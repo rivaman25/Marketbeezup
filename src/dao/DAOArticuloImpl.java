@@ -60,6 +60,10 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
     @Override
     public List<Articulo> listar(Pedido pedido, Filtro filtro, Connection conexion) throws Exception {
         Articulo articulo;
+        Envio envio;
+        Compra compra;
+        DocumentoVenta documentoVenta;
+        AlbaranVenta albaranVenta;
         List<Articulo> articulos = new ArrayList<>();
         int indice = 1;
         try {
@@ -157,6 +161,14 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
                 articulo.setMarca(result.getString("marca"));
                 articulo.setMarketplace(result.getString("marketplace"));
                 articulo.setIdPedido(result.getString("idPedido"));
+                envio = new Envio();
+                articulo.NuevoEnvio(result.getDate("fechaSalida"), result.getString("idAlmacen"), 
+                        result.getString("idAgencia"), result.getString("codigoArticulo"),
+                        result.getString("idPedido"), result.getString("marketplace"));
+                compra = new Compra();
+                articulo.NuevaCompra(result.getString("idCompra"), result.getString("proveedor"), 
+                        result.getDate("fechaCompra"), result.getDate("fechaEntrada"), result.getString("codigoArticulo"),
+                        result.getString("idPedido"), result.getString("marketplace"));
                 articulos.add(articulo);
             }
             result.close();
@@ -621,6 +633,7 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
             }
             consulta.delete(consulta.length() - 4, consulta.length());
         }
+        consulta.append(" GROUP BY articulos.idPedido, articulos.marketplace, articulos.codigoArticulo");
         return consulta.toString();
     }
 }

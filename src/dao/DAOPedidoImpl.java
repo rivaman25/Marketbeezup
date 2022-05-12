@@ -587,7 +587,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
             }
             consulta.delete(consulta.length() - 4, consulta.length());
         }
-        consulta.append(" ORDER BY pedidos.fechaPedido DESC");
+        consulta.append(" GROUP BY pedidos.marketplace, pedidos.idPedido ORDER BY pedidos.idPedido DESC LIMIT 3000");
         return consulta.toString();
     }
 }
