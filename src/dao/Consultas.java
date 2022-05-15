@@ -266,7 +266,7 @@ public class Consultas {
     
     
 
-    "Artículo");
+   /* "Artículo");
     modeloComboBuscar.addElement (
 
     "Compra");
@@ -275,7 +275,7 @@ public class Consultas {
     "Ticket");
     modeloComboBuscar.addElement (
 
-    "Albarán");
+    "Albarán");*/
 
     public static String obtenerConsultaPedidos(Filtro filtro) {
         StringBuilder consulta = new StringBuilder();
