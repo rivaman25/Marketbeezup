@@ -51,6 +51,70 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
         }
         return parametros.toString();
     }
+    
+    @Override
+    public List<Pedido> buscar(String atributo, String valor) throws Exception {
+        Pedido pedido;
+        List<Articulo> articulos;
+        List<Observacion> observaciones;
+        DAOArticulo daoArticulo;
+        DAOInterfazLista<Observacion> daoObservacion;
+        List<Pedido> pedidos = new ArrayList<>();
+        PreparedStatement pstm;
+        ResultSet result;
+        int indice = 1;
+        try {
+            this.openConnection();
+            this.getConnection().setAutoCommit(false);
+            daoObservacion = new DAOObservacionImpl();
+            daoArticulo = new DAOArticuloImpl();
+            // articulos = daoArticulo.buscar(atributo, valor);
+            // observaciones = daoObservaciones.buscar(atributo, valor);
+            pstm = this.getConnection().prepareStatement(Consultas.obtenerConsultaPedidos(atributo, valor));
+            pstm.setString(1, atributo);
+            result = pstm.executeQuery();
+            while (result.next()) {
+                pedido = new Pedido();
+                pedido.setTienda(result.getString("tienda"));
+                pedido.setMarketplace(result.getString("marketplace"));
+                pedido.setIdPedido(result.getString("idPedido"));
+                pedido.setFechaPedido(result.getTimestamp("fechaPedido"));
+                pedido.setDni(result.getString("dni"));
+                pedido.setNombreApellidos(result.getString("nombreApellidos"));
+                pedido.setDireccion(result.getString("direccion"));
+                pedido.setCp(result.getString("cp"));
+                pedido.setPoblacion(result.getString("poblacion"));
+                pedido.setProvincia(result.getString("provincia"));
+                pedido.setTelefono(result.getString("telefono"));
+                pedido.setEmail(result.getString("email"));
+                pedido.setImporte(result.getFloat("importe"));
+                pedido.setComision(result.getFloat("comision"));
+                pedido.setCostePorte(result.getFloat("costePorte"));
+                /*for (Articulo articulo : articulos) {
+                    if (articulo.getMarketplace().equalsIgnoreCase(pedido.getMarketplace()) &
+                            articulo.getIdPedido().equalsIgnoreCase(pedido.getIdPedido())) {
+                        pedido.NuevoArticulo(articulo);
+                    }
+                }
+                for (Observacion observacion : observaciones) {
+                    if (observacion.getMarketplace().equalsIgnoreCase(pedido.getMarketplace()) &
+                            observacion.getIdPedido().equalsIgnoreCase(pedido.getIdPedido())) {
+                        pedido.NuevaObservacion(observacion);
+                    }
+                }*/
+                pedidos.add(pedido);
+            }
+            this.getConnection().commit();
+            result.close();
+            pstm.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOPedidoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw ex;
+        } finally {
+            this.closeConnection();
+        }
+        return pedidos;
+    }
 
     /**
      * Devuele una lista de pedidos de la base de datos en función de los
@@ -587,7 +651,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
             }
             consulta.delete(consulta.length() - 4, consulta.length());
         }
-        consulta.append(" GROUP BY pedidos.marketplace, pedidos.idPedido ORDER BY pedidos.idPedido DESC LIMIT 3000");
+        consulta.append(" GROUP BY pedidos.marketplace, pedidos.idPedido ORDER BY pedidos.fechaPedido DESC LIMIT 3000");
         return consulta.toString();
     }
 }

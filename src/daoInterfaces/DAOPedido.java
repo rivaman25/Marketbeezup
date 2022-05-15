@@ -14,6 +14,8 @@ import modelos.PedidoPK;
  * @author Manolo
  */
 public interface DAOPedido extends CRUD<Pedido> {
+    
+    public List<Pedido> buscar(String atributo, String valor) throws Exception;
 
     public List<Pedido> listar(Filtro filtros) throws Exception;
 

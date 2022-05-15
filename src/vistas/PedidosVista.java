@@ -49,6 +49,16 @@ public class PedidosVista extends javax.swing.JFrame {
         botonFiltrar.setActionCommand("Filtrar");
         menuFiltrar.addActionListener(pedidosControlador);
         menuFiltrar.setActionCommand("Filtrar");
+        botonBuscar.addActionListener(pedidosControlador);
+        botonBuscar.setActionCommand("Buscar");
+    }
+
+    public String getAtributoBuscar() {
+        return (String) comboBuscar.getSelectedItem();
+    }
+    
+    public String getValorBuscar() {
+        return textoBuscar.getText();
     }
 
     /**
@@ -259,7 +269,9 @@ public class PedidosVista extends javax.swing.JFrame {
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pedidos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
 
+        tablaPedidos.setBackground(new java.awt.Color(20, 28, 50));
         tablaPedidos.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        tablaPedidos.setForeground(new java.awt.Color(255, 255, 255));
         tablaPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -577,7 +589,7 @@ public class PedidosVista extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void menuImprimirAlbaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuImprimirAlbaranActionPerformed
-        Imprimir imprimir = new Imprimir(this, true);
+        ImprimirVista imprimir = new ImprimirVista(this, true);
         imprimir.setLocationRelativeTo(null);
         imprimir.setVisible(true);
     }//GEN-LAST:event_menuImprimirAlbaranActionPerformed
@@ -603,7 +615,7 @@ public class PedidosVista extends javax.swing.JFrame {
     }//GEN-LAST:event_botonNuevaCompraActionPerformed
 
     private void botonImprimirAlbaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonImprimirAlbaranActionPerformed
-        Imprimir imprimir = new Imprimir(this, true);
+        ImprimirVista imprimir = new ImprimirVista(this, true);
         imprimir.setLocationRelativeTo(null);
         imprimir.setVisible(true);
     }//GEN-LAST:event_botonImprimirAlbaranActionPerformed

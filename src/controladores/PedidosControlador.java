@@ -83,17 +83,23 @@ public class PedidosControlador implements ActionListener {
             filtroVista.actualizarVista(filtro);
             filtroVista.setLocationRelativeTo(null);
             filtroVista.setVisible(true);
+            filtro = filtroVista.getFiltroNuevo();
             try {
-                if (filtro.equals(filtroVista.getFiltroNuevo())) {
-                    System.out.println("Son iguales");
-                } else {
-                    System.out.println("Son distintos");
-                    filtro = filtroVista.getFiltroNuevo();
-                    this.obtenerPedidos();
-                    this.actualizarVista();
-                }
+                this.obtenerPedidos();
+                this.actualizarVista();
             } catch (Exception ex) {
                 Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (e.getActionCommand().equals("Buscar")) {
+            if (!pedidosVista.getValorBuscar().isBlank()) {
+                PedidosControlador.pedidos.clear();
+                try {
+                    PedidosControlador.pedidos.addAll(
+                            daoPedido.buscar(pedidosVista.getAtributoBuscar(), pedidosVista.getValorBuscar()));
+                } catch (Exception ex) {
+                    Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
