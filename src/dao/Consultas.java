@@ -706,11 +706,11 @@ public class Consultas {
                 }
             }
             consulta.append("?");
-            for (String market : marketplace) {
+            for (int i = 1; i < marketplace.size(); i++) {
                 consulta.append(", ?");
             }
             consulta.append(") AND pedidos.idPedido IN (?");
-            for (String idPedido : idPedidos) {
+            for (int i = 1; i < idPedidos.size(); i++) {
                 consulta.append(", ?");
             }
             consulta.append(") ORDER BY pedidos.fechaPedido");

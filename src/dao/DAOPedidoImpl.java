@@ -67,7 +67,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
             this.openConnection();
             this.getConnection().setAutoCommit(false);
             daoObservacion = new DAOObservacionImpl();
-            daoArticulo = new DAOArticuloImpl();
+            daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
             articulos = daoArticulo.listar(atributo, valor);
             // observaciones = daoObservaciones.buscar(atributo, valor);
             pstm = this.getConnection().prepareStatement(Consultas.obtenerConsultaPedidos(atributo, valor));
@@ -140,7 +140,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
         try {
             this.openConnection();
             daoObservacion = new DAOObservacionImpl();
-            daoArticulo = new DAOArticuloImpl();
+            daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
             articulos = daoArticulo.listar(filtro);
             // observaciones = daoObservaciones.listar(filtro);
             pstm = this.getConnection().prepareStatement(Consultas.obtenerConsultaPedidos(articulos));
