@@ -51,7 +51,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
         }
         return parametros.toString();
     }
-    
+
     @Override
     public List<Pedido> buscar(String atributo, String valor) throws Exception {
         Pedido pedido;
@@ -68,7 +68,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
             this.getConnection().setAutoCommit(false);
             daoObservacion = new DAOObservacionImpl();
             daoArticulo = new DAOArticuloImpl();
-            // articulos = daoArticulo.buscar(atributo, valor);
+            articulos = daoArticulo.listar(atributo, valor);
             // observaciones = daoObservaciones.buscar(atributo, valor);
             pstm = this.getConnection().prepareStatement(Consultas.obtenerConsultaPedidos(atributo, valor));
             pstm.setString(1, atributo);
@@ -90,13 +90,13 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
                 pedido.setImporte(result.getFloat("importe"));
                 pedido.setComision(result.getFloat("comision"));
                 pedido.setCostePorte(result.getFloat("costePorte"));
-                /*for (Articulo articulo : articulos) {
-                    if (articulo.getMarketplace().equalsIgnoreCase(pedido.getMarketplace()) &
-                            articulo.getIdPedido().equalsIgnoreCase(pedido.getIdPedido())) {
+                for (Articulo articulo : articulos) {
+                    if (articulo.getMarketplace().equalsIgnoreCase(pedido.getMarketplace())
+                            & articulo.getIdPedido().equalsIgnoreCase(pedido.getIdPedido())) {
                         pedido.NuevoArticulo(articulo);
                     }
                 }
-                for (Observacion observacion : observaciones) {
+                /*for (Observacion observacion : observaciones) {
                     if (observacion.getMarketplace().equalsIgnoreCase(pedido.getMarketplace()) &
                             observacion.getIdPedido().equalsIgnoreCase(pedido.getIdPedido())) {
                         pedido.NuevaObservacion(observacion);
@@ -126,6 +126,8 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
      */
     @Override
     public List<Pedido> listar(Filtro filtro) throws Exception {
+        List<String> idPedidos = new ArrayList<>();
+        List<String> marketplace = new ArrayList<>();
         Pedido pedido;
         List<Articulo> articulos;
         List<Observacion> observaciones;
@@ -137,82 +139,29 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
         int indice = 1;
         try {
             this.openConnection();
-            this.getConnection().setAutoCommit(false);
             daoObservacion = new DAOObservacionImpl();
             daoArticulo = new DAOArticuloImpl();
-            articulos = daoArticulo.listar(new Pedido(), filtro, this.getConnection());
+            articulos = daoArticulo.listar(filtro);
             // observaciones = daoObservaciones.listar(filtro);
-            pstm = this.getConnection().prepareStatement(obtenerConsulta(filtro));
+            pstm = this.getConnection().prepareStatement(Consultas.obtenerConsultaPedidos(articulos));
             // Se añaden los parámetros en función de los filtros almacenados
-            if (filtro.getMarketplace() != null) {
-                for (String market : Filtro.obtenerMarketsFiltrados(filtro.getMarketplace())) {
+            if (!articulos.isEmpty()) {
+                for (Articulo articulo : articulos) {
+                    if (!marketplace.contains(articulo.getMarketplace())) {
+                        marketplace.add(articulo.getMarketplace());
+                    }
+                    if (!idPedidos.contains(articulo.getIdPedido())) {
+                        idPedidos.add(articulo.getIdPedido());
+                    }
+                }
+                for (String market : marketplace) {
                     pstm.setString(indice, market);
                     indice++;
                 }
-            }
-            if (filtro.getTiendas() != null) {
-                for (String tienda : Filtro.obtenerTiendasFiltradas(filtro.getTiendas())) {
-                    pstm.setString(indice, tienda);
+                for (String idPedido : idPedidos) {
+                    pstm.setString(indice, idPedido);
                     indice++;
                 }
-            }
-            if (filtro.getFechaPedidoDesde() != null) {
-                pstm.setDate(indice, filtro.getFechaPedidoDesde());
-                indice++;
-            }
-            if (filtro.getFechaPedidoHasta() != null) {
-                pstm.setDate(indice, filtro.getFechaPedidoHasta());
-                indice++;
-            }
-            if (filtro.getEstados() != null) {
-                for (String estado : Filtro.obtenerEstadosFiltrados(filtro.getEstados())) {
-                    pstm.setString(indice, estado);
-                    indice++;
-                }
-            }
-            if (filtro.getFechaSalidaDesde() != null) {
-                pstm.setDate(indice, filtro.getFechaSalidaDesde());
-                indice++;
-            }
-            if (filtro.getFechaSalidaHasta() != null) {
-                pstm.setDate(indice, filtro.getFechaSalidaHasta());
-                indice++;
-            }
-            if (filtro.getAlmacenes() != null) {
-                for (String almacen : Filtro.obtenerAlmacenesFiltrados(filtro.getAlmacenes())) {
-                    pstm.setString(indice, almacen);
-                    indice++;
-                }
-            }
-            if (filtro.getAgencias() != null) {
-                for (String agencia : Filtro.obtenerAgenciasFiltradas(filtro.getAgencias())) {
-                    pstm.setString(indice, agencia);
-                    indice++;
-                }
-            }
-            if (filtro.getFechaCompraDesde() != null) {
-                pstm.setDate(indice, filtro.getFechaCompraDesde());
-                indice++;
-            }
-            if (filtro.getFechaCompraHasta() != null) {
-                pstm.setDate(indice, filtro.getFechaCompraHasta());
-                indice++;
-            }
-            if (filtro.getFechaVentaDesde() != null) {
-                pstm.setDate(indice, filtro.getFechaVentaDesde());
-                indice++;
-            }
-            if (filtro.getFechaVentaHasta() != null) {
-                pstm.setDate(indice, filtro.getFechaVentaHasta());
-                indice++;
-            }
-            if (filtro.getFechaAlbaranDesde() != null) {
-                pstm.setDate(indice, filtro.getFechaAlbaranDesde());
-                indice++;
-            }
-            if (filtro.getFechaAlbaranHasta() != null) {
-                pstm.setDate(indice, filtro.getFechaAlbaranHasta());
-                indice++;
             }
             result = pstm.executeQuery();
             while (result.next()) {
@@ -233,8 +182,8 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
                 pedido.setComision(result.getFloat("comision"));
                 pedido.setCostePorte(result.getFloat("costePorte"));
                 for (Articulo articulo : articulos) {
-                    if (articulo.getMarketplace().equalsIgnoreCase(pedido.getMarketplace()) &
-                            articulo.getIdPedido().equalsIgnoreCase(pedido.getIdPedido())) {
+                    if (articulo.getMarketplace().equalsIgnoreCase(pedido.getMarketplace())
+                            & articulo.getIdPedido().equalsIgnoreCase(pedido.getIdPedido())) {
                         pedido.NuevoArticulo(articulo);
                     }
                 }
@@ -246,7 +195,6 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
                 }*/
                 pedidos.add(pedido);
             }
-            this.getConnection().commit();
             result.close();
             pstm.close();
         } catch (SQLException ex) {
@@ -470,188 +418,5 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
             this.closeConnection();
         }
         return lista;
-    }
-
-    /**
-     * Obtiene la consulta SQL en función del filtro seleccionado
-     *
-     * @param filtro
-     * @return
-     */
-    private String obtenerConsulta(Filtro filtro) {
-        StringBuilder consulta = new StringBuilder();
-        StringBuilder predicadoAux;
-        List<String> predicados = new ArrayList<>();
-        if (filtro.isObservaciones()) { // Registros con observaciones almacenadas
-            consulta.append("""
-                        SELECT 
-                            pedidos.tienda,
-                            pedidos.marketplace,
-                            pedidos.idPedido,
-                            pedidos.fechaPedido,
-                            pedidos.dni,
-                            pedidos.nombreApellidos,
-                            pedidos.direccion,
-                            pedidos.cp,
-                            pedidos.poblacion,
-                            pedidos.provincia,
-                            pedidos.telefono,
-                            pedidos.email,
-                            pedidos.importe,
-                            pedidos.comision,
-                            pedidos.costePorte
-                        FROM
-                            pedidos
-                                NATURAL JOIN
-                            articulos
-                                INNER JOIN
-                            observaciones ON (pedidos.idPedido = observaciones.idPedido
-                                AND pedidos.marketplace = observaciones.marketplace)
-                                LEFT OUTER JOIN
-                            envios ON (articulos.idPedido = envios.idPedido
-                                AND articulos.marketplace = envios.marketplace
-                                AND articulos.codigoArticulo = envios.codigoArticulo)
-                                LEFT OUTER JOIN
-                            compras ON (articulos.idPedido = compras.idPedido
-                                AND articulos.marketplace = compras.marketplace
-                                AND articulos.codigoArticulo = compras.codigoArticulo)
-                                LEFT OUTER JOIN
-                            documentosVenta ON (articulos.idPedido = documentosVenta.idPedido
-                                AND articulos.marketplace = documentosVenta.marketplace
-                                AND articulos.codigoArticulo = documentosVenta.codigoArticulo)
-                                LEFT OUTER JOIN
-                            albaranesVenta ON (articulos.idPedido = albaranesVenta.idPedido
-                                AND articulos.marketplace = albaranesVenta.marketplace
-                                AND articulos.codigoArticulo = albaranesVenta.codigoArticulo)""");
-        } else { // Registros con y sin observaciones registradas
-            consulta.append("""
-                        SELECT 
-                            pedidos.tienda,
-                            pedidos.marketplace,
-                            pedidos.idPedido,
-                            pedidos.fechaPedido,
-                            pedidos.dni,
-                            pedidos.nombreApellidos,
-                            pedidos.direccion,
-                            pedidos.cp,
-                            pedidos.poblacion,
-                            pedidos.provincia,
-                            pedidos.telefono,
-                            pedidos.email,
-                            pedidos.importe,
-                            pedidos.comision,
-                            pedidos.costePorte
-                        FROM
-                            pedidos
-                                NATURAL JOIN
-                            articulos
-                                LEFT OUTER JOIN
-                            observaciones ON (pedidos.idPedido = observaciones.idPedido
-                                AND pedidos.marketplace = observaciones.marketplace)
-                                LEFT OUTER JOIN
-                            envios ON (articulos.idPedido = envios.idPedido
-                                AND articulos.marketplace = envios.marketplace
-                                AND articulos.codigoArticulo = envios.codigoArticulo)
-                                LEFT OUTER JOIN
-                            compras ON (articulos.idPedido = compras.idPedido
-                                AND articulos.marketplace = compras.marketplace
-                                AND articulos.codigoArticulo = compras.codigoArticulo)
-                                LEFT OUTER JOIN
-                            documentosVenta ON (articulos.idPedido = documentosVenta.idPedido
-                                AND articulos.marketplace = documentosVenta.marketplace
-                                AND articulos.codigoArticulo = documentosVenta.codigoArticulo)
-                                LEFT OUTER JOIN
-                            albaranesVenta ON (articulos.idPedido = albaranesVenta.idPedido
-                                AND articulos.marketplace = albaranesVenta.marketplace
-                                AND articulos.codigoArticulo = albaranesVenta.codigoArticulo)""");
-        }
-        if (filtro.getMarketplace() != null) { // Si hay market seleccionado se añade el predicado correspondiente
-            predicadoAux = new StringBuilder();
-            predicadoAux.append(" pedidos.marketplace IN (?");
-            for (int i = 1; i < filtro.getMarketplace().length; i++) {
-                predicadoAux.append(", ?"); // Se añaden tantos parámetros como nº de market
-            }
-            predicadoAux.append(")");
-            predicados.add(predicadoAux.toString());
-        }
-        if (filtro.getTiendas() != null) {
-            predicadoAux = new StringBuilder();
-            predicadoAux.append(" pedidos.tienda IN (?");
-            for (int i = 1; i < filtro.getTiendas().length; i++) {
-                predicadoAux.append(", ?");
-            }
-            predicadoAux.append(")");
-            predicados.add(predicadoAux.toString());
-        }
-        if (filtro.getFechaPedidoDesde() != null) {
-            predicados.add(" pedidos.fechaPedido >= ?");
-        }
-        if (filtro.getFechaPedidoHasta() != null) {
-            predicados.add(" pedidos.fechaPedido <= ?");
-        }
-        if (filtro.getEstados() != null) {
-            predicadoAux = new StringBuilder();
-            predicadoAux.append(" articulos.estado IN (?");
-            for (int i = 1; i < filtro.getEstados().length; i++) {
-                predicadoAux.append(", ?");
-            }
-            predicadoAux.append(")");
-            predicados.add(predicadoAux.toString());
-        }
-        if (filtro.isExiste()) {
-            predicados.add((" (articulos.tipoArticulo <> 'EXISTE' OR articulos.tipoArticulo IS NULL)"));
-        }
-        if (filtro.getFechaSalidaDesde() != null) {
-            predicados.add(" envios.fechaSalida >= ?");
-        }
-        if (filtro.getFechaSalidaHasta() != null) {
-            predicados.add(" envios.fechaSalida <= ?");
-        }
-        if (filtro.getAlmacenes() != null) {
-            predicadoAux = new StringBuilder();
-            predicadoAux.append(" envios.idAlmacen IN (?");
-            for (int i = 1; i < filtro.getAlmacenes().length; i++) {
-                predicadoAux.append(", ?");
-            }
-            predicadoAux.append(")");
-            predicados.add(predicadoAux.toString());
-        }
-        if (filtro.getAgencias() != null) {
-            predicadoAux = new StringBuilder();
-            predicadoAux.append(" envios.idAgencia IN (?");
-            for (int i = 1; i < filtro.getAgencias().length; i++) {
-                predicadoAux.append(", ?");
-            }
-            predicadoAux.append(")");
-            predicados.add(predicadoAux.toString());
-        }
-        if (filtro.getFechaCompraDesde() != null) {
-            predicados.add(" compras.fechaCompra >= ?");
-        }
-        if (filtro.getFechaCompraHasta() != null) {
-            predicados.add(" compras.fechaCompra <= ?");
-        }
-        if (filtro.getFechaVentaDesde() != null) {
-            predicados.add(" documentosVenta.fechaVenta >= ?");
-        }
-        if (filtro.getFechaVentaHasta() != null) {
-            predicados.add(" documentosVenta.fechaVenta <= ?");
-        }
-        if (filtro.getFechaAlbaranDesde() != null) {
-            predicados.add(" albaranesVenta.fechaAlbaran >= ?");
-        }
-        if (filtro.getFechaAlbaranHasta() != null) {
-            predicados.add(" albaranesVenta.fechaAlbaran <= ?");
-        }
-        if (!predicados.isEmpty()) {
-            consulta.append(" WHERE");
-            for (String predicado : predicados) {
-                consulta.append(predicado);
-                consulta.append(" AND");
-            }
-            consulta.delete(consulta.length() - 4, consulta.length());
-        }
-        consulta.append(" GROUP BY pedidos.marketplace, pedidos.idPedido ORDER BY pedidos.fechaPedido DESC LIMIT 3000");
-        return consulta.toString();
     }
 }

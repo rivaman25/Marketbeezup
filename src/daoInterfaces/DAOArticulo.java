@@ -15,8 +15,10 @@ import modelos.Pedido;
  * @author Manolo
  */
 public interface DAOArticulo extends CRUD<Articulo> {
+    
+    public List<Articulo> listar(String atributo, String valor) throws Exception;
 
-    public List<Articulo> listar(Pedido pedido, Filtro filtro, Connection conexion) throws Exception;
+    public List<Articulo> listar(Filtro filtro) throws Exception;
 
     public void registrar(Articulo objet, Connection conexion) throws Exception;
 

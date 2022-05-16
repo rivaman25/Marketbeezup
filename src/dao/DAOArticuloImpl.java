@@ -58,18 +58,57 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
     }
 
     @Override
-    public List<Articulo> listar(Pedido pedido, Filtro filtro, Connection conexion) throws Exception {
+    public List<Articulo> listar(String atributo, String valor) throws Exception {
+        Articulo articulo;
+        List<Articulo> articulos = new ArrayList<>();
+        try {
+            this.openConnection();
+            PreparedStatement pstm = this.getConnection().prepareStatement(
+                    Consultas.obtenerConsultaArticulos(atributo, valor));
+            pstm.setString(1, valor);
+            ResultSet result = pstm.executeQuery();
+            while (result.next()) {
+                articulo = new Articulo();
+                articulo.setCodigoArticulo(result.getString("codigoArticulo"));
+                articulo.setDescripcion(result.getString("descripcion"));
+                articulo.setPrecio(result.getFloat("precio"));
+                articulo.setCantidad(result.getInt("cantidad"));
+                articulo.setEstado(result.getString("estado"));
+                articulo.setPuc(result.getFloat("puc"));
+                articulo.setTipoArticulo(result.getString("tipoArticulo"));
+                articulo.setFechaHoraImpr(result.getTimestamp("fechaHoraImpr"));
+                articulo.setFamilia(result.getString("idFamilia"));
+                articulo.setSubfamilia(result.getString("idSubfamilia"));
+                articulo.setMarca(result.getString("marca"));
+                articulo.setMarketplace(result.getString("marketplace"));
+                articulo.setIdPedido(result.getString("idPedido"));
+                articulo.NuevoEnvio(result.getDate("fechaSalida"), result.getString("idAlmacen"),
+                        result.getString("idAgencia"), result.getString("codigoArticulo"),
+                        result.getString("idPedido"), result.getString("marketplace"));
+                articulo.NuevaCompra(result.getString("idCompra"), result.getString("proveedor"),
+                        result.getDate("fechaCompra"), result.getDate("fechaEntrada"), result.getString("codigoArticulo"),
+                        result.getString("idPedido"), result.getString("marketplace"));
+                articulos.add(articulo);
+            }
+            result.close();
+            pstm.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOArticuloImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw ex;
+        } finally {
+            this.closeConnection();
+        }
+        return articulos;
+    }
+
+    @Override
+    public List<Articulo> listar(Filtro filtro) throws Exception {
         Articulo articulo;
         List<Articulo> articulos = new ArrayList<>();
         int indice = 1;
         try {
-            // Si recibo una conexión a la BD por parámetro no creo una nueva
-            if (conexion == null) {
-                this.openConnection();
-            } else {
-                this.setConnection(conexion);
-            }
-            PreparedStatement pstm = this.getConnection().prepareStatement(obtenerConsulta(filtro));
+            this.openConnection();
+            PreparedStatement pstm = this.getConnection().prepareStatement(Consultas.obtenerConsultaArticulos(filtro));
             // Se añaden los parámetros en función de los filtros almacenados
             if (filtro.getMarketplace() != null) {
                 for (String market : Filtro.obtenerMarketsFiltrados(filtro.getMarketplace())) {
@@ -157,10 +196,10 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
                 articulo.setMarca(result.getString("marca"));
                 articulo.setMarketplace(result.getString("marketplace"));
                 articulo.setIdPedido(result.getString("idPedido"));
-                articulo.NuevoEnvio(result.getDate("fechaSalida"), result.getString("idAlmacen"), 
+                articulo.NuevoEnvio(result.getDate("fechaSalida"), result.getString("idAlmacen"),
                         result.getString("idAgencia"), result.getString("codigoArticulo"),
                         result.getString("idPedido"), result.getString("marketplace"));
-                articulo.NuevaCompra(result.getString("idCompra"), result.getString("proveedor"), 
+                articulo.NuevaCompra(result.getString("idCompra"), result.getString("proveedor"),
                         result.getDate("fechaCompra"), result.getDate("fechaEntrada"), result.getString("codigoArticulo"),
                         result.getString("idPedido"), result.getString("marketplace"));
                 articulos.add(articulo);
@@ -171,11 +210,7 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
             Logger.getLogger(DAOArticuloImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         } finally {
-            // Si no he recibido la conexión por parámetro, cierro la que he obtenido
-            // En caso contrario la conexión se cerrará desde el objeto que use esta instancia
-            if (conexion == null) {
-                this.closeConnection();
-            }
+            this.closeConnection();
         }
         return articulos;
     }
