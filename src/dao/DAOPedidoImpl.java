@@ -54,6 +54,8 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
 
     @Override
     public List<Pedido> buscar(String atributo, String valor) throws Exception {
+        List<String> idPedidos = new ArrayList<>();
+        List<String> marketplace = new ArrayList<>();
         Pedido pedido;
         List<Articulo> articulos;
         List<Observacion> observaciones;
@@ -63,55 +65,77 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
         PreparedStatement pstm;
         ResultSet result;
         int indice = 1;
-        try {
-            this.openConnection();
-            this.getConnection().setAutoCommit(false);
-            daoObservacion = new DAOObservacionImpl();
-            daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
-            articulos = daoArticulo.listar(atributo, valor);
-            // observaciones = daoObservaciones.buscar(atributo, valor);
-            pstm = this.getConnection().prepareStatement(Consultas.obtenerConsultaPedidos(atributo, valor));
-            pstm.setString(1, atributo);
-            result = pstm.executeQuery();
-            while (result.next()) {
-                pedido = new Pedido();
-                pedido.setTienda(result.getString("tienda"));
-                pedido.setMarketplace(result.getString("marketplace"));
-                pedido.setIdPedido(result.getString("idPedido"));
-                pedido.setFechaPedido(result.getTimestamp("fechaPedido"));
-                pedido.setDni(result.getString("dni"));
-                pedido.setNombreApellidos(result.getString("nombreApellidos"));
-                pedido.setDireccion(result.getString("direccion"));
-                pedido.setCp(result.getString("cp"));
-                pedido.setPoblacion(result.getString("poblacion"));
-                pedido.setProvincia(result.getString("provincia"));
-                pedido.setTelefono(result.getString("telefono"));
-                pedido.setEmail(result.getString("email"));
-                pedido.setImporte(result.getFloat("importe"));
-                pedido.setComision(result.getFloat("comision"));
-                pedido.setCostePorte(result.getFloat("costePorte"));
+        daoObservacion = new DAOObservacionImpl();
+        daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
+        // Se obtiene la lista de artículos en función del atributo y el valor correspondiente al ese atributo
+        articulos = daoArticulo.listar(atributo, valor);
+        // Se obtiene la lista de observaciones en función de la lista de artículos
+        // observaciones = daoObservaciones.buscar(articulos);
+        // Se obtiene la lista de Pedidos en función de la lista de artículos
+        if (!articulos.isEmpty()) {
+            try {
+                this.openConnection();
+                pstm = this.getConnection().prepareStatement(Consultas.obtenerConsultaPedidos(articulos));
                 for (Articulo articulo : articulos) {
-                    if (articulo.getMarketplace().equalsIgnoreCase(pedido.getMarketplace())
-                            & articulo.getIdPedido().equalsIgnoreCase(pedido.getIdPedido())) {
-                        pedido.NuevoArticulo(articulo);
+                    // Se obtiene la lista de marketplace para introducir en los parámetros de la consulta
+                    if (!marketplace.contains(articulo.getMarketplace())) {
+                        marketplace.add(articulo.getMarketplace());
+                    }
+                    // Se obtiene la lista de idArticulo para introducir en los parámetros de la consulta
+                    if (!idPedidos.contains(articulo.getIdPedido())) {
+                        idPedidos.add(articulo.getIdPedido());
                     }
                 }
-                /*for (Observacion observacion : observaciones) {
+                // Añado los valores de marketplace e idPedidos a buscar en los parámetros de la consulta
+                for (String market : marketplace) {
+                    pstm.setString(indice, market);
+                    indice++;
+                }
+                for (String idPedido : idPedidos) {
+                    pstm.setString(indice, idPedido);
+                    indice++;
+                }
+                result = pstm.executeQuery();
+                while (result.next()) {
+                    pedido = new Pedido();
+                    pedido.setTienda(result.getString("tienda"));
+                    pedido.setMarketplace(result.getString("marketplace"));
+                    pedido.setIdPedido(result.getString("idPedido"));
+                    pedido.setFechaPedido(result.getTimestamp("fechaPedido"));
+                    pedido.setDni(result.getString("dni"));
+                    pedido.setNombreApellidos(result.getString("nombreApellidos"));
+                    pedido.setDireccion(result.getString("direccion"));
+                    pedido.setCp(result.getString("cp"));
+                    pedido.setPoblacion(result.getString("poblacion"));
+                    pedido.setProvincia(result.getString("provincia"));
+                    pedido.setTelefono(result.getString("telefono"));
+                    pedido.setEmail(result.getString("email"));
+                    pedido.setImporte(result.getFloat("importe"));
+                    pedido.setComision(result.getFloat("comision"));
+                    pedido.setCostePorte(result.getFloat("costePorte"));
+                    // Se genera el Pedido incluyendo su lista de Artículos y Observaciones correspondientes
+                    for (Articulo articulo : articulos) {
+                        if (articulo.getMarketplace().equalsIgnoreCase(pedido.getMarketplace())
+                                & articulo.getIdPedido().equalsIgnoreCase(pedido.getIdPedido())) {
+                            pedido.NuevoArticulo(articulo);
+                        }
+                    }
+                    /*for (Observacion observacion : observaciones) {
                     if (observacion.getMarketplace().equalsIgnoreCase(pedido.getMarketplace()) &
                             observacion.getIdPedido().equalsIgnoreCase(pedido.getIdPedido())) {
                         pedido.NuevaObservacion(observacion);
                     }
                 }*/
-                pedidos.add(pedido);
+                    pedidos.add(pedido);
+                }
+                result.close();
+                pstm.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOPedidoImpl.class.getName()).log(Level.SEVERE, null, ex);
+                throw ex;
+            } finally {
+                this.closeConnection();
             }
-            this.getConnection().commit();
-            result.close();
-            pstm.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(DAOPedidoImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw ex;
-        } finally {
-            this.closeConnection();
         }
         return pedidos;
     }
@@ -137,15 +161,15 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
         PreparedStatement pstm;
         ResultSet result;
         int indice = 1;
-        try {
-            this.openConnection();
-            daoObservacion = new DAOObservacionImpl();
-            daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
-            articulos = daoArticulo.listar(filtro);
-            // observaciones = daoObservaciones.listar(filtro);
-            pstm = this.getConnection().prepareStatement(Consultas.obtenerConsultaPedidos(articulos));
-            // Se añaden los parámetros en función de los filtros almacenados
-            if (!articulos.isEmpty()) {
+        daoObservacion = new DAOObservacionImpl();
+        daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
+        articulos = daoArticulo.listar(filtro);
+        if (!articulos.isEmpty()) {
+            try {
+                this.openConnection();
+                // observaciones = daoObservaciones.listar(filtro);
+                pstm = this.getConnection().prepareStatement(Consultas.obtenerConsultaPedidos(articulos));
+                // Se añaden los parámetros en función de los filtros almacenados
                 for (Articulo articulo : articulos) {
                     if (!marketplace.contains(articulo.getMarketplace())) {
                         marketplace.add(articulo.getMarketplace());
@@ -162,46 +186,46 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
                     pstm.setString(indice, idPedido);
                     indice++;
                 }
-            }
-            result = pstm.executeQuery();
-            while (result.next()) {
-                pedido = new Pedido();
-                pedido.setTienda(result.getString("tienda"));
-                pedido.setMarketplace(result.getString("marketplace"));
-                pedido.setIdPedido(result.getString("idPedido"));
-                pedido.setFechaPedido(result.getTimestamp("fechaPedido"));
-                pedido.setDni(result.getString("dni"));
-                pedido.setNombreApellidos(result.getString("nombreApellidos"));
-                pedido.setDireccion(result.getString("direccion"));
-                pedido.setCp(result.getString("cp"));
-                pedido.setPoblacion(result.getString("poblacion"));
-                pedido.setProvincia(result.getString("provincia"));
-                pedido.setTelefono(result.getString("telefono"));
-                pedido.setEmail(result.getString("email"));
-                pedido.setImporte(result.getFloat("importe"));
-                pedido.setComision(result.getFloat("comision"));
-                pedido.setCostePorte(result.getFloat("costePorte"));
-                for (Articulo articulo : articulos) {
-                    if (articulo.getMarketplace().equalsIgnoreCase(pedido.getMarketplace())
-                            & articulo.getIdPedido().equalsIgnoreCase(pedido.getIdPedido())) {
-                        pedido.NuevoArticulo(articulo);
+                result = pstm.executeQuery();
+                while (result.next()) {
+                    pedido = new Pedido();
+                    pedido.setTienda(result.getString("tienda"));
+                    pedido.setMarketplace(result.getString("marketplace"));
+                    pedido.setIdPedido(result.getString("idPedido"));
+                    pedido.setFechaPedido(result.getTimestamp("fechaPedido"));
+                    pedido.setDni(result.getString("dni"));
+                    pedido.setNombreApellidos(result.getString("nombreApellidos"));
+                    pedido.setDireccion(result.getString("direccion"));
+                    pedido.setCp(result.getString("cp"));
+                    pedido.setPoblacion(result.getString("poblacion"));
+                    pedido.setProvincia(result.getString("provincia"));
+                    pedido.setTelefono(result.getString("telefono"));
+                    pedido.setEmail(result.getString("email"));
+                    pedido.setImporte(result.getFloat("importe"));
+                    pedido.setComision(result.getFloat("comision"));
+                    pedido.setCostePorte(result.getFloat("costePorte"));
+                    for (Articulo articulo : articulos) {
+                        if (articulo.getMarketplace().equalsIgnoreCase(pedido.getMarketplace())
+                                & articulo.getIdPedido().equalsIgnoreCase(pedido.getIdPedido())) {
+                            pedido.NuevoArticulo(articulo);
+                        }
                     }
+                    /*for (Observacion observacion : observaciones) {
+                        if (observacion.getMarketplace().equalsIgnoreCase(pedido.getMarketplace()) &
+                                observacion.getIdPedido().equalsIgnoreCase(pedido.getIdPedido())) {
+                            pedido.NuevaObservacion(observacion);
+                        }
+                    }*/
+                    pedidos.add(pedido);
                 }
-                /*for (Observacion observacion : observaciones) {
-                    if (observacion.getMarketplace().equalsIgnoreCase(pedido.getMarketplace()) &
-                            observacion.getIdPedido().equalsIgnoreCase(pedido.getIdPedido())) {
-                        pedido.NuevaObservacion(observacion);
-                    }
-                }*/
-                pedidos.add(pedido);
+                result.close();
+                pstm.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOPedidoImpl.class.getName()).log(Level.SEVERE, null, ex);
+                throw ex;
+            } finally {
+                this.closeConnection();
             }
-            result.close();
-            pstm.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(DAOPedidoImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw ex;
-        } finally {
-            this.closeConnection();
         }
         return pedidos;
     }

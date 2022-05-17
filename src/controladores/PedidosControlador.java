@@ -79,24 +79,34 @@ public class PedidosControlador implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Filtrar")) {
+            // Se inicia el formulario de selección de filtros para la lista de pedidos
             FiltroVista filtroVista = new FiltroVista(pedidosVista, true);
             filtroVista.actualizarVista(filtro);
             filtroVista.setLocationRelativeTo(null);
             filtroVista.setVisible(true);
-            filtro = filtroVista.getFiltroNuevo();
-            try {
-                this.obtenerPedidos();
-                this.actualizarVista();
-            } catch (Exception ex) {
-                Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
+            // Si se selecciona aplicar en el formulario de filtros se muestra la lista de pedidos filtrada
+            if (filtroVista.getBotonSeleccionado().equals("APLICAR")) {
+                // Se obtiene el nuevo filtro
+                filtro = filtroVista.getFiltroNuevo();
+                try {
+                    // Se obtienen los pedidos filtrados
+                    this.obtenerPedidos();
+                    this.actualizarVista();
+                } catch (Exception ex) {
+                    Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
         if (e.getActionCommand().equals("Buscar")) {
+            List<Pedido> pedidosBuscar;
             if (!pedidosVista.getValorBuscar().isBlank()) {
-                PedidosControlador.pedidos.clear();
                 try {
-                    PedidosControlador.pedidos.addAll(
-                            daoPedido.buscar(pedidosVista.getAtributoBuscar(), pedidosVista.getValorBuscar()));
+                    pedidosBuscar = daoPedido.buscar(pedidosVista.getAtributoBuscar(), pedidosVista.getValorBuscar());
+                    if (!pedidosBuscar.isEmpty()) {
+                        PedidosControlador.pedidos.clear();
+                        PedidosControlador.pedidos.addAll(pedidosBuscar);
+                        actualizarVista();
+                    }
                 } catch (Exception ex) {
                     Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
                 }

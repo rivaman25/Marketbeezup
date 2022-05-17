@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import modelos.Articulo;
 import modelos.Filtro;
+import modelos.Pedido;
 
 /**
  *
@@ -229,7 +230,9 @@ public class Consultas {
             albaranesVenta ON (articulos.idPedido = albaranesVenta.idPedido
                 AND articulos.marketplace = albaranesVenta.marketplace
                 AND articulos.codigoArticulo = albaranesVenta.codigoArticulo)
-            WHERE pedidos.idPedido LIKE ? ORDER BY pedidos.fechaPedido""";
+            WHERE pedidos.idPedido LIKE ?
+            GROUP BY articulos.marketplace, articulos.idPedido, articulos.codigoArticulo
+            ORDER BY pedidos.fechaPedido DESC""";
 
     private static final String CONSULTA_ARTICULOS_NOMBRE = """
         SELECT 
@@ -280,7 +283,9 @@ public class Consultas {
             albaranesVenta ON (articulos.idPedido = albaranesVenta.idPedido
                 AND articulos.marketplace = albaranesVenta.marketplace
                 AND articulos.codigoArticulo = albaranesVenta.codigoArticulo)
-            WHERE pedidos.nombreApellidos LIKE ? ORDER BY pedidos.fechaPedido""";
+            WHERE pedidos.nombreApellidos LIKE ?
+            GROUP BY articulos.marketplace, articulos.idPedido, articulos.codigoArticulo
+            ORDER BY pedidos.fechaPedido DESC""";
 
     private static final String CONSULTA_ARTICULOS_DIRECCION = """
         SELECT 
@@ -331,7 +336,9 @@ public class Consultas {
             albaranesVenta ON (articulos.idPedido = albaranesVenta.idPedido
                 AND articulos.marketplace = albaranesVenta.marketplace
                 AND articulos.codigoArticulo = albaranesVenta.codigoArticulo)
-            WHERE pedidos.direccion LIKE ? ORDER BY pedidos.fechaPedido""";
+            WHERE pedidos.direccion LIKE ?
+            GROUP BY articulos.marketplace, articulos.idPedido, articulos.codigoArticulo
+            ORDER BY pedidos.fechaPedido DESC""";
 
     private static final String CONSULTA_ARTICULOS_TELEFONO = """
         SELECT 
@@ -382,7 +389,9 @@ public class Consultas {
             albaranesVenta ON (articulos.idPedido = albaranesVenta.idPedido
                 AND articulos.marketplace = albaranesVenta.marketplace
                 AND articulos.codigoArticulo = albaranesVenta.codigoArticulo)
-            WHERE pedidos.telefono LIKE ? ORDER BY pedidos.fechaPedido""";
+            WHERE pedidos.telefono LIKE ?
+            GROUP BY articulos.marketplace, articulos.idPedido, articulos.codigoArticulo
+            ORDER BY pedidos.fechaPedido DESC""";
 
     private static final String CONSULTA_ARTICULOS_ARTICULO = """
         SELECT 
@@ -433,7 +442,9 @@ public class Consultas {
             albaranesVenta ON (articulos.idPedido = albaranesVenta.idPedido
                 AND articulos.marketplace = albaranesVenta.marketplace
                 AND articulos.codigoArticulo = albaranesVenta.codigoArticulo)
-            WHERE articulos.codigoArticulo LIKE ? ORDER BY pedidos.fechaPedido""";
+            WHERE articulos.codigoArticulo LIKE ?
+            GROUP BY articulos.marketplace, articulos.idPedido, articulos.codigoArticulo
+            ORDER BY pedidos.fechaPedido DESC""";
 
     private static final String CONSULTA_ARTICULOS_COMPRA = """
         SELECT 
@@ -484,7 +495,9 @@ public class Consultas {
             albaranesVenta ON (articulos.idPedido = albaranesVenta.idPedido
                 AND articulos.marketplace = albaranesVenta.marketplace
                 AND articulos.codigoArticulo = albaranesVenta.codigoArticulo)
-            WHERE compras.idCompras LIKE ? ORDER BY pedidos.fechaPedido""";
+            WHERE compras.idCompras LIKE ?
+            GROUP BY articulos.marketplace, articulos.idPedido, articulos.codigoArticulo
+            ORDER BY pedidos.fechaPedido DESC""";
 
     private static final String CONSULTA_ARTICULOS_NUMERO_DOCUMENTO = """
         SELECT 
@@ -535,7 +548,9 @@ public class Consultas {
             albaranesVenta ON (articulos.idPedido = albaranesVenta.idPedido
                 AND articulos.marketplace = albaranesVenta.marketplace
                 AND articulos.codigoArticulo = albaranesVenta.codigoArticulo)
-            WHERE documentosVenta.numeroDocumento LIKE ? ORDER BY pedidos.fechaPedido""";
+            WHERE documentosVenta.numeroDocumento LIKE ?
+            GROUP BY articulos.marketplace, articulos.idPedido, articulos.codigoArticulo  
+            ORDER BY pedidos.fechaPedido DESC""";
 
     private static final String CONSULTA_ARTICULOS_NUMERO_ALBARAN = """
         SELECT 
@@ -586,7 +601,9 @@ public class Consultas {
             albaranesVenta ON (articulos.idPedido = albaranesVenta.idPedido
                 AND articulos.marketplace = albaranesVenta.marketplace
                 AND articulos.codigoArticulo = albaranesVenta.codigoArticulo)
-            WHERE albaranesVenta.numeroAlbaran LIKE ? ORDER BY pedidos.fechaPedido""";
+            WHERE albaranesVenta.numeroAlbaran LIKE ?
+            GROUP BY articulos.marketplace, articulos.idPedido, articulos.codigoArticulo
+            ORDER BY pedidos.fechaPedido DESC""";
 
     public static String obtenerConsultaPedidos(Filtro filtro) {
         StringBuilder consulta = new StringBuilder();
@@ -713,7 +730,7 @@ public class Consultas {
             for (int i = 1; i < idPedidos.size(); i++) {
                 consulta.append(", ?");
             }
-            consulta.append(") ORDER BY pedidos.fechaPedido");
+            consulta.append(") ORDER BY pedidos.fechaPedido DESC");
         }
         return consulta.toString();
     }
@@ -841,11 +858,7 @@ public class Consultas {
         }
     }
 
-    public static String obtenerConsultaObservaciones(Filtro filtro) {
-        return null;
-    }
-
-    public static String obtenerConsultaObservaciones(String atributo, String valor) {
+    public static String obtenerConsultaObservaciones(List<Pedido> pedidos) {
         return null;
     }
 }

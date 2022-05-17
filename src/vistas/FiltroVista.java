@@ -17,6 +17,7 @@ import modelos.Filtro;
 public class FiltroVista extends javax.swing.JDialog {
 
     private Filtro filtroNuevo;
+    private String botonSeleccionado;
 
     /**
      * Creates new form Filtro
@@ -44,11 +45,20 @@ public class FiltroVista extends javax.swing.JDialog {
             DefaultListModel<String> listaEstadosModel = new DefaultListModel<>();
             listaEstadosModel.addAll(PedidosControlador.getEstados());
             listaEstados.setModel(listaEstadosModel);
+            botonSeleccionado = "CERRAR";
         } catch (Exception ex) {
             Logger.getLogger(FiltroVista.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    public String getBotonSeleccionado() {
+        return botonSeleccionado;
+    }
+
+    public void setBotonSeleccionado(String botonSeleccionado) {
+        this.botonSeleccionado = botonSeleccionado;
+    }
+    
     public Filtro getFiltroNuevo() {
         return filtroNuevo;
     }
@@ -479,10 +489,12 @@ public class FiltroVista extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
+        botonSeleccionado = "CANCELAR";
         this.dispose();
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
+        botonSeleccionado = "APLICAR";
         filtroNuevo = new Filtro();
         if (listaAgencias.getSelectedIndices().length > 0) {
             filtroNuevo.setAgencias(listaAgencias.getSelectedIndices());

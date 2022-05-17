@@ -64,7 +64,7 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
             this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement(
                     Consultas.obtenerConsultaArticulos(atributo, valor));
-            pstm.setString(1, valor);
+            pstm.setString(1, valor + "%");
             ResultSet result = pstm.executeQuery();
             while (result.next()) {
                 articulo = new Articulo();
