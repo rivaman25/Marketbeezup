@@ -42,6 +42,7 @@ public class PedidosVista extends javax.swing.JFrame {
     public void actualizaTabla() {
         modeloTablaPedidos = new ModeloTablaPedidos(PedidosControlador.getPedidos());
         tablaPedidos.setModel(modeloTablaPedidos);
+        textoBuscar.setText(null);
     }
     
     public void setControlador(PedidosControlador pedidosControlador) {
@@ -51,6 +52,8 @@ public class PedidosVista extends javax.swing.JFrame {
         menuFiltrar.setActionCommand("Filtrar");
         botonBuscar.addActionListener(pedidosControlador);
         botonBuscar.setActionCommand("Buscar");
+        botonAplicarFiltro.addActionListener(pedidosControlador);
+        botonAplicarFiltro.setActionCommand("AplicarFiltro");
     }
 
     public String getAtributoBuscar() {
@@ -72,6 +75,7 @@ public class PedidosVista extends javax.swing.JFrame {
 
         jToolBar1 = new javax.swing.JToolBar();
         botonFiltrar = new javax.swing.JButton();
+        botonAplicarFiltro = new javax.swing.JButton();
         botonNuevoEnvio = new javax.swing.JButton();
         botonNuevaCompra = new javax.swing.JButton();
         botonImprimirAlbaran = new javax.swing.JButton();
@@ -137,11 +141,24 @@ public class PedidosVista extends javax.swing.JFrame {
 
         botonFiltrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Filtrar32(1).png"))); // NOI18N
         botonFiltrar.setText("Filtro");
-        botonFiltrar.setToolTipText("Filtrar");
+        botonFiltrar.setToolTipText("Modificar Filtro");
         botonFiltrar.setFocusable(false);
         botonFiltrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonFiltrar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(botonFiltrar);
+
+        botonAplicarFiltro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Filtrar32(2).png"))); // NOI18N
+        botonAplicarFiltro.setText("Filtrar");
+        botonAplicarFiltro.setToolTipText("Aplicar Filtro");
+        botonAplicarFiltro.setFocusable(false);
+        botonAplicarFiltro.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        botonAplicarFiltro.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        botonAplicarFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAplicarFiltroActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(botonAplicarFiltro);
 
         botonNuevoEnvio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Envio32.png"))); // NOI18N
         botonNuevoEnvio.setText("Envío");
@@ -229,7 +246,7 @@ public class PedidosVista extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(comboBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
-                .addComponent(textoBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                .addComponent(textoBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -620,6 +637,10 @@ public class PedidosVista extends javax.swing.JFrame {
         imprimir.setVisible(true);
     }//GEN-LAST:event_botonImprimirAlbaranActionPerformed
 
+    private void botonAplicarFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAplicarFiltroActionPerformed
+        textoBuscar.setText(null);
+    }//GEN-LAST:event_botonAplicarFiltroActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -663,6 +684,7 @@ public class PedidosVista extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonAplicarFiltro;
     private javax.swing.JButton botonBuscar;
     private javax.swing.JButton botonFiltrar;
     private javax.swing.JButton botonImprimirAlbaran;

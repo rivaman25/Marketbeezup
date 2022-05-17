@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import modelos.Articulo;
 import modelos.Filtro;
-import modelos.Pedido;
 
 /**
  *

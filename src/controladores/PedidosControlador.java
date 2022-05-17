@@ -112,6 +112,15 @@ public class PedidosControlador implements ActionListener {
                 }
             }
         }
+        if (e.getActionCommand().equals("AplicarFiltro")) {
+            try {
+                // Se actualiza la tabla con los pedidos filtrados
+                this.obtenerPedidos();
+                this.actualizarVista();
+            } catch (Exception ex) {
+                Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     public static List<Pedido> getPedidos() {
