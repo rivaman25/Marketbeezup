@@ -548,7 +548,7 @@ public class Consultas {
             albaranesVenta ON (articulos.idPedido = albaranesVenta.idPedido
                 AND articulos.marketplace = albaranesVenta.marketplace
                 AND articulos.codigoArticulo = albaranesVenta.codigoArticulo)
-            WHERE documentosVenta.numeroDocumento LIKE ?
+            WHERE documentosVenta.numeroVenta LIKE ?
             GROUP BY articulos.marketplace, articulos.idPedido, articulos.codigoArticulo  
             ORDER BY pedidos.fechaPedido DESC""";
 
@@ -604,6 +604,14 @@ public class Consultas {
             WHERE albaranesVenta.numeroAlbaran LIKE ?
             GROUP BY articulos.marketplace, articulos.idPedido, articulos.codigoArticulo
             ORDER BY pedidos.fechaPedido DESC""";
+    
+    private final static String CONSULTA_OBSERVACIONES = """
+        SELECT 
+            *
+        FROM
+            marketbeezup.observaciones
+        WHERE
+            observaciones.marketplace IN (""";
 
     public static String obtenerConsultaPedidos(Filtro filtro) {
         StringBuilder consulta = new StringBuilder();
@@ -858,7 +866,30 @@ public class Consultas {
         }
     }
 
-    public static String obtenerConsultaObservaciones(List<Pedido> pedidos) {
-        return null;
+    public static String obtenerConsultaObservaciones(List<Articulo> articulos) {
+        StringBuilder consulta = new StringBuilder();
+        consulta.append(CONSULTA_OBSERVACIONES);
+        List<String> idPedidos = new ArrayList<>();
+        List<String> marketplace = new ArrayList<>();
+        if (!articulos.isEmpty()) {
+            for (Articulo articulo : articulos) {
+                if (!marketplace.contains(articulo.getMarketplace())) {
+                    marketplace.add(articulo.getMarketplace());
+                }
+                if (!idPedidos.contains(articulo.getIdPedido())) {
+                    idPedidos.add(articulo.getIdPedido());
+                }
+            }
+            consulta.append("?");
+            for (int i = 1; i < marketplace.size(); i++) {
+                consulta.append(", ?");
+            }
+            consulta.append(") AND observaciones.idPedido IN (?");
+            for (int i = 1; i < idPedidos.size(); i++) {
+                consulta.append(", ?");
+            }
+            consulta.append(")");
+        }
+        return consulta.toString();
     }
 }

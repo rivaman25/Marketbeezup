@@ -7,52 +7,69 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import modelos.Observacion;
-import modelos.Pedido;
-import daoInterfaces.DAOInterfazLista;
+import daoInterfaces.DAOObservacion;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modelos.Articulo;
 
-public class DAOObservacionImpl extends ConexionBD implements DAOInterfazLista<Observacion> {
+public class DAOObservacionImpl extends ConexionBD implements DAOObservacion {
+
+    public DAOObservacionImpl(String url, String serverName, int portNumber, String databaseName, String userName, String password) {
+        super(url, serverName, portNumber, databaseName, userName, password);
+    }
+
+    public DAOObservacionImpl() {
+    }
 
     @Override
-    public List<Observacion> listar(Pedido pedido, Connection conexion) throws Exception {
+    public List<Observacion> listar(List<Articulo> articulos) throws Exception {
+        List<String> idPedidos = new ArrayList<>();
+        List<String> marketplace = new ArrayList<>();
         Observacion observacion;
         List<Observacion> observaciones = new ArrayList<>();
-        try {
-            // Si recibo una conexión a la BD por parámetro no creo una nueva
-            if (conexion == null) {
+        int indice = 1;
+        if (!articulos.isEmpty()) {
+            try {
                 this.openConnection();
-            } else {
-                this.setConnection(conexion);
-            }
-            PreparedStatement pstm = this.getConnection().prepareStatement(
-                    "SELECT * FROM Observaciones WHERE marketplace = ? AND "
-                    + "idPedido = ?");
-            pstm.setString(1, pedido.getMarketplace());
-            pstm.setString(2, pedido.getIdPedido());
-            ResultSet result = pstm.executeQuery();
-            while (result.next()) {
-                observacion = new Observacion();
-                observacion.setTitulo(result.getString("titulo"));
-                observacion.setDescripcion(result.getString("descripcion"));
-                observacion.setFechaHora(result.getTimestamp("fechaHora"));
-                observacion.setMarketplace(result.getString("marketplace"));
-                observacion.setIdPedido(result.getString("idPedido"));
-                observaciones.add(observacion);
-            }
-            result.close();
-            pstm.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(DAOEnvioImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw ex;
-        } finally {
-            // Si no he recibido la conexión por parámetro, cierro la que he obtenido
-            // En caso contrario la conexión se cerrará desde el objeto que use esta instancia
-            if (conexion == null) {
+                PreparedStatement pstm = this.getConnection().prepareStatement(Consultas.obtenerConsultaObservaciones(articulos));
+                for (Articulo articulo : articulos) {
+                    // Se obtiene la lista de marketplace para introducir en los parámetros de la consulta
+                    if (!marketplace.contains(articulo.getMarketplace())) {
+                        marketplace.add(articulo.getMarketplace());
+                    }
+                    // Se obtiene la lista de idArticulo para introducir en los parámetros de la consulta
+                    if (!idPedidos.contains(articulo.getIdPedido())) {
+                        idPedidos.add(articulo.getIdPedido());
+                    }
+                }
+                // Añado los valores de marketplace e idPedidos a buscar en los parámetros de la consulta
+                for (String market : marketplace) {
+                    pstm.setString(indice, market);
+                    indice++;
+                }
+                for (String idPedido : idPedidos) {
+                    pstm.setString(indice, idPedido);
+                    indice++;
+                }
+                ResultSet result = pstm.executeQuery();
+                while (result.next()) {
+                    observacion = new Observacion();
+                    observacion.setTitulo(result.getString("titulo"));
+                    observacion.setDescripcion(result.getString("descripcion"));
+                    observacion.setFechaHora(result.getTimestamp("fechaHora"));
+                    observacion.setMarketplace(result.getString("marketplace"));
+                    observacion.setIdPedido(result.getString("idPedido"));
+                    observaciones.add(observacion);
+                }
+                result.close();
+                pstm.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOEnvioImpl.class.getName()).log(Level.SEVERE, null, ex);
+                throw ex;
+            } finally {
                 this.closeConnection();
             }
         }
@@ -60,14 +77,9 @@ public class DAOObservacionImpl extends ConexionBD implements DAOInterfazLista<O
     }
 
     @Override
-    public void registrar(Observacion observacion, Connection conexion) throws Exception {
+    public void registrar(Observacion observacion) throws Exception {
         try {
-            // Si recibo una conexión a la BD por parámetro no creo una nueva
-            if (conexion == null) {
-                this.openConnection();
-            } else {
-                this.setConnection(conexion);
-            }
+            this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement(
                     "INSERT INTO Observaciones (titulo, descripcion, fechaHora, "
                     + "idPedido, marketplace) VALUES (?, ?, ?, ?, ?)");
@@ -82,23 +94,14 @@ public class DAOObservacionImpl extends ConexionBD implements DAOInterfazLista<O
             Logger.getLogger(DAOEnvioImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         } finally {
-            // Si no he recibido la conexión por parámetro, cierro la que he obtenido
-            // En caso contrario la conexión se cerrará desde el objeto que use esta instancia
-            if (conexion == null) {
-                this.closeConnection();
-            }
+            this.closeConnection();
         }
     }
 
     @Override
-    public void registrar(List<Observacion> observaciones, Connection conexion) throws Exception {
+    public void registrar(List<Observacion> observaciones) throws Exception {
         try {
-            // Si recibo una conexión a la BD por parámetro no creo una nueva
-            if (conexion == null) {
-                this.openConnection();
-            } else {
-                this.setConnection(conexion);
-            }
+            this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement(
                     "INSERT INTO Observaciones (titulo, descripcion, fechaHora, "
                     + "idPedido, marketplace) VALUES (?, ?, ?, ?, ?)");
@@ -116,11 +119,7 @@ public class DAOObservacionImpl extends ConexionBD implements DAOInterfazLista<O
             Logger.getLogger(DAOEnvioImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         } finally {
-            // Si no he recibido la conexión por parámetro, cierro la que he obtenido
-            // En caso contrario la conexión se cerrará desde el objeto que use esta instancia
-            if (conexion == null) {
-                this.closeConnection();
-            }
+            this.closeConnection();
         }
     }
 

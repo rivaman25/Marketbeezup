@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import modelos.Observacion;
 import modelos.Pedido;
-import daoInterfaces.DAOInterfazLista;
+import daoInterfaces.DAOObservacion;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,24 +34,6 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
         super(url, serverName, portNumber, databaseName, userName, password);
     }
 
-    /**
-     * Devuelve una cadena con los símbolos de los parámetros para la consulta
-     * preparada en función del número de elementos de la lista
-     *
-     * @param lista
-     * @return
-     */
-    private String obtenerParametros(List<String> lista) {
-        StringBuilder parametros = new StringBuilder();
-        if (!lista.isEmpty()) {
-            parametros.append("?");
-            for (int i = 1; i < lista.size(); i++) {
-                parametros.append(", ?");
-            }
-        }
-        return parametros.toString();
-    }
-
     @Override
     public List<Pedido> buscar(String atributo, String valor) throws Exception {
         List<String> idPedidos = new ArrayList<>();
@@ -60,20 +42,20 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
         List<Articulo> articulos;
         List<Observacion> observaciones;
         DAOArticulo daoArticulo;
-        DAOInterfazLista<Observacion> daoObservacion;
+        DAOObservacion daoObservacion;
         List<Pedido> pedidos = new ArrayList<>();
         PreparedStatement pstm;
         ResultSet result;
         int indice = 1;
-        daoObservacion = new DAOObservacionImpl();
+        daoObservacion = new DAOObservacionImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
         daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
         // Se obtiene la lista de artículos en función del atributo y el valor correspondiente al ese atributo
         articulos = daoArticulo.listar(atributo, valor);
-        // Se obtiene la lista de observaciones en función de la lista de artículos
-        // observaciones = daoObservaciones.buscar(articulos);
         // Se obtiene la lista de Pedidos en función de la lista de artículos
         if (!articulos.isEmpty()) {
             try {
+                // Se obtiene la lista de observaciones en función de la lista de pedidos
+                observaciones = daoObservacion.listar(articulos);
                 this.openConnection();
                 pstm = this.getConnection().prepareStatement(Consultas.obtenerConsultaPedidos(articulos));
                 for (Articulo articulo : articulos) {
@@ -120,12 +102,12 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
                             pedido.NuevoArticulo(articulo);
                         }
                     }
-                    /*for (Observacion observacion : observaciones) {
-                    if (observacion.getMarketplace().equalsIgnoreCase(pedido.getMarketplace()) &
-                            observacion.getIdPedido().equalsIgnoreCase(pedido.getIdPedido())) {
-                        pedido.NuevaObservacion(observacion);
+                    for (Observacion observacion : observaciones) {
+                        if (observacion.getMarketplace().equalsIgnoreCase(pedido.getMarketplace())
+                                & observacion.getIdPedido().equalsIgnoreCase(pedido.getIdPedido())) {
+                            pedido.NuevaObservacion(observacion);
+                        }
                     }
-                }*/
                     pedidos.add(pedido);
                 }
                 result.close();
@@ -156,18 +138,18 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
         List<Articulo> articulos;
         List<Observacion> observaciones;
         DAOArticulo daoArticulo;
-        DAOInterfazLista<Observacion> daoObservacion;
+        DAOObservacion daoObservacion;
         List<Pedido> pedidos = new ArrayList<>();
         PreparedStatement pstm;
         ResultSet result;
         int indice = 1;
-        daoObservacion = new DAOObservacionImpl();
+        daoObservacion = new DAOObservacionImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
         daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
         articulos = daoArticulo.listar(filtro);
         if (!articulos.isEmpty()) {
             try {
                 this.openConnection();
-                // observaciones = daoObservaciones.listar(filtro);
+                observaciones = daoObservacion.listar(articulos);
                 pstm = this.getConnection().prepareStatement(Consultas.obtenerConsultaPedidos(articulos));
                 // Se añaden los parámetros en función de los filtros almacenados
                 for (Articulo articulo : articulos) {
@@ -210,12 +192,12 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
                             pedido.NuevoArticulo(articulo);
                         }
                     }
-                    /*for (Observacion observacion : observaciones) {
-                        if (observacion.getMarketplace().equalsIgnoreCase(pedido.getMarketplace()) &
-                                observacion.getIdPedido().equalsIgnoreCase(pedido.getIdPedido())) {
+                    for (Observacion observacion : observaciones) {
+                        if (observacion.getMarketplace().equalsIgnoreCase(pedido.getMarketplace())
+                                & observacion.getIdPedido().equalsIgnoreCase(pedido.getIdPedido())) {
                             pedido.NuevaObservacion(observacion);
                         }
-                    }*/
+                    }
                     pedidos.add(pedido);
                 }
                 result.close();
@@ -239,12 +221,12 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
     @Override
     public void registrar(Pedido pedido) throws Exception {
         DAOArticulo daoArticulo;
-        DAOInterfazLista<Observacion> daoObservacion;
+        DAOObservacion daoObservacion;
         try {
             this.openConnection();
             this.getConnection().setAutoCommit(false);
             daoArticulo = new DAOArticuloImpl();
-            daoObservacion = new DAOObservacionImpl();
+            daoObservacion = new DAOObservacionImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
             PreparedStatement pstm = this.getConnection().prepareStatement(
                     "INSERT INTO Pedidos (tienda, marketplace, idPedido, "
                     + "fechaPedido, dni, nombreApellidos, direccion, cp, "
@@ -269,7 +251,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
             pstm.executeUpdate();
             daoArticulo.registrar(pedido.getArticulos(), this.getConnection());
             if (!pedido.getObservaciones().isEmpty()) {
-                daoObservacion.registrar(pedido.getObservaciones(), this.getConnection());
+                daoObservacion.registrar(pedido.getObservaciones());
             }
             this.getConnection().commit();
             pstm.close();
@@ -284,12 +266,12 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
     @Override
     public void registrar(List<Pedido> pedidos) throws Exception {
         DAOArticulo daoArticulo;
-        DAOInterfazLista<Observacion> daoObservacion;
+        DAOObservacion daoObservacion;
         try {
             this.openConnection();
             this.getConnection().setAutoCommit(false);
             daoArticulo = new DAOArticuloImpl();
-            daoObservacion = new DAOObservacionImpl();
+            daoObservacion = new DAOObservacionImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
             PreparedStatement pstm = this.getConnection().prepareStatement(
                     "INSERT INTO Pedidos (tienda, marketplace, idPedido, "
                     + "fechaPedido, dni, nombreApellidos, direccion, cp, "
@@ -315,7 +297,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
                 pstm.executeUpdate();
                 daoArticulo.registrar(pedido.getArticulos(), this.getConnection());
                 if (!pedido.getObservaciones().isEmpty()) {
-                    daoObservacion.registrar(pedido.getObservaciones(), this.getConnection());
+                    daoObservacion.registrar(pedido.getObservaciones());
                 }
             }
             this.getConnection().commit();
