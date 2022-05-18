@@ -101,7 +101,7 @@ public class PedidosControlador implements ActionListener {
             List<Pedido> pedidosBuscar;
             if (!pedidosVista.getValorBuscar().isBlank()) {
                 try {
-                    pedidosBuscar = daoPedido.buscar(pedidosVista.getAtributoBuscar(), pedidosVista.getValorBuscar());
+                    pedidosBuscar = daoPedido.listar(pedidosVista.getAtributoBuscar(), pedidosVista.getValorBuscar());
                     if (!pedidosBuscar.isEmpty()) {
                         PedidosControlador.pedidos.clear();
                         PedidosControlador.pedidos.addAll(pedidosBuscar);

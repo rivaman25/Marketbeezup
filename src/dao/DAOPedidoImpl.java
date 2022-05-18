@@ -35,7 +35,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
     }
 
     @Override
-    public List<Pedido> buscar(String atributo, String valor) throws Exception {
+    public List<Pedido> listar(String atributo, String valor) throws Exception {
         List<String> idPedidos = new ArrayList<>();
         List<String> marketplace = new ArrayList<>();
         Pedido pedido;

@@ -36,26 +36,6 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
         super(url, serverName, portNumber, databaseName, userName, password);
     }
 
-    private List<String> obtenerAgenciasFiltradas() {
-        List<String> lista = new ArrayList<>();
-        if (PedidosControlador.getFiltro().getAgencias() != null) {
-            for (int i : PedidosControlador.getFiltro().getAgencias()) {
-                lista.add(PedidosControlador.getAgencias().get(i));
-            }
-        }
-        return lista;
-    }
-
-    private List<String> obtenerAlmacenesFiltrados() {
-        List<String> lista = new ArrayList<>();
-        if (PedidosControlador.getFiltro().getAlmacenes() != null) {
-            for (int i : PedidosControlador.getFiltro().getAlmacenes()) {
-                lista.add(PedidosControlador.getAlmacenes().get(i));
-            }
-        }
-        return lista;
-    }
-
     @Override
     public List<Articulo> listar(String atributo, String valor) throws Exception {
         Articulo articulo;
