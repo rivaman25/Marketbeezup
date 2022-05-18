@@ -54,6 +54,10 @@ public class PedidosVista extends javax.swing.JFrame {
         botonBuscar.setActionCommand("Buscar");
         botonAplicarFiltro.addActionListener(pedidosControlador);
         botonAplicarFiltro.setActionCommand("AplicarFiltro");
+        botonImprimirAlbaran.addActionListener(pedidosControlador);
+        botonImprimirAlbaran.setActionCommand("ImprimirAlbaran");
+        menuImprimirAlbaran.addActionListener(pedidosControlador);
+        menuImprimirAlbaran.setActionCommand("ImprimirAlbaran");
     }
 
     public String getAtributoBuscar() {
@@ -153,11 +157,6 @@ public class PedidosVista extends javax.swing.JFrame {
         botonAplicarFiltro.setFocusable(false);
         botonAplicarFiltro.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonAplicarFiltro.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        botonAplicarFiltro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonAplicarFiltroActionPerformed(evt);
-            }
-        });
         jToolBar1.add(botonAplicarFiltro);
 
         botonNuevoEnvio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Envio32.png"))); // NOI18N
@@ -192,11 +191,6 @@ public class PedidosVista extends javax.swing.JFrame {
         botonImprimirAlbaran.setFocusable(false);
         botonImprimirAlbaran.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonImprimirAlbaran.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        botonImprimirAlbaran.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonImprimirAlbaranActionPerformed(evt);
-            }
-        });
         jToolBar1.add(botonImprimirAlbaran);
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Ticket32.png"))); // NOI18N
@@ -513,11 +507,6 @@ public class PedidosVista extends javax.swing.JFrame {
 
         menuImprimirAlbaran.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuImprimirAlbaran.setText("Imprimir");
-        menuImprimirAlbaran.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuImprimirAlbaranActionPerformed(evt);
-            }
-        });
         jMenu6.add(menuImprimirAlbaran);
 
         menuReimprimirAlbaran.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -605,12 +594,6 @@ public class PedidosVista extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void menuImprimirAlbaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuImprimirAlbaranActionPerformed
-        ImprimirVista imprimir = new ImprimirVista(this, true);
-        imprimir.setLocationRelativeTo(null);
-        imprimir.setVisible(true);
-    }//GEN-LAST:event_menuImprimirAlbaranActionPerformed
-
     private void menuFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuFiltrarActionPerformed
 
     }//GEN-LAST:event_menuFiltrarActionPerformed
@@ -630,16 +613,6 @@ public class PedidosVista extends javax.swing.JFrame {
         compra.setLocationRelativeTo(null);
         compra.setVisible(true);
     }//GEN-LAST:event_botonNuevaCompraActionPerformed
-
-    private void botonImprimirAlbaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonImprimirAlbaranActionPerformed
-        ImprimirVista imprimir = new ImprimirVista(this, true);
-        imprimir.setLocationRelativeTo(null);
-        imprimir.setVisible(true);
-    }//GEN-LAST:event_botonImprimirAlbaranActionPerformed
-
-    private void botonAplicarFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAplicarFiltroActionPerformed
-        textoBuscar.setText(null);
-    }//GEN-LAST:event_botonAplicarFiltroActionPerformed
 
     /**
      * @param args the command line arguments

@@ -433,7 +433,9 @@ public class FiltroVista extends javax.swing.JDialog {
                 .addGap(7, 7, 7))
         );
 
+        botonAceptar.setBackground(new java.awt.Color(102, 51, 255));
         botonAceptar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        botonAceptar.setForeground(new java.awt.Color(255, 255, 255));
         botonAceptar.setText("Aplicar");
         botonAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -23,6 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelos.Filtro;
 import vistas.FiltroVista;
+import vistas.ImprimirVista;
 
 /**
  *
@@ -53,6 +54,8 @@ public class PedidosControlador implements ActionListener {
         this.daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
         this.daoAgencias = new DAOAgenciaImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
         this.daoAlmacenes = new DAOAlmacenImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
+        List<Pedido> pedidosNuevos = daoPedidoNuevos.obtenerPedidosNuevos();
+        this.daoPedido.registrar(pedidosNuevos);
         PedidosControlador.tiendas = daoPedido.listarTiendas();
         PedidosControlador.markets = daoPedido.listarMarket();
         PedidosControlador.agencias = daoAgencias.obtener();
@@ -120,6 +123,11 @@ public class PedidosControlador implements ActionListener {
             } catch (Exception ex) {
                 Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        if (e.getActionCommand().equals("ImprimirAlbaran")) {
+            ImprimirVista imprimirVista = new ImprimirVista(pedidosVista, true);
+            ImprimirControlador imprimirControlador = new ImprimirControlador(imprimirVista);
+            imprimirControlador.actualizarVista();
         }
     }
 

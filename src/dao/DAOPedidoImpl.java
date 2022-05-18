@@ -225,7 +225,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
         try {
             this.openConnection();
             this.getConnection().setAutoCommit(false);
-            daoArticulo = new DAOArticuloImpl();
+            daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
             daoObservacion = new DAOObservacionImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
             PreparedStatement pstm = this.getConnection().prepareStatement(
                     "INSERT INTO Pedidos (tienda, marketplace, idPedido, "
@@ -251,7 +251,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
             pstm.executeUpdate();
             daoArticulo.registrar(pedido.getArticulos(), this.getConnection());
             if (!pedido.getObservaciones().isEmpty()) {
-                daoObservacion.registrar(pedido.getObservaciones());
+                daoObservacion.registrar(pedido.getObservaciones(), this.getConnection());
             }
             this.getConnection().commit();
             pstm.close();
@@ -267,10 +267,12 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
     public void registrar(List<Pedido> pedidos) throws Exception {
         DAOArticulo daoArticulo;
         DAOObservacion daoObservacion;
+        List<Articulo> articulos = new ArrayList<>();
+        List<Observacion> observaciones = new ArrayList<>();
         try {
             this.openConnection();
             this.getConnection().setAutoCommit(false);
-            daoArticulo = new DAOArticuloImpl();
+            daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
             daoObservacion = new DAOObservacionImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
             PreparedStatement pstm = this.getConnection().prepareStatement(
                     "INSERT INTO Pedidos (tienda, marketplace, idPedido, "
@@ -295,11 +297,13 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
                 pstm.setFloat(14, pedido.getComision());
                 pstm.setFloat(15, pedido.getCostePorte());
                 pstm.executeUpdate();
-                daoArticulo.registrar(pedido.getArticulos(), this.getConnection());
+                articulos.addAll(pedido.getArticulos());
                 if (!pedido.getObservaciones().isEmpty()) {
-                    daoObservacion.registrar(pedido.getObservaciones());
+                    observaciones.addAll(pedido.getObservaciones());
                 }
             }
+            daoArticulo.registrar(articulos, this.getConnection());
+            daoObservacion.registrar(observaciones, this.getConnection());
             this.getConnection().commit();
             pstm.close();
         } catch (SQLException ex) {

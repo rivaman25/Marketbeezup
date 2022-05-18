@@ -14,6 +14,7 @@ import daoInterfaces.DAOObservacion;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelos.Articulo;
+import java.sql.Connection;
 
 public class DAOObservacionImpl extends ConexionBD implements DAOObservacion {
 
@@ -99,9 +100,13 @@ public class DAOObservacionImpl extends ConexionBD implements DAOObservacion {
     }
 
     @Override
-    public void registrar(List<Observacion> observaciones) throws Exception {
+    public void registrar(List<Observacion> observaciones, Connection conexion) throws Exception {
         try {
-            this.openConnection();
+            if (conexion == null) {
+                this.openConnection();
+            } else {
+                this.setConnection(conexion);
+            }
             PreparedStatement pstm = this.getConnection().prepareStatement(
                     "INSERT INTO Observaciones (titulo, descripcion, fechaHora, "
                     + "idPedido, marketplace) VALUES (?, ?, ?, ?, ?)");
@@ -119,7 +124,9 @@ public class DAOObservacionImpl extends ConexionBD implements DAOObservacion {
             Logger.getLogger(DAOEnvioImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         } finally {
-            this.closeConnection();
+            if (conexion == null) {
+                this.closeConnection();
+            }
         }
     }
 

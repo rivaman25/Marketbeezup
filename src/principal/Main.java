@@ -42,7 +42,6 @@ public class Main {
             PedidosControlador pedidosControlador = new PedidosControlador(pedidos, pedidosVista);
             pedidosVista.setControlador(pedidosControlador);
             pedidosVista.setVisible(true);
-            pedidosControlador.actualizarPedidos();
             pedidosControlador.obtenerPedidos();
             pedidosControlador.actualizarVista();
         } catch (Exception ex) {

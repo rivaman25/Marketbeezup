@@ -7,6 +7,7 @@ package daoInterfaces;
 import java.util.List;
 import modelos.Articulo;
 import modelos.Observacion;
+import java.sql.Connection;
 
 /**
  *
@@ -16,5 +17,5 @@ public interface DAOObservacion extends CRUD<Observacion> {
 
     public List<Observacion> listar(List<Articulo> articulos) throws Exception;
     
-    public void registrar(List<Observacion> observaciones) throws Exception;
+    public void registrar(List<Observacion> observaciones, Connection conexion) throws Exception;
 }

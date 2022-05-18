@@ -150,7 +150,7 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
                                 result.getDate("FechaTiquet"), result.getString("idarticulo"),
                                 result.getString("idPedido"), result.getString("Marketplace"));
                     }
-                    if ((result.getString("numeroAlbaran") != null || !result.getString("numeroAlbaran").isBlank())) {
+                    if ((result.getString("numeroAlbaran") != null & !result.getString("numeroAlbaran").isBlank())) {
                         articulo.NuevoAlbaranVenta(result.getString("numeroAlbaran"),
                                 result.getDate("Fecha"), result.getString("idarticulo"),
                                 result.getString("idPedido"), result.getString("Marketplace"));

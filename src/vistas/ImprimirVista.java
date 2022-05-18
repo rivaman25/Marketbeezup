@@ -4,8 +4,11 @@
  */
 package vistas;
 
+import controladores.ModeloTablaAlbaranesImpr;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.util.List;
+import modelos.Pedido;
 
 /**
  *
@@ -13,8 +16,11 @@ import java.awt.Toolkit;
  */
 public class ImprimirVista extends javax.swing.JDialog {
 
+    ModeloTablaAlbaranesImpr modeloTablaAlbaranesImpr;
+
     /**
      * Creates new form Imprimir
+     *
      * @param parent
      * @param modal
      */
@@ -28,6 +34,11 @@ public class ImprimirVista extends javax.swing.JDialog {
         // Fijamos el tamaño de la ventana al tamaño del escritorio menos la altura de la barra de tareas
         this.setSize(this.getToolkit().getScreenSize().width, this.getToolkit().getScreenSize().height - taskHeight);
         this.setTitle("Imprimir Albarán");
+    }
+
+    public void actualizarTabla(List<Pedido> pedidos) {
+        modeloTablaAlbaranesImpr = new ModeloTablaAlbaranesImpr(pedidos);
+        tablaAlbaranesImpr.setModel(modeloTablaAlbaranesImpr);
     }
 
     /**
@@ -51,7 +62,7 @@ public class ImprimirVista extends javax.swing.JDialog {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaAlbaranesImpr = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.PAGE_AXIS));
@@ -150,7 +161,7 @@ public class ImprimirVista extends javax.swing.JDialog {
 
         getContentPane().add(jPanel1);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaAlbaranesImpr.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null, null, null},
@@ -169,7 +180,7 @@ public class ImprimirVista extends javax.swing.JDialog {
                 return types [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tablaAlbaranesImpr);
 
         getContentPane().add(jScrollPane2);
 
@@ -231,7 +242,7 @@ public class ImprimirVista extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tablaAlbaranesImpr;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,7 +4,6 @@
  */
 package dao;
 
-import controladores.PedidosControlador;
 import daoInterfaces.DAOArticulo;
 import daoInterfaces.DAOInterfaz;
 import java.sql.PreparedStatement;
@@ -61,16 +60,24 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
                 articulo.setMarca(result.getString("marca"));
                 articulo.setMarketplace(result.getString("marketplace"));
                 articulo.setIdPedido(result.getString("idPedido"));
-                articulo.NuevoEnvio(result.getDate("fechaSalida"), result.getString("idAlmacen"),
-                        result.getString("idAgencia"), result.getString("codigoArticulo"),
-                        result.getString("idPedido"), result.getString("marketplace"));
-                articulo.NuevaCompra(result.getString("idCompra"), result.getString("proveedor"),
-                        result.getDate("fechaCompra"), result.getDate("fechaEntrada"), result.getString("codigoArticulo"),
-                        result.getString("idPedido"), result.getString("marketplace"));
-                articulo.NuevoDocumentoVenta(result.getString("numeroVenta"), result.getDate("fechaVenta"),
-                        result.getString("codigoArticulo"), result.getString("idPedido"), result.getString("marketplace"));
-                articulo.NuevoAlbaranVenta(result.getString("numeroAlbaran"), result.getDate("fechaAlbaran"),
-                        result.getString("codigoArticulo"), result.getString("idPedido"), result.getString("marketplace"));
+                if (result.getDate("fechaSalida") != null) {
+                    articulo.NuevoEnvio(result.getDate("fechaSalida"), result.getString("idAlmacen"),
+                            result.getString("idAgencia"), result.getString("codigoArticulo"),
+                            result.getString("idPedido"), result.getString("marketplace"));
+                }
+                if (result.getSQLXML("idCompra") != null) {
+                    articulo.NuevaCompra(result.getString("idCompra"), result.getString("proveedor"),
+                            result.getDate("fechaCompra"), result.getDate("fechaEntrada"), result.getString("codigoArticulo"),
+                            result.getString("idPedido"), result.getString("marketplace"));
+                }
+                if (result.getString("numeroVenta") != null) {
+                    articulo.NuevoDocumentoVenta(result.getString("numeroVenta"), result.getDate("fechaVenta"),
+                            result.getString("codigoArticulo"), result.getString("idPedido"), result.getString("marketplace"));
+                }
+                if (result.getString("numeroAlbaran") != null) {
+                    articulo.NuevoAlbaranVenta(result.getString("numeroAlbaran"), result.getDate("fechaAlbaran"),
+                            result.getString("codigoArticulo"), result.getString("idPedido"), result.getString("marketplace"));
+                }
                 articulos.add(articulo);
             }
             result.close();
@@ -179,16 +186,24 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
                 articulo.setMarca(result.getString("marca"));
                 articulo.setMarketplace(result.getString("marketplace"));
                 articulo.setIdPedido(result.getString("idPedido"));
-                articulo.NuevoEnvio(result.getDate("fechaSalida"), result.getString("idAlmacen"),
-                        result.getString("idAgencia"), result.getString("codigoArticulo"),
-                        result.getString("idPedido"), result.getString("marketplace"));
-                articulo.NuevaCompra(result.getString("idCompra"), result.getString("proveedor"),
-                        result.getDate("fechaCompra"), result.getDate("fechaEntrada"), result.getString("codigoArticulo"),
-                        result.getString("idPedido"), result.getString("marketplace"));
-                articulo.NuevoDocumentoVenta(result.getString("numeroVenta"), result.getDate("fechaVenta"),
-                        result.getString("codigoArticulo"), result.getString("idPedido"), result.getString("marketplace"));
-                articulo.NuevoAlbaranVenta(result.getString("numeroAlbaran"), result.getDate("fechaAlbaran"),
-                        result.getString("codigoArticulo"), result.getString("idPedido"), result.getString("marketplace"));
+                if (result.getDate("fechaSalida") != null) {
+                    articulo.NuevoEnvio(result.getDate("fechaSalida"), result.getString("idAlmacen"),
+                            result.getString("idAgencia"), result.getString("codigoArticulo"),
+                            result.getString("idPedido"), result.getString("marketplace"));
+                }
+                if (result.getSQLXML("idCompra") != null) {
+                    articulo.NuevaCompra(result.getString("idCompra"), result.getString("proveedor"),
+                            result.getDate("fechaCompra"), result.getDate("fechaEntrada"), result.getString("codigoArticulo"),
+                            result.getString("idPedido"), result.getString("marketplace"));
+                }
+                if (result.getString("numeroVenta") != null) {
+                    articulo.NuevoDocumentoVenta(result.getString("numeroVenta"), result.getDate("fechaVenta"),
+                            result.getString("codigoArticulo"), result.getString("idPedido"), result.getString("marketplace"));
+                }
+                if (result.getString("numeroAlbaran") != null) {
+                    articulo.NuevoAlbaranVenta(result.getString("numeroAlbaran"), result.getDate("fechaAlbaran"),
+                            result.getString("codigoArticulo"), result.getString("idPedido"), result.getString("marketplace"));
+                }
                 articulos.add(articulo);
             }
             result.close();
