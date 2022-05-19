@@ -37,6 +37,8 @@ public class ImprimirVista extends javax.swing.JDialog {
         // Fijamos el tamaño de la ventana al tamaño del escritorio menos la altura de la barra de tareas
         this.setSize(this.getToolkit().getScreenSize().width, this.getToolkit().getScreenSize().height - taskHeight);
         this.setTitle("Imprimir Albarán");
+        selectorFecha.getJCalendar().setTodayButtonVisible(true);
+        selectorFecha.getJCalendar().setNullDateButtonVisible(true);
     }
 
     public void actualizarTabla(List<Articulo> articulos) {
@@ -72,8 +74,8 @@ public class ImprimirVista extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listaAgencias = new javax.swing.JList<>();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jTextField1 = new javax.swing.JTextField();
+        selectorFecha = new com.toedter.calendar.JDateChooser();
+        textoIdPedido = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -99,27 +101,40 @@ public class ImprimirVista extends javax.swing.JDialog {
         listaAgencias.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jScrollPane1.setViewportView(listaAgencias);
 
-        jDateChooser1.setDateFormatString("dd/MM/yy");
-        jDateChooser1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jDateChooser1.setMaximumSize(new java.awt.Dimension(150, 23));
-        jDateChooser1.setMinimumSize(new java.awt.Dimension(150, 23));
-        jDateChooser1.setPreferredSize(new java.awt.Dimension(150, 23));
+        selectorFecha.setDateFormatString("dd/MM/yy");
+        selectorFecha.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        selectorFecha.setMaximumSize(new java.awt.Dimension(150, 23));
+        selectorFecha.setMinimumSize(new java.awt.Dimension(150, 23));
+        selectorFecha.setPreferredSize(new java.awt.Dimension(150, 23));
 
-        jTextField1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jTextField1.setMaximumSize(new java.awt.Dimension(219, 23));
-        jTextField1.setMinimumSize(new java.awt.Dimension(219, 23));
-        jTextField1.setPreferredSize(new java.awt.Dimension(219, 23));
+        textoIdPedido.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        textoIdPedido.setMaximumSize(new java.awt.Dimension(219, 23));
+        textoIdPedido.setMinimumSize(new java.awt.Dimension(219, 23));
+        textoIdPedido.setPreferredSize(new java.awt.Dimension(219, 23));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Imprimir32(1).png"))); // NOI18N
+        jButton1.setText("Imprimir");
+        jButton1.setToolTipText("Imprimir Albaranes");
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Filtrar32.png"))); // NOI18N
+        jButton2.setText("Filtrar");
         jButton2.setToolTipText("Filtrar");
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Limipiar32.png"))); // NOI18N
-        jButton3.setToolTipText("Limpiar");
+        jButton3.setText("Limpiar");
+        jButton3.setToolTipText("Limpiar Filtro");
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Cancelar32.png"))); // NOI18N
+        jButton4.setText("Cancelar");
         jButton4.setToolTipText("Cancelar");
+        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -136,8 +151,8 @@ public class ImprimirVista extends javax.swing.JDialog {
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(textoIdPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(selectorFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -151,24 +166,24 @@ public class ImprimirVista extends javax.swing.JDialog {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(selectorFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(textoIdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1);
@@ -192,6 +207,7 @@ public class ImprimirVista extends javax.swing.JDialog {
                 return types [columnIndex];
             }
         });
+        tablaAlbaranesImpr.setRowSelectionAllowed(false);
         jScrollPane2.setViewportView(tablaAlbaranesImpr);
 
         getContentPane().add(jScrollPane2);
@@ -247,14 +263,14 @@ public class ImprimirVista extends javax.swing.JDialog {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JList<String> listaAgencias;
+    private com.toedter.calendar.JDateChooser selectorFecha;
     private javax.swing.JTable tablaAlbaranesImpr;
+    private javax.swing.JTextField textoIdPedido;
     // End of variables declaration//GEN-END:variables
 }
