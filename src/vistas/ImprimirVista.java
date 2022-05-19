@@ -4,6 +4,7 @@
  */
 package vistas;
 
+import controladores.ImprimirControlador;
 import controladores.ModeloTablaAlbaranesImpr;
 import java.awt.Insets;
 import java.awt.Toolkit;
@@ -59,6 +60,15 @@ public class ImprimirVista extends javax.swing.JDialog {
         modeloListaAgencias.addAll(agencias);
         listaAgencias.setModel(modeloListaAgencias);
     }
+    
+    public void setControlador(ImprimirControlador imprimirControlador) {
+        botonImprimir.addActionListener(imprimirControlador);
+        botonImprimir.setActionCommand("ImprimirAlbaranes");
+        botonFiltrar.addActionListener(imprimirControlador);
+        botonFiltrar.setActionCommand("filtrarAlbaranes");
+        botonLimpiar.addActionListener(imprimirControlador);
+        botonLimpiar.setActionCommand("limpiarFiltroAlbaranes");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -76,10 +86,10 @@ public class ImprimirVista extends javax.swing.JDialog {
         listaAgencias = new javax.swing.JList<>();
         selectorFecha = new com.toedter.calendar.JDateChooser();
         textoIdPedido = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        botonImprimir = new javax.swing.JButton();
+        botonFiltrar = new javax.swing.JButton();
+        botonLimpiar = new javax.swing.JButton();
+        botonCancelar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaAlbaranesImpr = new javax.swing.JTable();
 
@@ -112,29 +122,29 @@ public class ImprimirVista extends javax.swing.JDialog {
         textoIdPedido.setMinimumSize(new java.awt.Dimension(219, 23));
         textoIdPedido.setPreferredSize(new java.awt.Dimension(219, 23));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Imprimir32(1).png"))); // NOI18N
-        jButton1.setText("Imprimir");
-        jButton1.setToolTipText("Imprimir Albaranes");
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        botonImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Imprimir32(1).png"))); // NOI18N
+        botonImprimir.setText("Imprimir");
+        botonImprimir.setToolTipText("Imprimir Albaranes");
+        botonImprimir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        botonImprimir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Filtrar32.png"))); // NOI18N
-        jButton2.setText("Filtrar");
-        jButton2.setToolTipText("Filtrar");
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        botonFiltrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Filtrar32.png"))); // NOI18N
+        botonFiltrar.setText("Filtrar");
+        botonFiltrar.setToolTipText("Filtrar");
+        botonFiltrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        botonFiltrar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Limipiar32.png"))); // NOI18N
-        jButton3.setText("Limpiar");
-        jButton3.setToolTipText("Limpiar Filtro");
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        botonLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Limipiar32.png"))); // NOI18N
+        botonLimpiar.setText("Limpiar");
+        botonLimpiar.setToolTipText("Limpiar Filtro");
+        botonLimpiar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        botonLimpiar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Cancelar32.png"))); // NOI18N
-        jButton4.setText("Cancelar");
-        jButton4.setToolTipText("Cancelar");
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        botonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Cancelar32.png"))); // NOI18N
+        botonCancelar.setText("Cancelar");
+        botonCancelar.setToolTipText("Cancelar");
+        botonCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        botonCancelar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -154,13 +164,13 @@ public class ImprimirVista extends javax.swing.JDialog {
                             .addComponent(textoIdPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(selectorFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(botonImprimir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
+                        .addComponent(botonFiltrar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3)
+                        .addComponent(botonLimpiar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4)))
+                        .addComponent(botonCancelar)))
                 .addGap(208, 208, 208))
         );
         jPanel1Layout.setVerticalGroup(
@@ -179,10 +189,10 @@ public class ImprimirVista extends javax.swing.JDialog {
                             .addComponent(textoIdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(botonFiltrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botonLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botonCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botonImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -259,10 +269,10 @@ public class ImprimirVista extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton botonCancelar;
+    private javax.swing.JButton botonFiltrar;
+    private javax.swing.JButton botonImprimir;
+    private javax.swing.JButton botonLimpiar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;

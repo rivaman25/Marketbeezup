@@ -33,7 +33,7 @@ public class ImprimirControlador implements ActionListener {
                     /* Se comprueba que el pedido no esté impreso, no esté cancelado y la agencia no contenga
                         la cadena 'drop' */
                     if (articulo.getFechaHoraImpr() == null & !articulo.getEstado().equalsIgnoreCase("CANCELADO")
-                            & !articulo.getEnvio().getIdAgencia().toUpperCase().contains("DROP")) {  
+                            & !articulo.getEnvio().getIdAgencia().toUpperCase().contains("DROP")) {
                         articulosImpr.add(articulo);
                     }
                 }
@@ -46,16 +46,33 @@ public class ImprimirControlador implements ActionListener {
         imprimirVista.setVisible(true);
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        switch (e.getActionCommand()) {
+            case "ImprimirAlbaranes":
+                
+                break;
+            case "FiltrarAlbaranes":
+                
+                break;
+            case "LimpiarFiltroAlbaranes":
+
+        }
+    }
+
+    public List<Articulo> getArticulosImpr() {
+        return articulosImpr;
+    }
+
+    public void setArticulosImpr(List<Articulo> articulosImpr) {
+        this.articulosImpr = articulosImpr;
+    }
+
     public ImprimirVista getImprimirVista() {
         return imprimirVista;
     }
 
     public void setImprimirVista(ImprimirVista imprimirVista) {
         this.imprimirVista = imprimirVista;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

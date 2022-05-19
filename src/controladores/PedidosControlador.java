@@ -19,6 +19,8 @@ import daoInterfaces.DAOAlmacen;
 import daoInterfaces.DAOArticulo;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelos.Filtro;
@@ -29,7 +31,7 @@ import vistas.ImprimirVista;
  *
  * @author Manolo
  */
-public class PedidosControlador implements ActionListener {
+public class PedidosControlador implements ActionListener, KeyListener {
 
     private static List<Pedido> pedidos;
     private static Filtro filtro;
@@ -81,26 +83,65 @@ public class PedidosControlador implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("Filtrar")) {
-            // Se inicia el formulario de selección de filtros para la lista de pedidos
-            FiltroVista filtroVista = new FiltroVista(pedidosVista, true);
-            filtroVista.actualizarVista(filtro);
-            filtroVista.setLocationRelativeTo(null);
-            filtroVista.setVisible(true);
-            // Si se selecciona aplicar en el formulario de filtros se muestra la lista de pedidos filtrada
-            if (filtroVista.getBotonSeleccionado().equals("APLICAR")) {
-                // Se obtiene el nuevo filtro
-                filtro = filtroVista.getFiltroNuevo();
+        switch (e.getActionCommand()) {
+            case "Filtrar":
+                // Se inicia el formulario de selección de filtros para la lista de pedidos
+                FiltroVista filtroVista = new FiltroVista(pedidosVista, true);
+                filtroVista.actualizarVista(filtro);
+                filtroVista.setLocationRelativeTo(null);
+                filtroVista.setVisible(true);
+                // Si se selecciona aplicar en el formulario de filtros se muestra la lista de pedidos filtrada
+                if (filtroVista.getBotonSeleccionado().equals("APLICAR")) {
+                    // Se obtiene el nuevo filtro
+                    filtro = filtroVista.getFiltroNuevo();
+                    try {
+                        // Se obtienen los pedidos filtrados
+                        this.obtenerPedidos();
+                        this.actualizarVista();
+                    } catch (Exception ex) {
+                        Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                break;
+            case "Buscar":
+                List<Pedido> pedidosBuscar;
+                if (!pedidosVista.getValorBuscar().isBlank()) {
+                    try {
+                        pedidosBuscar = daoPedido.listar(pedidosVista.getAtributoBuscar(), pedidosVista.getValorBuscar());
+                        if (!pedidosBuscar.isEmpty()) {
+                            PedidosControlador.pedidos.clear();
+                            PedidosControlador.pedidos.addAll(pedidosBuscar);
+                            actualizarVista();
+                        }
+                    } catch (Exception ex) {
+                        Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                break;
+            case "AplicarFiltro":
                 try {
-                    // Se obtienen los pedidos filtrados
+                    // Se actualiza la tabla con los pedidos filtrados
                     this.obtenerPedidos();
                     this.actualizarVista();
                 } catch (Exception ex) {
                     Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
+            break;
+            case "ImprimirAlbaran":
+                ImprimirVista imprimirVista = new ImprimirVista(pedidosVista, true);
+                ImprimirControlador imprimirControlador = new ImprimirControlador(imprimirVista);
+                imprimirVista.setControlador(imprimirControlador);
+                imprimirControlador.actualizarVista();
         }
-        if (e.getActionCommand().equals("Buscar")) {
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == e.VK_ENTER) {
             List<Pedido> pedidosBuscar;
             if (!pedidosVista.getValorBuscar().isBlank()) {
                 try {
@@ -115,20 +156,10 @@ public class PedidosControlador implements ActionListener {
                 }
             }
         }
-        if (e.getActionCommand().equals("AplicarFiltro")) {
-            try {
-                // Se actualiza la tabla con los pedidos filtrados
-                this.obtenerPedidos();
-                this.actualizarVista();
-            } catch (Exception ex) {
-                Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        if (e.getActionCommand().equals("ImprimirAlbaran")) {
-            ImprimirVista imprimirVista = new ImprimirVista(pedidosVista, true);
-            ImprimirControlador imprimirControlador = new ImprimirControlador(imprimirVista);
-            imprimirControlador.actualizarVista();
-        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
     }
 
     public static List<Pedido> getPedidos() {

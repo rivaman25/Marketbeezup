@@ -58,6 +58,7 @@ public class PedidosVista extends javax.swing.JFrame {
         botonImprimirAlbaran.setActionCommand("ImprimirAlbaran");
         menuImprimirAlbaran.addActionListener(pedidosControlador);
         menuImprimirAlbaran.setActionCommand("ImprimirAlbaran");
+        textoBuscar.addKeyListener(pedidosControlador);
     }
 
     public String getAtributoBuscar() {
