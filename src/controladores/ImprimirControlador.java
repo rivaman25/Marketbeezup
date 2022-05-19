@@ -19,11 +19,11 @@ import vistas.ImprimirVista;
 public class ImprimirControlador implements ActionListener {
 
     private ImprimirVista imprimirVista;
-    private List<Pedido> pedidosAlbaranesImpr;
+    private List<Articulo> articulosImpr;
 
     public ImprimirControlador(ImprimirVista imprimirVista) {
         this.imprimirVista = imprimirVista;
-        pedidosAlbaranesImpr = new ArrayList<>();
+        articulosImpr = new ArrayList<>();
         /* Se obtienen los pedidos que no están impresos, tienen fecha de salida, no están cancelados y 
             la agencia no contiene la cadena 'drop' */
         for (Pedido pedido : PedidosControlador.getPedidos()) {
@@ -34,7 +34,7 @@ public class ImprimirControlador implements ActionListener {
                         la cadena 'drop' */
                     if (articulo.getFechaHoraImpr() == null & !articulo.getEstado().equalsIgnoreCase("CANCELADO")
                             & !articulo.getEnvio().getIdAgencia().toUpperCase().contains("DROP")) {  
-                       
+                        articulosImpr.add(articulo);
                     }
                 }
             }
@@ -42,7 +42,7 @@ public class ImprimirControlador implements ActionListener {
     }
 
     public void actualizarVista() {
-        imprimirVista.actualizarTabla(pedidosAlbaranesImpr);
+        imprimirVista.actualizarTabla(articulosImpr);
         imprimirVista.setVisible(true);
     }
 

@@ -4,7 +4,6 @@
  */
 package controladores;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import modelos.Articulo;
@@ -16,7 +15,6 @@ import modelos.Pedido;
  */
 public class ModeloTablaAlbaranesImpr extends AbstractTableModel {
 
-    private List<Pedido> pedidos;
     private List<Articulo> articulos;
 
     private final Class[] tipoColumna = new Class[]{String.class, String.class, String.class, java.sql.Date.class,
@@ -24,24 +22,16 @@ public class ModeloTablaAlbaranesImpr extends AbstractTableModel {
     private final String[] columnNames = {"Tienda", "Market", "Pedido", "Fecha Salida", "FechaImpr", "Código",
         "Descripción", "Agencia", "Nombre Cliente"};
 
-    public ModeloTablaAlbaranesImpr(List<Pedido> pedidos) {
-        this.pedidos = pedidos;
-        articulos = new ArrayList<>();
-        for (Pedido pedido : pedidos) {
-            articulos.addAll(pedido.getArticulos());
-        }
+    public ModeloTablaAlbaranesImpr(List<Articulo> articulos) {
+        this.articulos = articulos;
     }
 
-    public List<Pedido> getPedidos() {
-        return pedidos;
+    public List<Articulo> getArticulos() {
+        return articulos;
     }
 
-    public void setPedidos(List<Pedido> pedidos) {
-        this.pedidos = pedidos;
-        articulos = new ArrayList<>();
-        for (Pedido pedido : pedidos) {
-            articulos.addAll(pedido.getArticulos());
-        }
+    public void setArticulos(List<Articulo> articulos) {
+        this.articulos = articulos;
     }
 
     @Override
@@ -68,7 +58,7 @@ public class ModeloTablaAlbaranesImpr extends AbstractTableModel {
     public Object getValueAt(int row, int col) {
         Pedido pedidoFila = new Pedido();
         // Obtengo el pedido correspondiente al artículo a mostrar en la fila
-        for (Pedido pedido : pedidos) {
+        for (Pedido pedido : PedidosControlador.getPedidos()) {
             if (articulos.get(row).getMarketplace().equals(pedido.getMarketplace())
                     & articulos.get(row).getIdPedido().equals(pedido.getIdPedido())) {
                 pedidoFila = pedido;

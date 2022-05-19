@@ -7,8 +7,10 @@ package vistas;
 import controladores.ModeloTablaAlbaranesImpr;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import java.util.List;
-import modelos.Pedido;
+import javax.swing.DefaultListModel;
+import modelos.Articulo;
 
 /**
  *
@@ -17,6 +19,7 @@ import modelos.Pedido;
 public class ImprimirVista extends javax.swing.JDialog {
 
     ModeloTablaAlbaranesImpr modeloTablaAlbaranesImpr;
+    DefaultListModel<String> modeloListaAgencias;
 
     /**
      * Creates new form Imprimir
@@ -36,9 +39,23 @@ public class ImprimirVista extends javax.swing.JDialog {
         this.setTitle("Imprimir Albarán");
     }
 
-    public void actualizarTabla(List<Pedido> pedidos) {
-        modeloTablaAlbaranesImpr = new ModeloTablaAlbaranesImpr(pedidos);
+    public void actualizarTabla(List<Articulo> articulos) {
+        List<String> agencias = new ArrayList<>();
+        // Se muestran los pedidos en la tabla
+        modeloTablaAlbaranesImpr = new ModeloTablaAlbaranesImpr(articulos);
         tablaAlbaranesImpr.setModel(modeloTablaAlbaranesImpr);
+        // Se obtiene la lista de agencias incluidas en los pedidos que se muestran en la tabla
+        for (Articulo articulo : articulos) {
+            if (articulo.getEnvio() != null) {
+                if (!agencias.contains(articulo.getEnvio().getIdAgencia())) {
+                    agencias.add(articulo.getEnvio().getIdAgencia());
+                }
+            }
+        }
+        // Se muestra el listado de agencias
+        modeloListaAgencias = new DefaultListModel<>();
+        modeloListaAgencias.addAll(agencias);
+        listaAgencias.setModel(modeloListaAgencias);
     }
 
     /**
@@ -54,7 +71,7 @@ public class ImprimirVista extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        listaAgencias = new javax.swing.JList<>();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -79,13 +96,8 @@ public class ImprimirVista extends javax.swing.JDialog {
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Agencias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
 
-        jList1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "GLS", "METOD", "SEUR", "TDN" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
+        listaAgencias.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jScrollPane1.setViewportView(listaAgencias);
 
         jDateChooser1.setDateFormatString("dd/MM/yy");
         jDateChooser1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -238,11 +250,11 @@ public class ImprimirVista extends javax.swing.JDialog {
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JList<String> listaAgencias;
     private javax.swing.JTable tablaAlbaranesImpr;
     // End of variables declaration//GEN-END:variables
 }
