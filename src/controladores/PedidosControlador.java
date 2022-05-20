@@ -103,35 +103,26 @@ public class PedidosControlador implements ActionListener, KeyListener {
                     }
                 }
                 break;
-            case "Buscar":
-                List<Pedido> pedidosBuscar;
-                if (!pedidosVista.getValorBuscar().isBlank()) {
-                    try {
-                        pedidosBuscar = daoPedido.listar(pedidosVista.getAtributoBuscar(), pedidosVista.getValorBuscar());
-                        if (!pedidosBuscar.isEmpty()) {
-                            PedidosControlador.pedidos.clear();
-                            PedidosControlador.pedidos.addAll(pedidosBuscar);
-                            actualizarVista();
-                        }
-                    } catch (Exception ex) {
-                        Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-                break;
             case "AplicarFiltro":
                 try {
-                    // Se actualiza la tabla con los pedidos filtrados
-                    this.obtenerPedidos();
-                    this.actualizarVista();
-                } catch (Exception ex) {
-                    Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                // Se actualiza la tabla con los pedidos filtrados
+                this.obtenerPedidos();
+                this.actualizarVista();
+            } catch (Exception ex) {
+                Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
             break;
             case "ImprimirAlbaran":
                 ImprimirVista imprimirVista = new ImprimirVista(pedidosVista, true);
-                ImprimirControlador imprimirControlador = new ImprimirControlador(imprimirVista);
-                imprimirVista.setControlador(imprimirControlador);
-                imprimirControlador.actualizarVista();
+                ImprimirControlador imprimirControlador;
+                try {
+                    imprimirControlador = new ImprimirControlador(imprimirVista);
+                    imprimirVista.setControlador(imprimirControlador);
+                    imprimirControlador.actualizarVista();
+                } catch (Exception ex) {
+                    Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
         }
     }
 

@@ -36,6 +36,59 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
     }
 
     @Override
+    public List<Articulo> listarArticulosImpr(boolean reimprimir) throws Exception {
+        List<Articulo> articulos = new ArrayList<>();
+        Articulo articulo;
+        try {
+            this.openConnection();
+            PreparedStatement pstm = this.getConnection().prepareStatement(Consultas.obtenerConsultaImprimirAlbaranes());
+            ResultSet result = pstm.executeQuery();
+            while (result.next()) {
+                articulo = new Articulo();
+                articulo.setCodigoArticulo(result.getString("codigoArticulo"));
+                articulo.setDescripcion(result.getString("descripcion"));
+                articulo.setPrecio(result.getFloat("precio"));
+                articulo.setCantidad(result.getInt("cantidad"));
+                articulo.setEstado(result.getString("estado"));
+                articulo.setPuc(result.getFloat("puc"));
+                articulo.setTipoArticulo(result.getString("tipoArticulo"));
+                articulo.setFechaHoraImpr(result.getTimestamp("fechaHoraImpr"));
+                articulo.setFamilia(result.getString("idFamilia"));
+                articulo.setSubfamilia(result.getString("idSubfamilia"));
+                articulo.setMarca(result.getString("marca"));
+                articulo.setMarketplace(result.getString("marketplace"));
+                articulo.setIdPedido(result.getString("idPedido"));
+                if (result.getDate("fechaSalida") != null) {
+                    articulo.NuevoEnvio(result.getDate("fechaSalida"), result.getString("idAlmacen"),
+                            result.getString("idAgencia"), result.getString("codigoArticulo"),
+                            result.getString("idPedido"), result.getString("marketplace"));
+                }
+                if (result.getSQLXML("idCompra") != null) {
+                    articulo.NuevaCompra(result.getString("idCompra"), result.getString("proveedor"),
+                            result.getDate("fechaCompra"), result.getDate("fechaEntrada"), result.getString("codigoArticulo"),
+                            result.getString("idPedido"), result.getString("marketplace"));
+                }
+                if (result.getString("numeroVenta") != null) {
+                    articulo.NuevoDocumentoVenta(result.getString("numeroVenta"), result.getDate("fechaVenta"),
+                            result.getString("codigoArticulo"), result.getString("idPedido"), result.getString("marketplace"));
+                }
+                if (result.getString("numeroAlbaran") != null) {
+                    articulo.NuevoAlbaranVenta(result.getString("numeroAlbaran"), result.getDate("fechaAlbaran"),
+                            result.getString("codigoArticulo"), result.getString("idPedido"), result.getString("marketplace"));
+                }
+                articulos.add(articulo);
+            }
+            pstm.close();
+            result.close();
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            this.closeConnection();
+        }
+        return articulos;
+    }
+
+    @Override
     public List<Articulo> listar(String atributo, String valor) throws Exception {
         Articulo articulo;
         List<Articulo> articulos = new ArrayList<>();

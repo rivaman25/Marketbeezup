@@ -106,6 +106,7 @@ public class FiltroVista extends javax.swing.JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -126,34 +127,37 @@ public class FiltroVista extends javax.swing.JDialog {
         labelAlmacen = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         labelFechaPedido = new javax.swing.JLabel();
-        labelFechaSalida = new javax.swing.JLabel();
-        labelFechaCompra = new javax.swing.JLabel();
-        labelFechaDoc = new javax.swing.JLabel();
-        labelFechaAlbaran = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         selectorFechaPedidoDesde = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
         selectorFechaPedidoHasta = new com.toedter.calendar.JDateChooser();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        labelFechaSalida = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         selectorFechaSalidaDesde = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
         selectorFechaSalidaHasta = new com.toedter.calendar.JDateChooser();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        labelFechaCompra = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         selectorFechaCompraDesde = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
         selectorFechaCompraHasta = new com.toedter.calendar.JDateChooser();
+        jCheckBox3 = new javax.swing.JCheckBox();
+        labelFechaDoc = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         selectorFechaDocDesde = new com.toedter.calendar.JDateChooser();
         jLabel8 = new javax.swing.JLabel();
         selectorFechaDocHasta = new com.toedter.calendar.JDateChooser();
+        jCheckBox4 = new javax.swing.JCheckBox();
+        labelFechaAlbaran = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         selectorFechaAlbaranDesde = new com.toedter.calendar.JDateChooser();
         jLabel10 = new javax.swing.JLabel();
         selectorFechaAlbaranHasta = new com.toedter.calendar.JDateChooser();
+        jCheckBox5 = new javax.swing.JCheckBox();
         checkObservaciones = new javax.swing.JCheckBox();
         checkExiste = new javax.swing.JCheckBox();
-        jCheckBox1 = new javax.swing.JCheckBox();
         botonAceptar = new javax.swing.JButton();
         botonCancelar = new javax.swing.JButton();
         botonLimpiar = new javax.swing.JButton();
@@ -240,34 +244,26 @@ public class FiltroVista extends javax.swing.JDialog {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel3.setLayout(new java.awt.GridLayout(5, 1));
+        jPanel3.setMaximumSize(new java.awt.Dimension(32767, 800));
+        jPanel3.setLayout(new java.awt.GridBagLayout());
 
         labelFechaPedido.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        labelFechaPedido.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelFechaPedido.setText("Fecha Pedido:");
-        jPanel3.add(labelFechaPedido);
-
-        labelFechaSalida.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        labelFechaSalida.setText("Fecha Salida:");
-        jPanel3.add(labelFechaSalida);
-
-        labelFechaCompra.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        labelFechaCompra.setText("Fecha Compra:");
-        jPanel3.add(labelFechaCompra);
-
-        labelFechaDoc.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        labelFechaDoc.setText("Fecha Doc:");
-        jPanel3.add(labelFechaDoc);
-
-        labelFechaAlbaran.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        labelFechaAlbaran.setText("Fecha Albaran:");
-        jPanel3.add(labelFechaAlbaran);
-
-        jPanel4.setMaximumSize(new java.awt.Dimension(32767, 800));
-        jPanel4.setLayout(new java.awt.GridLayout(5, 4));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel3.add(labelFechaPedido, gridBagConstraints);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Desde");
-        jPanel4.add(jLabel1);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 30;
+        jPanel3.add(jLabel1, gridBagConstraints);
 
         selectorFechaPedidoDesde.setDateFormatString("dd-MM-yy");
         selectorFechaPedidoDesde.setFocusTraversalPolicyProvider(true);
@@ -275,11 +271,21 @@ public class FiltroVista extends javax.swing.JDialog {
         selectorFechaPedidoDesde.setMaximumSize(new java.awt.Dimension(75, 23));
         selectorFechaPedidoDesde.setMinimumSize(new java.awt.Dimension(75, 23));
         selectorFechaPedidoDesde.setPreferredSize(new java.awt.Dimension(75, 23));
-        jPanel4.add(selectorFechaPedidoDesde);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        jPanel3.add(selectorFechaPedidoDesde, gridBagConstraints);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Hasta");
-        jPanel4.add(jLabel2);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 30;
+        jPanel3.add(jLabel2, gridBagConstraints);
 
         selectorFechaPedidoHasta.setDateFormatString("dd-MM-yy");
         selectorFechaPedidoHasta.setFocusTraversalPolicyProvider(true);
@@ -287,11 +293,33 @@ public class FiltroVista extends javax.swing.JDialog {
         selectorFechaPedidoHasta.setMaximumSize(new java.awt.Dimension(75, 23));
         selectorFechaPedidoHasta.setMinimumSize(new java.awt.Dimension(75, 23));
         selectorFechaPedidoHasta.setPreferredSize(new java.awt.Dimension(75, 23));
-        jPanel4.add(selectorFechaPedidoHasta);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        jPanel3.add(selectorFechaPedidoHasta, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 0;
+        jPanel3.add(filler1, gridBagConstraints);
+
+        labelFechaSalida.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        labelFechaSalida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelFechaSalida.setText("Fecha Salida:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel3.add(labelFechaSalida, gridBagConstraints);
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Desde");
-        jPanel4.add(jLabel3);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 30;
+        jPanel3.add(jLabel3, gridBagConstraints);
 
         selectorFechaSalidaDesde.setDateFormatString("dd-MM-yy");
         selectorFechaSalidaDesde.setFocusTraversalPolicyProvider(true);
@@ -299,11 +327,21 @@ public class FiltroVista extends javax.swing.JDialog {
         selectorFechaSalidaDesde.setMaximumSize(new java.awt.Dimension(75, 23));
         selectorFechaSalidaDesde.setMinimumSize(new java.awt.Dimension(75, 23));
         selectorFechaSalidaDesde.setPreferredSize(new java.awt.Dimension(75, 23));
-        jPanel4.add(selectorFechaSalidaDesde);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        jPanel3.add(selectorFechaSalidaDesde, gridBagConstraints);
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Hasta");
-        jPanel4.add(jLabel4);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 30;
+        jPanel3.add(jLabel4, gridBagConstraints);
 
         selectorFechaSalidaHasta.setDateFormatString("dd-MM-yy");
         selectorFechaSalidaHasta.setFocusTraversalPolicyProvider(true);
@@ -311,11 +349,40 @@ public class FiltroVista extends javax.swing.JDialog {
         selectorFechaSalidaHasta.setMaximumSize(new java.awt.Dimension(75, 23));
         selectorFechaSalidaHasta.setMinimumSize(new java.awt.Dimension(75, 23));
         selectorFechaSalidaHasta.setPreferredSize(new java.awt.Dimension(75, 23));
-        jPanel4.add(selectorFechaSalidaHasta);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        jPanel3.add(selectorFechaSalidaHasta, gridBagConstraints);
+
+        jCheckBox2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jCheckBox2.setText("Sin Envio");
+        jCheckBox2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jCheckBox2.setMargin(new java.awt.Insets(2, 20, 2, 2));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel3.add(jCheckBox2, gridBagConstraints);
+
+        labelFechaCompra.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        labelFechaCompra.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelFechaCompra.setText("Fecha Compra:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel3.add(labelFechaCompra, gridBagConstraints);
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Desde");
-        jPanel4.add(jLabel5);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 30;
+        jPanel3.add(jLabel5, gridBagConstraints);
 
         selectorFechaCompraDesde.setDateFormatString("dd-MM-yy");
         selectorFechaCompraDesde.setFocusTraversalPolicyProvider(true);
@@ -323,11 +390,21 @@ public class FiltroVista extends javax.swing.JDialog {
         selectorFechaCompraDesde.setMaximumSize(new java.awt.Dimension(75, 23));
         selectorFechaCompraDesde.setMinimumSize(new java.awt.Dimension(75, 23));
         selectorFechaCompraDesde.setPreferredSize(new java.awt.Dimension(75, 23));
-        jPanel4.add(selectorFechaCompraDesde);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        jPanel3.add(selectorFechaCompraDesde, gridBagConstraints);
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Hasta");
-        jPanel4.add(jLabel6);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 30;
+        jPanel3.add(jLabel6, gridBagConstraints);
 
         selectorFechaCompraHasta.setDateFormatString("dd-MM-yy");
         selectorFechaCompraHasta.setFocusTraversalPolicyProvider(true);
@@ -335,11 +412,40 @@ public class FiltroVista extends javax.swing.JDialog {
         selectorFechaCompraHasta.setMaximumSize(new java.awt.Dimension(75, 23));
         selectorFechaCompraHasta.setMinimumSize(new java.awt.Dimension(75, 23));
         selectorFechaCompraHasta.setPreferredSize(new java.awt.Dimension(75, 23));
-        jPanel4.add(selectorFechaCompraHasta);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        jPanel3.add(selectorFechaCompraHasta, gridBagConstraints);
+
+        jCheckBox3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jCheckBox3.setText("Sin Compra");
+        jCheckBox3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jCheckBox3.setMargin(new java.awt.Insets(2, 20, 2, 2));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel3.add(jCheckBox3, gridBagConstraints);
+
+        labelFechaDoc.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        labelFechaDoc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelFechaDoc.setText("Fecha Ticket:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel3.add(labelFechaDoc, gridBagConstraints);
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Desde");
-        jPanel4.add(jLabel7);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = 30;
+        jPanel3.add(jLabel7, gridBagConstraints);
 
         selectorFechaDocDesde.setDateFormatString("dd-MM-yy");
         selectorFechaDocDesde.setFocusTraversalPolicyProvider(true);
@@ -347,11 +453,21 @@ public class FiltroVista extends javax.swing.JDialog {
         selectorFechaDocDesde.setMaximumSize(new java.awt.Dimension(75, 23));
         selectorFechaDocDesde.setMinimumSize(new java.awt.Dimension(75, 23));
         selectorFechaDocDesde.setPreferredSize(new java.awt.Dimension(75, 23));
-        jPanel4.add(selectorFechaDocDesde);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        jPanel3.add(selectorFechaDocDesde, gridBagConstraints);
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Hasta");
-        jPanel4.add(jLabel8);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = 30;
+        jPanel3.add(jLabel8, gridBagConstraints);
 
         selectorFechaDocHasta.setDateFormatString("dd-MM-yy");
         selectorFechaDocHasta.setFocusTraversalPolicyProvider(true);
@@ -359,11 +475,40 @@ public class FiltroVista extends javax.swing.JDialog {
         selectorFechaDocHasta.setMaximumSize(new java.awt.Dimension(75, 23));
         selectorFechaDocHasta.setMinimumSize(new java.awt.Dimension(75, 23));
         selectorFechaDocHasta.setPreferredSize(new java.awt.Dimension(75, 23));
-        jPanel4.add(selectorFechaDocHasta);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        jPanel3.add(selectorFechaDocHasta, gridBagConstraints);
+
+        jCheckBox4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jCheckBox4.setText("Sin Ticket");
+        jCheckBox4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jCheckBox4.setMargin(new java.awt.Insets(2, 20, 2, 2));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel3.add(jCheckBox4, gridBagConstraints);
+
+        labelFechaAlbaran.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        labelFechaAlbaran.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelFechaAlbaran.setText("Fecha Albaran:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel3.add(labelFechaAlbaran, gridBagConstraints);
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Desde");
-        jPanel4.add(jLabel9);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 30;
+        jPanel3.add(jLabel9, gridBagConstraints);
 
         selectorFechaAlbaranDesde.setDateFormatString("dd-MM-yy");
         selectorFechaAlbaranDesde.setFocusTraversalPolicyProvider(true);
@@ -371,11 +516,21 @@ public class FiltroVista extends javax.swing.JDialog {
         selectorFechaAlbaranDesde.setMaximumSize(new java.awt.Dimension(75, 23));
         selectorFechaAlbaranDesde.setMinimumSize(new java.awt.Dimension(75, 23));
         selectorFechaAlbaranDesde.setPreferredSize(new java.awt.Dimension(75, 23));
-        jPanel4.add(selectorFechaAlbaranDesde);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        jPanel3.add(selectorFechaAlbaranDesde, gridBagConstraints);
 
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("Hasta");
-        jPanel4.add(jLabel10);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 30;
+        jPanel3.add(jLabel10, gridBagConstraints);
 
         selectorFechaAlbaranHasta.setDateFormatString("dd-MM-yy");
         selectorFechaAlbaranHasta.setFocusTraversalPolicyProvider(true);
@@ -383,7 +538,22 @@ public class FiltroVista extends javax.swing.JDialog {
         selectorFechaAlbaranHasta.setMaximumSize(new java.awt.Dimension(75, 23));
         selectorFechaAlbaranHasta.setMinimumSize(new java.awt.Dimension(75, 23));
         selectorFechaAlbaranHasta.setPreferredSize(new java.awt.Dimension(75, 23));
-        jPanel4.add(selectorFechaAlbaranHasta);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        jPanel3.add(selectorFechaAlbaranHasta, gridBagConstraints);
+
+        jCheckBox5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jCheckBox5.setText("Sin Albarán");
+        jCheckBox5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jCheckBox5.setMargin(new java.awt.Insets(2, 20, 2, 2));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel3.add(jCheckBox5, gridBagConstraints);
 
         checkObservaciones.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         checkObservaciones.setText("Con observaciones");
@@ -392,9 +562,6 @@ public class FiltroVista extends javax.swing.JDialog {
         checkExiste.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         checkExiste.setText("Ocultar Existen");
         checkExiste.setToolTipText("Ocultar los artículos que existen");
-
-        jCheckBox1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jCheckBox1.setText("Sin fecha Salida");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -407,34 +574,30 @@ public class FiltroVista extends javax.swing.JDialog {
                         .addComponent(checkObservaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(checkExiste)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCheckBox1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(6, 6, 6)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(checkObservaciones)
-                    .addComponent(checkExiste)
-                    .addComponent(jCheckBox1))
+                    .addComponent(checkExiste))
                 .addGap(7, 7, 7))
         );
 
         botonAceptar.setBackground(new java.awt.Color(102, 51, 255));
-        botonAceptar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        botonAceptar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         botonAceptar.setForeground(new java.awt.Color(255, 255, 255));
         botonAceptar.setText("Aplicar");
         botonAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -444,7 +607,7 @@ public class FiltroVista extends javax.swing.JDialog {
         });
 
         botonCancelar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        botonCancelar.setText("Cancelar");
+        botonCancelar.setText("Cerrar");
         botonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonCancelarActionPerformed(evt);
@@ -625,7 +788,11 @@ public class FiltroVista extends javax.swing.JDialog {
     private javax.swing.JButton botonLimpiar;
     private javax.swing.JCheckBox checkExiste;
     private javax.swing.JCheckBox checkObservaciones;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JCheckBox jCheckBox4;
+    private javax.swing.JCheckBox jCheckBox5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -639,7 +806,6 @@ public class FiltroVista extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

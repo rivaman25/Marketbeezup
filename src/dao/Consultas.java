@@ -130,6 +130,111 @@ public class Consultas {
                 AND articulos.marketplace = albaranesVenta.marketplace
                 AND articulos.codigoArticulo = albaranesVenta.codigoArticulo)""";
 
+    static final String CONSULTA_ARTICULOS_SOLO_CON_FECHA_SALIDA = """
+        SELECT
+            articulos.codigoArticulo,
+            articulos.descripcion,
+            articulos.precio,
+            articulos.cantidad,
+            articulos.estado,
+            articulos.puc,
+            articulos.tipoArticulo,
+            articulos.fechaHoraImpr,
+            articulos.idFamilia,
+            articulos.idSubfamilia,
+            articulos.marca,
+            articulos.marketplace,
+            articulos.idPedido,
+            envios.fechaSalida,
+            envios.idAgencia,
+            envios.idAlmacen,
+            compras.idCompra,
+            compras.proveedor,
+            compras.fechaCompra,
+            compras.fechaEntrada,
+            albaranesVenta.fechaAlbaran,
+            albaranesVenta.numeroAlbaran,
+            documentosVenta.numeroVenta,
+            documentosVenta.fechaVenta
+        FROM
+            pedidos
+                NATURAL JOIN
+            articulos
+                INNER JOIN
+            observaciones ON (pedidos.idPedido = observaciones.idPedido
+                AND pedidos.marketplace = observaciones.marketplace)
+                INNER JOIN
+            envios ON (articulos.idPedido = envios.idPedido
+                AND articulos.marketplace = envios.marketplace
+                AND articulos.codigoArticulo = envios.codigoArticulo)
+                LEFT OUTER JOIN
+            compras ON (articulos.idPedido = compras.idPedido
+                AND articulos.marketplace = compras.marketplace
+                AND articulos.codigoArticulo = compras.codigoArticulo)
+                LEFT OUTER JOIN
+            documentosVenta ON (articulos.idPedido = documentosVenta.idPedido
+                AND articulos.marketplace = documentosVenta.marketplace
+                AND articulos.codigoArticulo = documentosVenta.codigoArticulo)
+                LEFT OUTER JOIN
+            albaranesVenta ON (articulos.idPedido = albaranesVenta.idPedido
+                AND articulos.marketplace = albaranesVenta.marketplace
+                AND articulos.codigoArticulo = albaranesVenta.codigoArticulo)""";
+    
+    static final String CONSULTA_ARTICULOS_IMPRIMIR_ALBARANES = """
+        SELECT
+            articulos.codigoArticulo,
+            articulos.descripcion,
+            articulos.precio,
+            articulos.cantidad,
+            articulos.estado,
+            articulos.puc,
+            articulos.tipoArticulo,
+            articulos.fechaHoraImpr,
+            articulos.idFamilia,
+            articulos.idSubfamilia,
+            articulos.marca,
+            articulos.marketplace,
+            articulos.idPedido,
+            envios.fechaSalida,
+            envios.idAgencia,
+            envios.idAlmacen,
+            compras.idCompra,
+            compras.proveedor,
+            compras.fechaCompra,
+            compras.fechaEntrada,
+            albaranesVenta.fechaAlbaran,
+            albaranesVenta.numeroAlbaran,
+            documentosVenta.numeroVenta,
+            documentosVenta.fechaVenta
+        FROM
+            pedidos
+                NATURAL JOIN
+            articulos
+                INNER JOIN
+            observaciones ON (pedidos.idPedido = observaciones.idPedido
+                AND pedidos.marketplace = observaciones.marketplace)
+                INNER JOIN
+            envios ON (articulos.idPedido = envios.idPedido
+                AND articulos.marketplace = envios.marketplace
+                AND articulos.codigoArticulo = envios.codigoArticulo)
+                LEFT OUTER JOIN
+            compras ON (articulos.idPedido = compras.idPedido
+                AND articulos.marketplace = compras.marketplace
+                AND articulos.codigoArticulo = compras.codigoArticulo)
+                LEFT OUTER JOIN
+            documentosVenta ON (articulos.idPedido = documentosVenta.idPedido
+                AND articulos.marketplace = documentosVenta.marketplace
+                AND articulos.codigoArticulo = documentosVenta.codigoArticulo)
+                LEFT OUTER JOIN
+            albaranesVenta ON (articulos.idPedido = albaranesVenta.idPedido
+                AND articulos.marketplace = albaranesVenta.marketplace
+                AND articulos.codigoArticulo = albaranesVenta.codigoArticulo)
+        WHERE
+            articulos.fechaHoraImpr IS NULL
+                AND articulos.estado <> "CANCELADO"
+                AND envios.idAgencia NOT LIKE '%drop%'
+        ORDER BY envios.fechaSalida, pedidos.idPedido, articulos.codigoArticulo""";                                                                
+    
     static final String CONSULTA_ARTICULOS = """
         SELECT 
             articulos.codigoArticulo,
@@ -603,7 +708,7 @@ public class Consultas {
             WHERE albaranesVenta.numeroAlbaran LIKE ?
             GROUP BY articulos.marketplace, articulos.idPedido, articulos.codigoArticulo
             ORDER BY pedidos.fechaPedido DESC""";
-    
+
     private final static String CONSULTA_OBSERVACIONES = """
         SELECT 
             *
@@ -890,5 +995,9 @@ public class Consultas {
             consulta.append(")");
         }
         return consulta.toString();
+    }
+    
+    public static String obtenerConsultaImprimirAlbaranes() {
+        return CONSULTA_ARTICULOS_IMPRIMIR_ALBARANES;
     }
 }

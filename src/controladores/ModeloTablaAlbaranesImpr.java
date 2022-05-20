@@ -4,7 +4,11 @@
  */
 package controladores;
 
+import dao.DAOPedidoImpl;
+import daoInterfaces.DAOPedido;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
 import modelos.Articulo;
 import modelos.Pedido;
@@ -16,6 +20,7 @@ import modelos.Pedido;
 public class ModeloTablaAlbaranesImpr extends AbstractTableModel {
 
     private List<Articulo> articulos;
+    private List<Pedido> pedidos;
 
     private final Class[] tipoColumna = new Class[]{String.class, String.class, String.class, java.sql.Date.class,
         java.sql.Date.class, String.class, String.class, String.class, String.class};
@@ -23,7 +28,13 @@ public class ModeloTablaAlbaranesImpr extends AbstractTableModel {
         "Descripción", "Agencia", "Nombre Cliente"};
 
     public ModeloTablaAlbaranesImpr(List<Articulo> articulos) {
+        DAOPedido daoPedido = new DAOPedidoImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
         this.articulos = articulos;
+        try {
+            this.pedidos = daoPedido.listarAlbaranesImpr();
+        } catch (Exception ex) {
+            Logger.getLogger(ModeloTablaAlbaranesImpr.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public List<Articulo> getArticulos() {
@@ -58,7 +69,7 @@ public class ModeloTablaAlbaranesImpr extends AbstractTableModel {
     public Object getValueAt(int row, int col) {
         Pedido pedidoFila = new Pedido();
         // Obtengo el pedido correspondiente al artículo a mostrar en la fila
-        for (Pedido pedido : PedidosControlador.getPedidos()) {
+        for (Pedido pedido : pedidos) {
             if (articulos.get(row).getMarketplace().equals(pedido.getMarketplace())
                     & articulos.get(row).getIdPedido().equals(pedido.getIdPedido())) {
                 pedidoFila = pedido;

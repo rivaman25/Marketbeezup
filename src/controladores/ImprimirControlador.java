@@ -4,41 +4,38 @@
  */
 package controladores;
 
+import dao.ConexionBD;
+import dao.DAOArticuloImpl;
+import daoInterfaces.DAOArticulo;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import javax.swing.JDialog;
 import modelos.Articulo;
-import modelos.Pedido;
+import net.sf.jasperreports.engine.JRException;
 import vistas.ImprimirVista;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
  * @author Manolo
  */
-public class ImprimirControlador implements ActionListener {
+public class ImprimirControlador extends ConexionBD implements ActionListener {
 
     private ImprimirVista imprimirVista;
     private List<Articulo> articulosImpr;
 
-    public ImprimirControlador(ImprimirVista imprimirVista) {
+    public ImprimirControlador(ImprimirVista imprimirVista) throws Exception {
         this.imprimirVista = imprimirVista;
-        articulosImpr = new ArrayList<>();
-        /* Se obtienen los pedidos que no están impresos, tienen fecha de salida, no están cancelados y 
-            la agencia no contiene la cadena 'drop' */
-        for (Pedido pedido : PedidosControlador.getPedidos()) {
-            for (Articulo articulo : pedido.getArticulos()) {
-                // Se comprueba que haya un envío registrado
-                if (articulo.getEnvio() != null) {
-                    /* Se comprueba que el pedido no esté impreso, no esté cancelado y la agencia no contenga
-                        la cadena 'drop' */
-                    if (articulo.getFechaHoraImpr() == null & !articulo.getEstado().equalsIgnoreCase("CANCELADO")
-                            & !articulo.getEnvio().getIdAgencia().toUpperCase().contains("DROP")) {
-                        articulosImpr.add(articulo);
-                    }
-                }
-            }
-        }
+        DAOArticulo daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
+        articulosImpr = daoArticulo.listarArticulosImpr(false);
     }
 
     public void actualizarVista() {
@@ -50,13 +47,37 @@ public class ImprimirControlador implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "ImprimirAlbaranes":
-                
+                // Si introduzco el informe JasperReport en un paquete de la aplicación lo cargo en un stream
+                InputStream jasperStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("informes/AlbaranesWEB.jasper");
+                Map<String, Object> parametros = new HashMap<>();
+                try {
+                    // this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR)); // Modifico el cursor para indicar que está trabajando
+                    // parametros.put("Impresos", impreso);
+                    // parametros.put("IdPedidos", pedidosImprimir.getIdPedidosConFiltro());
+                    // parametros.put("Idarticulos", pedidosImprimir.getIdarticulosConFiltro());
+                    // parametros.put("Agencias", pedidosImprimir.getAgenciasConFiltro());
+                    // parametros.put("FechasSalida", pedidosImprimir.getFechasSalidaConFiltro());
+                    // parametros.put("Limite", PREFERENCIAS.getLimite());
+                    JDialog viewer = new JDialog(imprimirVista, "Impresión Albaranes", true);
+                    viewer.setSize(800, 600);
+                    viewer.setLocationRelativeTo(null);
+                    JasperReport reporte = (JasperReport) JRLoader.loadObject(jasperStream);
+                    this.openConnection();
+                    /* 
+                     * Si el informe está en el directorio raiz de la aplicación lo compilo así
+                     * JasperCompileManager.compileReportToFile(jrxmlFileName, jasperFileName);
+                     * JasperPrint jp = (JasperPrint) JasperFillManager.fillReport(jasperFileName, parametros, connection);
+                     */
+                    JasperPrint jp = (JasperPrint) JasperFillManager.fillReport(reporte, parametros, this.getConnection());
+                    JasperViewer jv = new JasperViewer(jp, true);
+                    viewer.getContentPane().add(jv.getContentPane());
+                    viewer.setVisible(true);
+                } catch (JRException ex) {
+                }
                 break;
             case "FiltrarAlbaranes":
-                
                 break;
             case "LimpiarFiltroAlbaranes":
-
         }
     }
 

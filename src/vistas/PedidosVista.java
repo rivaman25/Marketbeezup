@@ -50,8 +50,6 @@ public class PedidosVista extends javax.swing.JFrame {
         botonFiltrar.setActionCommand("Filtrar");
         menuFiltrar.addActionListener(pedidosControlador);
         menuFiltrar.setActionCommand("Filtrar");
-        botonBuscar.addActionListener(pedidosControlador);
-        botonBuscar.setActionCommand("Buscar");
         botonAplicarFiltro.addActionListener(pedidosControlador);
         botonAplicarFiltro.setActionCommand("AplicarFiltro");
         botonImprimirAlbaran.addActionListener(pedidosControlador);
@@ -91,7 +89,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         comboBuscar = new javax.swing.JComboBox<>();
         textoBuscar = new javax.swing.JTextField();
-        botonBuscar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -231,7 +229,12 @@ public class PedidosVista extends javax.swing.JFrame {
         jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton6);
 
+        comboBuscar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         comboBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pedido", "Nombre", "Dirección", "Teléfono", "Artículo", "Compra", "Ticket", "Albaran", " " }));
+
+        textoBuscar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Buscar32.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -241,27 +244,23 @@ public class PedidosVista extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(comboBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
-                .addComponent(textoBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jLabel2)
+                .addGap(3, 3, 3)
+                .addComponent(textoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(509, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
+                .addGap(14, 14, 14)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(1, 1, 1))
+                    .addComponent(comboBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addContainerGap())
         );
 
         jToolBar1.add(jPanel2);
-
-        botonBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Buscar32.png"))); // NOI18N
-        botonBuscar.setText("Buscar");
-        botonBuscar.setFocusable(false);
-        botonBuscar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        botonBuscar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(botonBuscar);
 
         getContentPane().add(jToolBar1);
 
@@ -659,7 +658,6 @@ public class PedidosVista extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAplicarFiltro;
-    private javax.swing.JButton botonBuscar;
     private javax.swing.JButton botonFiltrar;
     private javax.swing.JButton botonImprimirAlbaran;
     private javax.swing.JButton botonNuevaCompra;
@@ -670,6 +668,7 @@ public class PedidosVista extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

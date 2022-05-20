@@ -35,91 +35,17 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
     }
 
     @Override
+    public List<Pedido> listarAlbaranesImpr() throws Exception {
+        DAOArticulo daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
+        List<Articulo> articulos = daoArticulo.listarArticulosImpr(false);
+        return listarPedidos(articulos);
+    }
+
+    @Override
     public List<Pedido> listar(String atributo, String valor) throws Exception {
-        List<String> idPedidos = new ArrayList<>();
-        List<String> marketplace = new ArrayList<>();
-        Pedido pedido;
-        List<Articulo> articulos;
-        List<Observacion> observaciones;
-        DAOArticulo daoArticulo;
-        DAOObservacion daoObservacion;
-        List<Pedido> pedidos = new ArrayList<>();
-        PreparedStatement pstm;
-        ResultSet result;
-        int indice = 1;
-        daoObservacion = new DAOObservacionImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
-        daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
-        // Se obtiene la lista de artículos en función del atributo y el valor correspondiente al ese atributo
-        articulos = daoArticulo.listar(atributo, valor);
-        // Se obtiene la lista de Pedidos en función de la lista de artículos
-        if (!articulos.isEmpty()) {
-            try {
-                // Se obtiene la lista de observaciones en función de la lista de pedidos
-                observaciones = daoObservacion.listar(articulos);
-                this.openConnection();
-                pstm = this.getConnection().prepareStatement(Consultas.obtenerConsultaPedidos(articulos));
-                for (Articulo articulo : articulos) {
-                    // Se obtiene la lista de marketplace para introducir en los parámetros de la consulta
-                    if (!marketplace.contains(articulo.getMarketplace())) {
-                        marketplace.add(articulo.getMarketplace());
-                    }
-                    // Se obtiene la lista de idArticulo para introducir en los parámetros de la consulta
-                    if (!idPedidos.contains(articulo.getIdPedido())) {
-                        idPedidos.add(articulo.getIdPedido());
-                    }
-                }
-                // Añado los valores de marketplace e idPedidos a buscar en los parámetros de la consulta
-                for (String market : marketplace) {
-                    pstm.setString(indice, market);
-                    indice++;
-                }
-                for (String idPedido : idPedidos) {
-                    pstm.setString(indice, idPedido);
-                    indice++;
-                }
-                result = pstm.executeQuery();
-                while (result.next()) {
-                    pedido = new Pedido();
-                    pedido.setTienda(result.getString("tienda"));
-                    pedido.setMarketplace(result.getString("marketplace"));
-                    pedido.setIdPedido(result.getString("idPedido"));
-                    pedido.setFechaPedido(result.getTimestamp("fechaPedido"));
-                    pedido.setDni(result.getString("dni"));
-                    pedido.setNombreApellidos(result.getString("nombreApellidos"));
-                    pedido.setDireccion(result.getString("direccion"));
-                    pedido.setCp(result.getString("cp"));
-                    pedido.setPoblacion(result.getString("poblacion"));
-                    pedido.setProvincia(result.getString("provincia"));
-                    pedido.setTelefono(result.getString("telefono"));
-                    pedido.setEmail(result.getString("email"));
-                    pedido.setImporte(result.getFloat("importe"));
-                    pedido.setComision(result.getFloat("comision"));
-                    pedido.setCostePorte(result.getFloat("costePorte"));
-                    // Se genera el Pedido incluyendo su lista de Artículos y Observaciones correspondientes
-                    for (Articulo articulo : articulos) {
-                        if (articulo.getMarketplace().equalsIgnoreCase(pedido.getMarketplace())
-                                & articulo.getIdPedido().equalsIgnoreCase(pedido.getIdPedido())) {
-                            pedido.NuevoArticulo(articulo);
-                        }
-                    }
-                    for (Observacion observacion : observaciones) {
-                        if (observacion.getMarketplace().equalsIgnoreCase(pedido.getMarketplace())
-                                & observacion.getIdPedido().equalsIgnoreCase(pedido.getIdPedido())) {
-                            pedido.NuevaObservacion(observacion);
-                        }
-                    }
-                    pedidos.add(pedido);
-                }
-                result.close();
-                pstm.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(DAOPedidoImpl.class.getName()).log(Level.SEVERE, null, ex);
-                throw ex;
-            } finally {
-                this.closeConnection();
-            }
-        }
-        return pedidos;
+        DAOArticulo daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
+        List<Articulo> articulos = daoArticulo.listar(atributo, valor);
+        return listarPedidos(articulos);
     }
 
     /**
@@ -132,26 +58,27 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
      */
     @Override
     public List<Pedido> listar(Filtro filtro) throws Exception {
+        DAOArticulo daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
+        List<Articulo> articulos = daoArticulo.listar(filtro);
+        return listarPedidos(articulos);
+    }
+
+    private List<Pedido> listarPedidos(List<Articulo> articulos) throws Exception {
         List<String> idPedidos = new ArrayList<>();
         List<String> marketplace = new ArrayList<>();
         Pedido pedido;
-        List<Articulo> articulos;
         List<Observacion> observaciones;
-        DAOArticulo daoArticulo;
         DAOObservacion daoObservacion;
         List<Pedido> pedidos = new ArrayList<>();
         PreparedStatement pstm;
         ResultSet result;
         int indice = 1;
         daoObservacion = new DAOObservacionImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
-        daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
-        articulos = daoArticulo.listar(filtro);
         if (!articulos.isEmpty()) {
             try {
                 this.openConnection();
                 observaciones = daoObservacion.listar(articulos);
                 pstm = this.getConnection().prepareStatement(Consultas.obtenerConsultaPedidos(articulos));
-                // Se añaden los parámetros en función de los filtros almacenados
                 for (Articulo articulo : articulos) {
                     if (!marketplace.contains(articulo.getMarketplace())) {
                         marketplace.add(articulo.getMarketplace());

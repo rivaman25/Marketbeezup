@@ -8,13 +8,14 @@ import java.sql.Connection;
 import java.util.List;
 import modelos.Articulo;
 import modelos.Filtro;
-import modelos.Pedido;
 
 /**
  *
  * @author Manolo
  */
 public interface DAOArticulo extends CRUD<Articulo> {
+    
+    public List<Articulo> listarArticulosImpr(boolean reimprimir) throws Exception;
     
     public List<Articulo> listar(String atributo, String valor) throws Exception;
 
