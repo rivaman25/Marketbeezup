@@ -40,13 +40,17 @@ public class ImprimirVista extends javax.swing.JDialog {
         this.setTitle("Imprimir Albarán");
         selectorFecha.getJCalendar().setTodayButtonVisible(true);
         selectorFecha.getJCalendar().setNullDateButtonVisible(true);
+        botonMarcar.setEnabled(false);
     }
 
     public void actualizarTabla(List<Articulo> articulos) {
-        List<String> agencias = new ArrayList<>();
         // Se muestran los pedidos en la tabla
         modeloTablaAlbaranesImpr = new ModeloTablaAlbaranesImpr(articulos);
         tablaAlbaranesImpr.setModel(modeloTablaAlbaranesImpr);
+    }
+
+    public void actualizarAgencias(List<Articulo> articulos) {
+        List<String> agencias = new ArrayList<>();
         // Se obtiene la lista de agencias incluidas en los pedidos que se muestran en la tabla
         for (Articulo articulo : articulos) {
             if (articulo.getEnvio() != null) {
@@ -60,14 +64,61 @@ public class ImprimirVista extends javax.swing.JDialog {
         modeloListaAgencias.addAll(agencias);
         listaAgencias.setModel(modeloListaAgencias);
     }
+
+    public void habilitarMarcar(boolean habilitar) {
+        botonMarcar.setEnabled(habilitar);
+    }
     
+    public void habilitarImprimir(boolean habilitar) {
+        botonImprimir.setEnabled(habilitar);
+    }
+
     public void setControlador(ImprimirControlador imprimirControlador) {
         botonImprimir.addActionListener(imprimirControlador);
         botonImprimir.setActionCommand("ImprimirAlbaranes");
         botonFiltrar.addActionListener(imprimirControlador);
-        botonFiltrar.setActionCommand("filtrarAlbaranes");
+        botonFiltrar.setActionCommand("FiltrarAlbaranes");
         botonLimpiar.addActionListener(imprimirControlador);
-        botonLimpiar.setActionCommand("limpiarFiltroAlbaranes");
+        botonLimpiar.setActionCommand("LimpiarFiltroAlbaranes");
+        botonMarcar.addActionListener(imprimirControlador);
+        botonMarcar.setActionCommand("MarcarImpresos");
+        // selectorFecha.getDateEditor().adaddActionListener("FiltrarAlbaranes");
+    }
+
+    public List<String> getAgenciasSeleccionadas() {
+        return listaAgencias.getSelectedValuesList();
+    }
+
+    public void setAgenciasSeleccionadas(String agenciaSeleccionada) {
+        listaAgencias.setSelectedValue(agenciaSeleccionada, true);
+    }
+
+    public java.sql.Date getFechaSeleccionada() {
+        if (selectorFecha.getDate() == null) {
+            return null;
+        } else {
+            return new java.sql.Date(selectorFecha.getDate().getTime());
+        }
+    }
+
+    public void setFechaSeleccionada(java.sql.Date fecha) {
+        if (fecha != null) {
+            selectorFecha.setDate(new java.util.Date(fecha.getTime()));
+        } else {
+            selectorFecha.setDate(null);
+        }
+    }
+
+    public String getIdPedido() {
+        if (textoIdPedido.getText().isBlank()) {
+            return null;
+        } else {
+            return textoIdPedido.getText();
+        }
+    }
+
+    public void setIdPedido(String idPedido) {
+        textoIdPedido.setText(idPedido);
     }
 
     /**
@@ -90,7 +141,7 @@ public class ImprimirVista extends javax.swing.JDialog {
         botonFiltrar = new javax.swing.JButton();
         botonLimpiar = new javax.swing.JButton();
         botonCancelar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        botonMarcar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaAlbaranesImpr = new javax.swing.JTable();
 
@@ -112,7 +163,7 @@ public class ImprimirVista extends javax.swing.JDialog {
         listaAgencias.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jScrollPane1.setViewportView(listaAgencias);
 
-        selectorFecha.setDateFormatString("dd/MM/yy");
+        selectorFecha.setDateFormatString("dd-MM-yy");
         selectorFecha.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         selectorFecha.setMaximumSize(new java.awt.Dimension(150, 23));
         selectorFecha.setMinimumSize(new java.awt.Dimension(150, 23));
@@ -147,11 +198,11 @@ public class ImprimirVista extends javax.swing.JDialog {
         botonCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonCancelar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Check.png"))); // NOI18N
-        jButton1.setText("Marcar");
-        jButton1.setToolTipText("Marcar como Impreso");
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        botonMarcar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Check.png"))); // NOI18N
+        botonMarcar.setText("Marcar");
+        botonMarcar.setToolTipText("Marcar como Impreso");
+        botonMarcar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        botonMarcar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -167,30 +218,30 @@ public class ImprimirVista extends javax.swing.JDialog {
                             .addComponent(jLabel3)
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textoIdPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(selectorFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(208, 208, 208))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(selectorFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textoIdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(botonImprimir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botonMarcar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonFiltrar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonLimpiar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botonCancelar)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(botonCancelar)))
+                .addGap(168, 168, 168))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(botonCancelar)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -200,36 +251,29 @@ public class ImprimirVista extends javax.swing.JDialog {
                                     .addComponent(jLabel3)
                                     .addComponent(textoIdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(botonFiltrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(botonLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(botonCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(botonImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jButton1))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(botonFiltrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(botonImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(botonMarcar))
+                                    .addComponent(botonLimpiar, javax.swing.GroupLayout.Alignment.TRAILING))))))
+                .addContainerGap(1, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1);
 
         tablaAlbaranesImpr.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Tienda", "Marketplace", "Id Pedido", "Fecha Pedido", "Código", "Descripción", "Precio", "Cantidad", "Total", "Fecha Salida", "Agencia", "Almacén"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Integer.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-        });
+        ));
         tablaAlbaranesImpr.setRowSelectionAllowed(false);
         jScrollPane2.setViewportView(tablaAlbaranesImpr);
 
@@ -286,7 +330,7 @@ public class ImprimirVista extends javax.swing.JDialog {
     private javax.swing.JButton botonFiltrar;
     private javax.swing.JButton botonImprimir;
     private javax.swing.JButton botonLimpiar;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton botonMarcar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;

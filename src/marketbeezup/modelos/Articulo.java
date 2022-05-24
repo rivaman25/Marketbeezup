@@ -226,4 +226,34 @@ public class Articulo {
     public void setIdPedido(String idPedido) {
         this.idPedido = idPedido;
     }
+
+    public static List<String> getIdpedidos(List<Articulo> articulos) {
+        List<String> idPedidos = new ArrayList<>();
+        for (Articulo articulo : articulos) {
+            if (!idPedidos.contains(articulo.getIdPedido())) {
+                idPedidos.add(articulo.getIdPedido());
+            }
+        }
+        return idPedidos;
+    }
+
+    public static List<String> getMarketplace(List<Articulo> articulos) {
+        List<String> marketplaces = new ArrayList<>();
+        for (Articulo articulo : articulos) {
+            if (!marketplaces.contains(articulo.getMarketplace())) {
+                marketplaces.add(articulo.getMarketplace());
+            }
+        }
+        return marketplaces;
+    }
+
+    public static List<String> getCodigoArticulos(List<Articulo> articulos) {
+        List<String> codigoArticulos = new ArrayList<>();
+        for (Articulo articulo : articulos) {
+            if (!codigoArticulos.contains(articulo.getCodigoArticulo())) {
+                codigoArticulos.add(articulo.getCodigoArticulo());
+            }
+        }
+        return codigoArticulos;
+    }
 }

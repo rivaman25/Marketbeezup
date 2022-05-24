@@ -17,7 +17,7 @@ import java.util.Objects;
  */
 public class Filtro {
     private int[] marketplace, tiendas, almacenes, agencias, estados;
-    private boolean observaciones, existe;
+    private boolean observaciones, existe, fechaSalida, fechaCompra, fechaTicket, fechaAlbaran;
     private Date fechaPedidoDesde, fechaPedidoHasta;
     private Date fechaSalidaDesde, fechaSalidaHasta, fechaCompraDesde, fechaCompraHasta, 
             fechaVentaDesde, fechaVentaHasta, fechaAlbaranDesde, fechaAlbaranHasta;
@@ -95,27 +95,30 @@ public class Filtro {
         return lista;
     }
 
-
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 71 * hash + Arrays.hashCode(this.marketplace);
-        hash = 71 * hash + Arrays.hashCode(this.tiendas);
-        hash = 71 * hash + Arrays.hashCode(this.almacenes);
-        hash = 71 * hash + Arrays.hashCode(this.agencias);
-        hash = 71 * hash + Arrays.hashCode(this.estados);
-        hash = 71 * hash + (this.observaciones ? 1 : 0);
-        hash = 71 * hash + (this.existe ? 1 : 0);
-        hash = 71 * hash + Objects.hashCode(this.fechaPedidoDesde);
-        hash = 71 * hash + Objects.hashCode(this.fechaPedidoHasta);
-        hash = 71 * hash + Objects.hashCode(this.fechaSalidaDesde);
-        hash = 71 * hash + Objects.hashCode(this.fechaSalidaHasta);
-        hash = 71 * hash + Objects.hashCode(this.fechaCompraDesde);
-        hash = 71 * hash + Objects.hashCode(this.fechaCompraHasta);
-        hash = 71 * hash + Objects.hashCode(this.fechaVentaDesde);
-        hash = 71 * hash + Objects.hashCode(this.fechaVentaHasta);
-        hash = 71 * hash + Objects.hashCode(this.fechaAlbaranDesde);
-        hash = 71 * hash + Objects.hashCode(this.fechaAlbaranHasta);
+        hash = 29 * hash + Arrays.hashCode(this.marketplace);
+        hash = 29 * hash + Arrays.hashCode(this.tiendas);
+        hash = 29 * hash + Arrays.hashCode(this.almacenes);
+        hash = 29 * hash + Arrays.hashCode(this.agencias);
+        hash = 29 * hash + Arrays.hashCode(this.estados);
+        hash = 29 * hash + (this.observaciones ? 1 : 0);
+        hash = 29 * hash + (this.existe ? 1 : 0);
+        hash = 29 * hash + (this.fechaSalida ? 1 : 0);
+        hash = 29 * hash + (this.fechaCompra ? 1 : 0);
+        hash = 29 * hash + (this.fechaTicket ? 1 : 0);
+        hash = 29 * hash + (this.fechaAlbaran ? 1 : 0);
+        hash = 29 * hash + Objects.hashCode(this.fechaPedidoDesde);
+        hash = 29 * hash + Objects.hashCode(this.fechaPedidoHasta);
+        hash = 29 * hash + Objects.hashCode(this.fechaSalidaDesde);
+        hash = 29 * hash + Objects.hashCode(this.fechaSalidaHasta);
+        hash = 29 * hash + Objects.hashCode(this.fechaCompraDesde);
+        hash = 29 * hash + Objects.hashCode(this.fechaCompraHasta);
+        hash = 29 * hash + Objects.hashCode(this.fechaVentaDesde);
+        hash = 29 * hash + Objects.hashCode(this.fechaVentaHasta);
+        hash = 29 * hash + Objects.hashCode(this.fechaAlbaranDesde);
+        hash = 29 * hash + Objects.hashCode(this.fechaAlbaranHasta);
         return hash;
     }
 
@@ -135,6 +138,18 @@ public class Filtro {
             return false;
         }
         if (this.existe != other.existe) {
+            return false;
+        }
+        if (this.fechaSalida != other.fechaSalida) {
+            return false;
+        }
+        if (this.fechaCompra != other.fechaCompra) {
+            return false;
+        }
+        if (this.fechaTicket != other.fechaTicket) {
+            return false;
+        }
+        if (this.fechaAlbaran != other.fechaAlbaran) {
             return false;
         }
         if (!Arrays.equals(this.marketplace, other.marketplace)) {
@@ -238,6 +253,38 @@ public class Filtro {
         this.existe = existe;
     }
 
+    public boolean isFechaSalida() {
+        return fechaSalida;
+    }
+
+    public void setFechaSalida(boolean fechaSalida) {
+        this.fechaSalida = fechaSalida;
+    }
+
+    public boolean isFechaCompra() {
+        return fechaCompra;
+    }
+
+    public void setFechaCompra(boolean fechaCompra) {
+        this.fechaCompra = fechaCompra;
+    }
+
+    public boolean isFechaTicket() {
+        return fechaTicket;
+    }
+
+    public void setFechaTicket(boolean fechaTicket) {
+        this.fechaTicket = fechaTicket;
+    }
+
+    public boolean isFechaAlbaran() {
+        return fechaAlbaran;
+    }
+
+    public void setFechaAlbaran(boolean fechaAlbaran) {
+        this.fechaAlbaran = fechaAlbaran;
+    }
+
     public Date getFechaPedidoDesde() {
         return fechaPedidoDesde;
     }
@@ -317,5 +364,4 @@ public class Filtro {
     public void setFechaAlbaranHasta(Date fechaAlbaranHasta) {
         this.fechaAlbaranHasta = fechaAlbaranHasta;
     }
-    
 }

@@ -15,8 +15,10 @@ import marketbeezup.modelos.Filtro;
  */
 public interface DAOArticulo extends CRUD<Articulo> {
     
-    public List<Articulo> listarArticulosImpr(boolean reimprimir) throws Exception;
-    
+    public void actualizarFechaHoraImpr(java.sql.Timestamp fechaHoraImpr, List<Articulo> articulos) throws Exception;
+
+    public List<Articulo> listar(String idPedido, java.sql.Date fechaSalida, List<String> agencias, boolean reimprimir) throws Exception;
+
     public List<Articulo> listar(String atributo, String valor) throws Exception;
 
     public List<Articulo> listar(Filtro filtro) throws Exception;
@@ -24,6 +26,6 @@ public interface DAOArticulo extends CRUD<Articulo> {
     public void registrar(Articulo objet, Connection conexion) throws Exception;
 
     public void registrar(List<Articulo> objetos, Connection conexion) throws Exception;
-    
+
     public List<String> listarEstados() throws Exception;
 }

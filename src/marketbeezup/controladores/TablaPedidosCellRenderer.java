@@ -9,6 +9,7 @@ import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 import marketbeezup.modelos.Articulo;
 import marketbeezup.modelos.Pedido;
@@ -37,8 +38,13 @@ public class TablaPedidosCellRenderer extends DefaultTableCellRenderer {
         String marketplaceAnterior = null;
         String idPedidoSiguiente = null;
         String marketplaceSiguiente = null;
+        Color alternate = UIManager.getColor("Table.alternateRowColor");
         if (articulos.get(row).getEstado().equals("CANCELADO")) {
-            this.setForeground(Color.red);
+            if (isSelected) {
+                this.setBackground(Color.GRAY);
+            } else {
+                this.setBackground(Color.LIGHT_GRAY);
+            }
         } else {
             if (row < articulos.size() - 1) {
                 idPedidoSiguiente = articulos.get(row + 1).getIdPedido();
@@ -50,13 +56,23 @@ public class TablaPedidosCellRenderer extends DefaultTableCellRenderer {
             }
             if (articulos.get(row).getIdPedido().equals(idPedidoAnterior)
                     & articulos.get(row).getMarketplace().equals(marketplaceAnterior)) {
-                this.setForeground(Color.orange);
+                if (isSelected) {
+                    this.setBackground(Color.YELLOW);
+                } else {
+                    this.setBackground(Color.ORANGE);
+                }
             } else {
                 if (articulos.get(row).getIdPedido().equals(idPedidoSiguiente)
                         & articulos.get(row).getMarketplace().equals(marketplaceSiguiente)) {
-                    this.setForeground(Color.orange);
+                    if (isSelected) {
+                        this.setBackground(Color.YELLOW);
+                    } else {
+                        this.setBackground(Color.ORANGE);
+                    }
                 } else {
-                    this.setForeground(Color.white);
+                    if (!isSelected) {
+                        this.setBackground(alternate);
+                    }
                 }
             }
         }

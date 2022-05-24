@@ -4,6 +4,7 @@
  */
 package marketbeezup.controladores;
 
+import java.util.ArrayList;
 import marketbeezup.dao.DAOPedidoImpl;
 import marketbeezup.daoInterfaces.DAOPedido;
 import java.util.List;
@@ -23,7 +24,7 @@ public class ModeloTablaAlbaranesImpr extends AbstractTableModel {
     private List<Pedido> pedidos;
 
     private final Class[] tipoColumna = new Class[]{String.class, String.class, String.class, java.sql.Date.class,
-        java.sql.Date.class, String.class, String.class, String.class, String.class};
+        java.sql.Timestamp.class, String.class, String.class, String.class, String.class};
     private final String[] columnNames = {"Tienda", "Market", "Pedido", "Fecha Salida", "FechaImpr", "Código",
         "Descripción", "Agencia", "Nombre Cliente"};
 
@@ -31,7 +32,7 @@ public class ModeloTablaAlbaranesImpr extends AbstractTableModel {
         DAOPedido daoPedido = new DAOPedidoImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
         this.articulos = articulos;
         try {
-            this.pedidos = daoPedido.listarAlbaranesImpr();
+            this.pedidos = daoPedido.listar(articulos);
         } catch (Exception ex) {
             Logger.getLogger(ModeloTablaAlbaranesImpr.class.getName()).log(Level.SEVERE, null, ex);
         }

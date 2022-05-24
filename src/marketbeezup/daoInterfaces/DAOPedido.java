@@ -5,6 +5,7 @@
 package marketbeezup.daoInterfaces;
 
 import java.util.List;
+import marketbeezup.modelos.Articulo;
 import marketbeezup.modelos.Filtro;
 import marketbeezup.modelos.Pedido;
 import marketbeezup.modelos.PedidoPK;
@@ -15,7 +16,7 @@ import marketbeezup.modelos.PedidoPK;
  */
 public interface DAOPedido extends CRUD<Pedido> {
 
-    public List<Pedido> listarAlbaranesImpr() throws Exception;
+    public List<Pedido> listar(List<Articulo> articulos) throws Exception;
 
     public List<Pedido> listar(String atributo, String valor) throws Exception;
 

@@ -179,7 +179,38 @@ public class Consultas {
             albaranesVenta ON (articulos.idPedido = albaranesVenta.idPedido
                 AND articulos.marketplace = albaranesVenta.marketplace
                 AND articulos.codigoArticulo = albaranesVenta.codigoArticulo)""";
-    
+
+    static final String CONSULTA_ARTICULOS_REIMPRIMIR_ALBARANES = """
+        SELECT
+            articulos.codigoArticulo,
+            articulos.descripcion,
+            articulos.precio,
+            articulos.cantidad,
+            articulos.estado,
+            articulos.puc,
+            articulos.tipoArticulo,
+            articulos.fechaHoraImpr,
+            articulos.idFamilia,
+            articulos.idSubfamilia,
+            articulos.marca,
+            articulos.marketplace,
+            articulos.idPedido,
+            envios.fechaSalida,
+            envios.idAgencia,
+            envios.idAlmacen
+        FROM
+            pedidos
+                NATURAL JOIN
+            articulos
+                INNER JOIN
+            envios ON (articulos.idPedido = envios.idPedido
+                AND articulos.marketplace = envios.marketplace
+                AND articulos.codigoArticulo = envios.codigoArticulo)
+        WHERE
+            articulos.fechaHoraImpr IS NOT NULL
+                AND articulos.estado <> "CANCELADO"
+                AND envios.idAgencia NOT LIKE '%drop%'""";
+
     static final String CONSULTA_ARTICULOS_IMPRIMIR_ALBARANES = """
         SELECT
             articulos.codigoArticulo,
@@ -209,10 +240,8 @@ public class Consultas {
         WHERE
             articulos.fechaHoraImpr IS NULL
                 AND articulos.estado <> "CANCELADO"
-                AND envios.idAgencia NOT LIKE '%drop%'
-        GROUP BY articulos.marketplace, articulos.idPedido, articulos.codigoArticulo
-        ORDER BY envios.fechaSalida, pedidos.idPedido, articulos.codigoArticulo""";                                                                
-    
+                AND envios.idAgencia NOT LIKE '%drop%'""";
+
     static final String CONSULTA_ARTICULOS = """
         SELECT 
             articulos.codigoArticulo,
@@ -695,6 +724,32 @@ public class Consultas {
         WHERE
             observaciones.marketplace IN (""";
 
+    private final static String CONSULTA_ACTUALIZAR_FECHAHORAIMPR = """
+            UPDATE 
+            	articulos 
+            SET 
+            	articulos.fechaHoraImpr = ?
+            WHERE
+            	articulos.codigoArticulo IN (?""";
+
+    public static String obtenerConsultaActualizarFechaHoraImpr(List<Articulo> articulos) {
+        StringBuilder consulta = new StringBuilder();
+        consulta.append(CONSULTA_ACTUALIZAR_FECHAHORAIMPR);
+        for (int i = 1; i < Articulo.getCodigoArticulos(articulos).size(); i++) {
+            consulta.append(", ?");
+        }
+        consulta.append(") AND articulos.idPedido IN(?");
+        for (int i = 1; i < Articulo.getIdpedidos(articulos).size(); i++) {
+            consulta.append(", ?");
+        }
+        consulta.append(") AND articulos.marketplace IN (?");
+        for (int i = 1; i < Articulo.getMarketplace(articulos).size(); i++) {
+            consulta.append(", ?");
+        }
+        consulta.append(")");
+        return consulta.toString();
+    }
+
     public static String obtenerConsultaPedidos(Filtro filtro) {
         StringBuilder consulta = new StringBuilder();
         StringBuilder predicadoAux;
@@ -974,8 +1029,39 @@ public class Consultas {
         }
         return consulta.toString();
     }
-    
-    public static String obtenerConsultaImprimirAlbaranes() {
-        return CONSULTA_ARTICULOS_IMPRIMIR_ALBARANES;
+
+    public static String obtenerConsultaImprimirAlbaranes(String idPedido, java.sql.Date fechaSalida, List<String> agencias, boolean reimprimir) {
+        StringBuilder consulta = new StringBuilder();
+        List<String> predicados = new ArrayList<>();
+        StringBuilder predicadoAux = new StringBuilder();
+        if (reimprimir) {
+            consulta.append(CONSULTA_ARTICULOS_REIMPRIMIR_ALBARANES);
+        } else {
+            consulta.append(CONSULTA_ARTICULOS_IMPRIMIR_ALBARANES);
+        }
+        if (idPedido != null) {
+            predicados.add("articulos.idPedido like ?");
+        }
+        if (fechaSalida != null) {
+            predicados.add("envios.fechaSalida = ?");
+        }
+        if (!agencias.isEmpty()) {
+            predicadoAux.append("envios.idAgencia IN (?");
+            for (int i = 1; i < agencias.size(); i++) {
+                predicadoAux.append(", ?");
+            }
+            predicadoAux.append(") ");
+            predicados.add(predicadoAux.toString());
+        }
+        if (!predicados.isEmpty()) {
+            for (String predicado : predicados) {
+                consulta.append(" AND ");
+                consulta.append(predicado);
+            }
+        }
+        consulta.append("""
+            GROUP BY articulos.marketplace, articulos.idPedido, articulos.codigoArticulo
+            ORDER BY envios.fechaSalida, pedidos.idPedido, articulos.codigoArticulo""");
+        return consulta.toString();
     }
 }

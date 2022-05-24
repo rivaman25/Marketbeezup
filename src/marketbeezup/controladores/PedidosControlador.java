@@ -83,46 +83,37 @@ public class PedidosControlador implements ActionListener, KeyListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
-            case "Filtrar":
-                // Se inicia el formulario de selección de filtros para la lista de pedidos
-                FiltroVista filtroVista = new FiltroVista(pedidosVista, true);
-                filtroVista.actualizarVista(filtro);
-                filtroVista.setLocationRelativeTo(null);
-                filtroVista.setVisible(true);
-                // Si se selecciona aplicar en el formulario de filtros se muestra la lista de pedidos filtrada
-                if (filtroVista.getBotonSeleccionado().equals("APLICAR")) {
-                    // Se obtiene el nuevo filtro
-                    filtro = filtroVista.getFiltroNuevo();
-                    try {
+        try {
+            switch (e.getActionCommand()) {
+                case "Filtrar":
+                    // Se inicia el formulario de selección de filtros para la lista de pedidos
+                    FiltroVista filtroVista = new FiltroVista(pedidosVista, true);
+                    filtroVista.actualizarVista(filtro);
+                    filtroVista.setLocationRelativeTo(null);
+                    filtroVista.setVisible(true);
+                    // Si se selecciona aplicar en el formulario de filtros se muestra la lista de pedidos filtrada
+                    if (filtroVista.getBotonSeleccionado().equals("APLICAR")) {
+                        // Se obtiene el nuevo filtro
+                        filtro = filtroVista.getFiltroNuevo();
                         // Se obtienen los pedidos filtrados
                         this.obtenerPedidos();
                         this.actualizarVista();
-                    } catch (Exception ex) {
-                        Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                }
-                break;
-            case "AplicarFiltro":
-                try {
-                // Se actualiza la tabla con los pedidos filtrados
-                this.obtenerPedidos();
-                this.actualizarVista();
-            } catch (Exception ex) {
-                Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            break;
-            case "ImprimirAlbaran":
-                ImprimirVista imprimirVista = new ImprimirVista(pedidosVista, true);
-                ImprimirControlador imprimirControlador;
-                try {
-                    imprimirControlador = new ImprimirControlador(imprimirVista);
+                    break;
+                case "AplicarFiltro":
+                    // Se actualiza la tabla con los pedidos filtrados
+                    this.obtenerPedidos();
+                    this.actualizarVista();
+                    break;
+                case "ImprimirAlbaran":
+                    ImprimirVista imprimirVista = new ImprimirVista(pedidosVista, true);
+                    ImprimirControlador imprimirControlador = new ImprimirControlador(imprimirVista);
                     imprimirVista.setControlador(imprimirControlador);
+                    imprimirControlador.actualizarAgenciasVista();
                     imprimirControlador.actualizarVista();
-                } catch (Exception ex) {
-                    Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

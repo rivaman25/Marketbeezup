@@ -4,15 +4,13 @@
  */
 package marketbeezup.principal;
 
+import com.formdev.flatlaf.IntelliJTheme;
 import marketbeezup.controladores.PedidosControlador;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.UnsupportedLookAndFeelException;
 import marketbeezup.modelos.Pedido;
 import marketbeezup.vistas.PedidosVista;
 
@@ -26,16 +24,8 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        try {
-            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
+        IntelliJTheme.setup(Main.class.getResourceAsStream("/marketbeezup/themes/GitHub.theme.json"));
 
-        }
         try {
             List<Pedido> pedidos = new ArrayList<>();
             PedidosVista pedidosVista = new PedidosVista();

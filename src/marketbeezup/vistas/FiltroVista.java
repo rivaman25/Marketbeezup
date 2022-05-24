@@ -58,7 +58,7 @@ public class FiltroVista extends javax.swing.JDialog {
     public void setBotonSeleccionado(String botonSeleccionado) {
         this.botonSeleccionado = botonSeleccionado;
     }
-    
+
     public Filtro getFiltroNuevo() {
         return filtroNuevo;
     }
@@ -96,6 +96,26 @@ public class FiltroVista extends javax.swing.JDialog {
         selectorFechaAlbaranHasta.setDate(filtro.getFechaAlbaranHasta());
         checkObservaciones.setSelected(filtro.isObservaciones());
         checkExiste.setSelected(filtro.isExiste());
+        checkSinEnvio.setSelected(filtro.isFechaSalida());
+        checkSinCompra.setSelected(filtro.isFechaCompra());
+        checkSinTicket.setSelected(filtro.isFechaTicket());
+        checkSinAlbaran.setSelected(filtro.isFechaAlbaran());
+        if (filtro.isFechaSalida()) {
+            selectorFechaSalidaDesde.setEnabled(false);
+            selectorFechaSalidaHasta.setEnabled(false);
+        }
+        if (filtro.isFechaCompra()) {
+            selectorFechaCompraDesde.setEnabled(false);
+            selectorFechaCompraHasta.setEnabled(false);
+        }
+        if (filtro.isFechaTicket()) {
+            selectorFechaDocDesde.setEnabled(false);
+            selectorFechaDocHasta.setEnabled(false);
+        }
+        if (filtro.isFechaAlbaran()) {
+            selectorFechaAlbaranDesde.setEnabled(false);
+            selectorFechaAlbaranHasta.setEnabled(false);
+        }
     }
 
     /**
@@ -137,25 +157,25 @@ public class FiltroVista extends javax.swing.JDialog {
         selectorFechaSalidaDesde = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
         selectorFechaSalidaHasta = new com.toedter.calendar.JDateChooser();
-        jCheckBox2 = new javax.swing.JCheckBox();
+        checkSinEnvio = new javax.swing.JCheckBox();
         labelFechaCompra = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         selectorFechaCompraDesde = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
         selectorFechaCompraHasta = new com.toedter.calendar.JDateChooser();
-        jCheckBox3 = new javax.swing.JCheckBox();
+        checkSinCompra = new javax.swing.JCheckBox();
         labelFechaDoc = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         selectorFechaDocDesde = new com.toedter.calendar.JDateChooser();
         jLabel8 = new javax.swing.JLabel();
         selectorFechaDocHasta = new com.toedter.calendar.JDateChooser();
-        jCheckBox4 = new javax.swing.JCheckBox();
+        checkSinTicket = new javax.swing.JCheckBox();
         labelFechaAlbaran = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         selectorFechaAlbaranDesde = new com.toedter.calendar.JDateChooser();
         jLabel10 = new javax.swing.JLabel();
         selectorFechaAlbaranHasta = new com.toedter.calendar.JDateChooser();
-        jCheckBox5 = new javax.swing.JCheckBox();
+        checkSinAlbaran = new javax.swing.JCheckBox();
         checkObservaciones = new javax.swing.JCheckBox();
         checkExiste = new javax.swing.JCheckBox();
         botonAceptar = new javax.swing.JButton();
@@ -356,15 +376,20 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.weightx = 1.0;
         jPanel3.add(selectorFechaSalidaHasta, gridBagConstraints);
 
-        jCheckBox2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jCheckBox2.setText("Sin Envio");
-        jCheckBox2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jCheckBox2.setMargin(new java.awt.Insets(2, 20, 2, 2));
+        checkSinEnvio.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        checkSinEnvio.setText("Sin Envio");
+        checkSinEnvio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        checkSinEnvio.setMargin(new java.awt.Insets(2, 20, 2, 2));
+        checkSinEnvio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkSinEnvioActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanel3.add(jCheckBox2, gridBagConstraints);
+        jPanel3.add(checkSinEnvio, gridBagConstraints);
 
         labelFechaCompra.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         labelFechaCompra.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -419,15 +444,20 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.weightx = 1.0;
         jPanel3.add(selectorFechaCompraHasta, gridBagConstraints);
 
-        jCheckBox3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jCheckBox3.setText("Sin Compra");
-        jCheckBox3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jCheckBox3.setMargin(new java.awt.Insets(2, 20, 2, 2));
+        checkSinCompra.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        checkSinCompra.setText("Sin Compra");
+        checkSinCompra.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        checkSinCompra.setMargin(new java.awt.Insets(2, 20, 2, 2));
+        checkSinCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkSinCompraActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanel3.add(jCheckBox3, gridBagConstraints);
+        jPanel3.add(checkSinCompra, gridBagConstraints);
 
         labelFechaDoc.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         labelFechaDoc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -482,15 +512,20 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.weightx = 1.0;
         jPanel3.add(selectorFechaDocHasta, gridBagConstraints);
 
-        jCheckBox4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jCheckBox4.setText("Sin Ticket");
-        jCheckBox4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jCheckBox4.setMargin(new java.awt.Insets(2, 20, 2, 2));
+        checkSinTicket.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        checkSinTicket.setText("Sin Ticket");
+        checkSinTicket.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        checkSinTicket.setMargin(new java.awt.Insets(2, 20, 2, 2));
+        checkSinTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkSinTicketActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanel3.add(jCheckBox4, gridBagConstraints);
+        jPanel3.add(checkSinTicket, gridBagConstraints);
 
         labelFechaAlbaran.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         labelFechaAlbaran.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -545,15 +580,20 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.weightx = 1.0;
         jPanel3.add(selectorFechaAlbaranHasta, gridBagConstraints);
 
-        jCheckBox5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jCheckBox5.setText("Sin Albarán");
-        jCheckBox5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jCheckBox5.setMargin(new java.awt.Insets(2, 20, 2, 2));
+        checkSinAlbaran.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        checkSinAlbaran.setText("Sin Albarán");
+        checkSinAlbaran.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        checkSinAlbaran.setMargin(new java.awt.Insets(2, 20, 2, 2));
+        checkSinAlbaran.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkSinAlbaranActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanel3.add(jCheckBox5, gridBagConstraints);
+        jPanel3.add(checkSinAlbaran, gridBagConstraints);
 
         checkObservaciones.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         checkObservaciones.setText("Con observaciones");
@@ -596,9 +636,7 @@ public class FiltroVista extends javax.swing.JDialog {
                 .addGap(7, 7, 7))
         );
 
-        botonAceptar.setBackground(new java.awt.Color(102, 51, 255));
         botonAceptar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        botonAceptar.setForeground(new java.awt.Color(255, 255, 255));
         botonAceptar.setText("Aplicar");
         botonAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -708,6 +746,10 @@ public class FiltroVista extends javax.swing.JDialog {
         }
         filtroNuevo.setObservaciones(checkObservaciones.isSelected());
         filtroNuevo.setExiste(checkExiste.isSelected());
+        filtroNuevo.setFechaSalida(checkSinEnvio.isSelected());
+        filtroNuevo.setFechaCompra(checkSinCompra.isSelected());
+        filtroNuevo.setFechaTicket(checkSinTicket.isSelected());
+        filtroNuevo.setFechaAlbaran(checkSinAlbaran.isSelected());
         this.dispose();
     }//GEN-LAST:event_botonAceptarActionPerformed
 
@@ -719,6 +761,10 @@ public class FiltroVista extends javax.swing.JDialog {
         listaEstados.clearSelection();
         checkObservaciones.setSelected(false);
         checkExiste.setSelected(false);
+        checkSinEnvio.setSelected(false);
+        checkSinCompra.setSelected(false);
+        checkSinTicket.setSelected(false);
+        checkSinAlbaran.setSelected(false);
         selectorFechaCompraDesde.setDate(null);
         selectorFechaCompraHasta.setDate(null);
         selectorFechaDocDesde.setDate(null);
@@ -729,7 +775,35 @@ public class FiltroVista extends javax.swing.JDialog {
         selectorFechaSalidaHasta.setDate(null);
         selectorFechaAlbaranDesde.setDate(null);
         selectorFechaAlbaranHasta.setDate(null);
+        selectorFechaSalidaDesde.setEnabled(true);
+        selectorFechaSalidaHasta.setEnabled(true);
+        selectorFechaCompraDesde.setEnabled(true);
+        selectorFechaCompraHasta.setEnabled(true);
+        selectorFechaDocDesde.setEnabled(true);
+        selectorFechaDocHasta.setEnabled(true);
+        selectorFechaAlbaranDesde.setEnabled(true);
+        selectorFechaAlbaranHasta.setEnabled(true);
     }//GEN-LAST:event_botonLimpiarActionPerformed
+
+    private void checkSinEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkSinEnvioActionPerformed
+        selectorFechaSalidaDesde.setEnabled(!checkSinEnvio.isSelected());
+        selectorFechaSalidaHasta.setEnabled(!checkSinEnvio.isSelected());
+    }//GEN-LAST:event_checkSinEnvioActionPerformed
+
+    private void checkSinCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkSinCompraActionPerformed
+        selectorFechaCompraDesde.setEnabled(!checkSinCompra.isSelected());
+        selectorFechaCompraHasta.setEnabled(!checkSinCompra.isSelected());
+    }//GEN-LAST:event_checkSinCompraActionPerformed
+
+    private void checkSinTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkSinTicketActionPerformed
+        selectorFechaDocDesde.setEnabled(!checkSinTicket.isSelected());
+        selectorFechaDocHasta.setEnabled(!checkSinTicket.isSelected());
+    }//GEN-LAST:event_checkSinTicketActionPerformed
+
+    private void checkSinAlbaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkSinAlbaranActionPerformed
+        selectorFechaAlbaranDesde.setEnabled(!checkSinAlbaran.isSelected());
+        selectorFechaAlbaranHasta.setEnabled(!checkSinAlbaran.isSelected());
+    }//GEN-LAST:event_checkSinAlbaranActionPerformed
 
     /**
      * @param args the command line arguments
@@ -788,11 +862,11 @@ public class FiltroVista extends javax.swing.JDialog {
     private javax.swing.JButton botonLimpiar;
     private javax.swing.JCheckBox checkExiste;
     private javax.swing.JCheckBox checkObservaciones;
+    private javax.swing.JCheckBox checkSinAlbaran;
+    private javax.swing.JCheckBox checkSinCompra;
+    private javax.swing.JCheckBox checkSinEnvio;
+    private javax.swing.JCheckBox checkSinTicket;
     private javax.swing.Box.Filler filler1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

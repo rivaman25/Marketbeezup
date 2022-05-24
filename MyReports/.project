@@ -31,5 +31,20 @@
 			<type>1</type>
 			<location>D:/Documents/DAM/Proyecto final/Marketbeezup/src/marketbeezup/informes/AlbaranesWEB.jrxml</location>
 		</link>
+		<link>
+			<name>AlbaranesWEB_1.jasper</name>
+			<type>1</type>
+			<location>D:/DAM_Pruebas/AlbaranesWEB/AlbaranesWEB.jasper</location>
+		</link>
+		<link>
+			<name>AlbaranesWEB_1.jrxml</name>
+			<type>1</type>
+			<location>D:/DAM_Pruebas/AlbaranesWEB/AlbaranesWEB.jrxml</location>
+		</link>
+		<link>
+			<name>AlbaranesWEB_2.jasper</name>
+			<type>1</type>
+			<location>D:/Documents/DAM/Proyecto final/Marketbeezup/src/marketbeezup/informes/AlbaranesWEB.jasper</location>
+		</link>
 	</linkedResources>
 </projectDescription>

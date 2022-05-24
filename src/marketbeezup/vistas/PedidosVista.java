@@ -9,6 +9,7 @@ import marketbeezup.controladores.PedidosControlador;
 import java.awt.Image;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import marketbeezup.controladores.TablaPedidosCellRenderer;
 
 /**
  *
@@ -17,6 +18,7 @@ import javax.swing.ImageIcon;
 public class PedidosVista extends javax.swing.JFrame {
 
     private ModeloTablaPedidos modeloTablaPedidos;
+    private TablaPedidosCellRenderer tablaPedidosCellRender;
     private final DefaultComboBoxModel<String> modeloComboBuscar = new DefaultComboBoxModel<>();;
 
     /**
@@ -41,7 +43,15 @@ public class PedidosVista extends javax.swing.JFrame {
 
     public void actualizaTabla() {
         modeloTablaPedidos = new ModeloTablaPedidos(PedidosControlador.getPedidos());
+        tablaPedidosCellRender = new TablaPedidosCellRenderer(PedidosControlador.getPedidos());
         tablaPedidos.setModel(modeloTablaPedidos);
+        tablaPedidos.setDefaultRenderer(Double.class, tablaPedidosCellRender);
+        tablaPedidos.setDefaultRenderer(String.class, tablaPedidosCellRender);
+        tablaPedidos.setDefaultRenderer(Boolean.class, tablaPedidosCellRender);
+        tablaPedidos.setDefaultRenderer(java.sql.Timestamp.class, tablaPedidosCellRender);
+        tablaPedidos.setDefaultRenderer(Float.class, tablaPedidosCellRender);
+        tablaPedidos.setDefaultRenderer(Integer.class, tablaPedidosCellRender);
+        tablaPedidos.setDefaultRenderer(java.sql.Date.class, tablaPedidosCellRender);
         textoBuscar.setText(null);
     }
     
@@ -143,6 +153,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jToolBar1.setMinimumSize(new java.awt.Dimension(800, 60));
         jToolBar1.setPreferredSize(new java.awt.Dimension(1366, 60));
 
+        botonFiltrar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         botonFiltrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Filtrar32(1).png"))); // NOI18N
         botonFiltrar.setText("Filtro");
         botonFiltrar.setToolTipText("Modificar Filtro");
@@ -151,6 +162,7 @@ public class PedidosVista extends javax.swing.JFrame {
         botonFiltrar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(botonFiltrar);
 
+        botonAplicarFiltro.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         botonAplicarFiltro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Filtrar32(2).png"))); // NOI18N
         botonAplicarFiltro.setText("Filtrar");
         botonAplicarFiltro.setToolTipText("Aplicar Filtro");
@@ -159,6 +171,7 @@ public class PedidosVista extends javax.swing.JFrame {
         botonAplicarFiltro.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(botonAplicarFiltro);
 
+        botonNuevoEnvio.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         botonNuevoEnvio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Envio32.png"))); // NOI18N
         botonNuevoEnvio.setText("Envío");
         botonNuevoEnvio.setToolTipText("Añadir Envío");
@@ -172,6 +185,7 @@ public class PedidosVista extends javax.swing.JFrame {
         });
         jToolBar1.add(botonNuevoEnvio);
 
+        botonNuevaCompra.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         botonNuevaCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Compra32(1).png"))); // NOI18N
         botonNuevaCompra.setText("Compra");
         botonNuevaCompra.setToolTipText("Añadir Compra");
@@ -185,6 +199,7 @@ public class PedidosVista extends javax.swing.JFrame {
         });
         jToolBar1.add(botonNuevaCompra);
 
+        botonImprimirAlbaran.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         botonImprimirAlbaran.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Imprimir32(1).png"))); // NOI18N
         botonImprimirAlbaran.setText("Albaranes");
         botonImprimirAlbaran.setToolTipText("Imprimir Albaranes");
@@ -193,6 +208,7 @@ public class PedidosVista extends javax.swing.JFrame {
         botonImprimirAlbaran.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(botonImprimirAlbaran);
 
+        jButton4.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Ticket32.png"))); // NOI18N
         jButton4.setText("Tickets");
         jButton4.setToolTipText("Obtener tickets");
@@ -201,6 +217,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton4);
 
+        jButton5.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Listado32.png"))); // NOI18N
         jButton5.setText("Listados");
         jButton5.setToolTipText("Obtener Listados");
@@ -214,6 +231,7 @@ public class PedidosVista extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton5);
 
+        jButton7.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Cancelar32.png"))); // NOI18N
         jButton7.setText("Cancelar\n");
         jButton7.setToolTipText("Cancelar Pedido");
@@ -222,6 +240,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton7);
 
+        jButton6.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Observaciones32.png"))); // NOI18N
         jButton6.setText("Observaciones");
         jButton6.setToolTipText("Obtener Observaciones");
@@ -234,10 +253,11 @@ public class PedidosVista extends javax.swing.JFrame {
         comboBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pedido", "Nombre", "Dirección", "Teléfono", "Artículo", "Compra", "Ticket", "Albaran", " " }));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Buscar32.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Search.png"))); // NOI18N
 
+        textoBuscar.setBackground(new java.awt.Color(255, 255, 255));
         textoBuscar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         textoBuscar.setBorder(null);
 
@@ -246,16 +266,15 @@ public class PedidosVista extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textoBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE))
+                .addComponent(jLabel2)
+                .addGap(4, 4, 4)
+                .addComponent(textoBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(textoBuscar)
-                .addContainerGap())
+            .addComponent(textoBuscar)
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -267,16 +286,16 @@ public class PedidosVista extends javax.swing.JFrame {
                 .addComponent(comboBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(408, Short.MAX_VALUE))
+                .addContainerGap(352, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(comboBuscar)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(comboBuscar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jToolBar1.add(jPanel2);
@@ -299,9 +318,7 @@ public class PedidosVista extends javax.swing.JFrame {
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pedidos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
 
-        tablaPedidos.setBackground(new java.awt.Color(20, 28, 50));
         tablaPedidos.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        tablaPedidos.setForeground(new java.awt.Color(255, 255, 255));
         tablaPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -388,14 +405,14 @@ public class PedidosVista extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1);
 
         jMenu1.setText("Archivo");
-        jMenu1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jMenu1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
-        menuOpciones.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuOpciones.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         menuOpciones.setText("Opciones");
         jMenu1.add(menuOpciones);
         jMenu1.add(jSeparator1);
 
-        menuSalir.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuSalir.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         menuSalir.setText("Salir");
         menuSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -407,7 +424,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Editar");
-        jMenu2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jMenu2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
         menuFiltrar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuFiltrar.setText("Filtrar Pedidos");
@@ -443,7 +460,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Pedidos");
-        jMenu3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jMenu3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
         menuNuevoPedido.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuNuevoPedido.setText("Nuevo");
@@ -478,7 +495,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Envíos");
-        jMenu4.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jMenu4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
         menuNuevoEnvio.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuNuevoEnvio.setText("Nuevo");
@@ -500,7 +517,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Compras");
-        jMenu5.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jMenu5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
         menuNuevaCompra.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuNuevaCompra.setText("Nueva");
@@ -522,7 +539,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jMenuBar1.add(jMenu5);
 
         jMenu6.setText("Albaranes");
-        jMenu6.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jMenu6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
         menuImprimirAlbaran.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuImprimirAlbaran.setText("Imprimir");
@@ -535,7 +552,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jMenuBar1.add(jMenu6);
 
         jMenu7.setText("Tickets");
-        jMenu7.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jMenu7.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
         jMenuItem16.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jMenuItem16.setText("Obtener");
@@ -544,7 +561,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jMenuBar1.add(jMenu7);
 
         jMenu8.setText("Listados");
-        jMenu8.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jMenu8.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
         jMenuItem17.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jMenuItem17.setText("Obtener");
@@ -553,7 +570,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jMenuBar1.add(jMenu8);
 
         jMenu9.setText("Observaciones");
-        jMenu9.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jMenu9.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
         jMenuItem19.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jMenuItem19.setText("Nueva");

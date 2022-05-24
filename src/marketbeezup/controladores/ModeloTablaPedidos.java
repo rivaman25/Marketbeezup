@@ -41,7 +41,7 @@ public class ModeloTablaPedidos extends AbstractTableModel {
     private final String[] columnNames = {"Tienda", "Marketplace", "Pedido",
         "Fecha Pedido", "DNI", "Nombre", "Dirección", "C.P.", "Población",
         "Provincia", "Teléfono", "Email", "Id Artículo", "Descripción", "Precio",
-        "Unidades", "Importe", "Comisión", "Porte", "Existe", "Observaciones", "Albarán",
+        "Unidades", "Importe", "Comisión", "Porte", "Existe", "Observaciones", "Albarán Impreso",
         "Estado", "Fecha Salida", "Almacén", "Agencia", "Id Compra", "Proveedor",
         "Fecha Compra", "Fecha Entrega", "Ticket", "Fecha ticket", "Albarán",
         "Fecha Albarán"};

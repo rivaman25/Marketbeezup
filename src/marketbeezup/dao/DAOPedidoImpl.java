@@ -35,9 +35,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
     }
 
     @Override
-    public List<Pedido> listarAlbaranesImpr() throws Exception {
-        DAOArticulo daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
-        List<Articulo> articulos = daoArticulo.listarArticulosImpr(false);
+    public List<Pedido> listar(List<Articulo> articulos) throws Exception {
         return listarPedidos(articulos);
     }
 
