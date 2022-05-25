@@ -60,7 +60,7 @@ public class ImprimirControlador extends ConexionBD implements ActionListener {
                 case "ImprimirAlbaranes":
                     if (!articulosImpr.isEmpty()) {
                         // Si introduzco el informe JasperReport en un paquete de la aplicación lo cargo en un stream
-                        InputStream jasperStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("marketbeezup/informes/AlbaranesWEB.jasper");
+                        InputStream jasperStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("com/informes/AlbaranesWEB.jasper");
                         Map<String, Object> parametros = new HashMap<>();
                         try {
                             this.openConnection();
