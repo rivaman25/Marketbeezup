@@ -267,22 +267,24 @@ public class FiltroVista extends javax.swing.JDialog {
         jPanel3.setMaximumSize(new java.awt.Dimension(32767, 800));
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
-        labelFechaPedido.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        labelFechaPedido.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         labelFechaPedido.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelFechaPedido.setText("Fecha Pedido:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         jPanel3.add(labelFechaPedido, gridBagConstraints);
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Desde");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 30;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 5);
         jPanel3.add(jLabel1, gridBagConstraints);
 
         selectorFechaPedidoDesde.setDateFormatString("dd-MM-yy");
@@ -296,15 +298,16 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         jPanel3.add(selectorFechaPedidoDesde, gridBagConstraints);
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Hasta");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 30;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 5);
         jPanel3.add(jLabel2, gridBagConstraints);
 
         selectorFechaPedidoHasta.setDateFormatString("dd-MM-yy");
@@ -318,27 +321,31 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         jPanel3.add(selectorFechaPedidoHasta, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 0;
         jPanel3.add(filler1, gridBagConstraints);
 
-        labelFechaSalida.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        labelFechaSalida.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         labelFechaSalida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelFechaSalida.setText("Fecha Salida:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         jPanel3.add(labelFechaSalida, gridBagConstraints);
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Desde");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 30;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 5);
         jPanel3.add(jLabel3, gridBagConstraints);
 
         selectorFechaSalidaDesde.setDateFormatString("dd-MM-yy");
@@ -352,15 +359,16 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         jPanel3.add(selectorFechaSalidaDesde, gridBagConstraints);
 
-        jLabel4.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Hasta");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 30;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 5);
         jPanel3.add(jLabel4, gridBagConstraints);
 
         selectorFechaSalidaHasta.setDateFormatString("dd-MM-yy");
@@ -374,6 +382,7 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         jPanel3.add(selectorFechaSalidaHasta, gridBagConstraints);
 
         checkSinEnvio.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -389,24 +398,27 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         jPanel3.add(checkSinEnvio, gridBagConstraints);
 
-        labelFechaCompra.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        labelFechaCompra.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         labelFechaCompra.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelFechaCompra.setText("Fecha Compra:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         jPanel3.add(labelFechaCompra, gridBagConstraints);
 
-        jLabel5.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Desde");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipadx = 30;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 5);
         jPanel3.add(jLabel5, gridBagConstraints);
 
         selectorFechaCompraDesde.setDateFormatString("dd-MM-yy");
@@ -420,15 +432,16 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         jPanel3.add(selectorFechaCompraDesde, gridBagConstraints);
 
-        jLabel6.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Hasta");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipadx = 30;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 5);
         jPanel3.add(jLabel6, gridBagConstraints);
 
         selectorFechaCompraHasta.setDateFormatString("dd-MM-yy");
@@ -442,6 +455,7 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         jPanel3.add(selectorFechaCompraHasta, gridBagConstraints);
 
         checkSinCompra.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -457,24 +471,27 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         jPanel3.add(checkSinCompra, gridBagConstraints);
 
-        labelFechaDoc.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        labelFechaDoc.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         labelFechaDoc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelFechaDoc.setText("Fecha Ticket:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         jPanel3.add(labelFechaDoc, gridBagConstraints);
 
-        jLabel7.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Desde");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.ipadx = 30;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 5);
         jPanel3.add(jLabel7, gridBagConstraints);
 
         selectorFechaDocDesde.setDateFormatString("dd-MM-yy");
@@ -488,15 +505,16 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         jPanel3.add(selectorFechaDocDesde, gridBagConstraints);
 
-        jLabel8.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Hasta");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.ipadx = 30;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 5);
         jPanel3.add(jLabel8, gridBagConstraints);
 
         selectorFechaDocHasta.setDateFormatString("dd-MM-yy");
@@ -510,6 +528,7 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         jPanel3.add(selectorFechaDocHasta, gridBagConstraints);
 
         checkSinTicket.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -525,24 +544,27 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         jPanel3.add(checkSinTicket, gridBagConstraints);
 
-        labelFechaAlbaran.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        labelFechaAlbaran.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         labelFechaAlbaran.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelFechaAlbaran.setText("Fecha Albaran:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         jPanel3.add(labelFechaAlbaran, gridBagConstraints);
 
-        jLabel9.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Desde");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.ipadx = 30;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 5);
         jPanel3.add(jLabel9, gridBagConstraints);
 
         selectorFechaAlbaranDesde.setDateFormatString("dd-MM-yy");
@@ -556,15 +578,16 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         jPanel3.add(selectorFechaAlbaranDesde, gridBagConstraints);
 
-        jLabel10.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("Hasta");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.ipadx = 30;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 5);
         jPanel3.add(jLabel10, gridBagConstraints);
 
         selectorFechaAlbaranHasta.setDateFormatString("dd-MM-yy");
@@ -578,6 +601,7 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         jPanel3.add(selectorFechaAlbaranHasta, gridBagConstraints);
 
         checkSinAlbaran.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -593,6 +617,7 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         jPanel3.add(checkSinAlbaran, gridBagConstraints);
 
         checkObservaciones.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -786,21 +811,29 @@ public class FiltroVista extends javax.swing.JDialog {
     }//GEN-LAST:event_botonLimpiarActionPerformed
 
     private void checkSinEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkSinEnvioActionPerformed
+        selectorFechaSalidaDesde.setDate(null);
+        selectorFechaSalidaHasta.setDate(null);
         selectorFechaSalidaDesde.setEnabled(!checkSinEnvio.isSelected());
         selectorFechaSalidaHasta.setEnabled(!checkSinEnvio.isSelected());
     }//GEN-LAST:event_checkSinEnvioActionPerformed
 
     private void checkSinCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkSinCompraActionPerformed
+        selectorFechaCompraDesde.setDate(null);
+        selectorFechaCompraHasta.setDate(null);
         selectorFechaCompraDesde.setEnabled(!checkSinCompra.isSelected());
         selectorFechaCompraHasta.setEnabled(!checkSinCompra.isSelected());
     }//GEN-LAST:event_checkSinCompraActionPerformed
 
     private void checkSinTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkSinTicketActionPerformed
+        selectorFechaDocDesde.setDate(null);
+        selectorFechaDocHasta.setDate(null);
         selectorFechaDocDesde.setEnabled(!checkSinTicket.isSelected());
         selectorFechaDocHasta.setEnabled(!checkSinTicket.isSelected());
     }//GEN-LAST:event_checkSinTicketActionPerformed
 
     private void checkSinAlbaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkSinAlbaranActionPerformed
+        selectorFechaAlbaranDesde.setDate(null);
+        selectorFechaAlbaranHasta.setDate(null);
         selectorFechaAlbaranDesde.setEnabled(!checkSinAlbaran.isSelected());
         selectorFechaAlbaranHasta.setEnabled(!checkSinAlbaran.isSelected());
     }//GEN-LAST:event_checkSinAlbaranActionPerformed

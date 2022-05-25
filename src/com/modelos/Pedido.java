@@ -25,7 +25,7 @@ public class Pedido {
      *
      * @param marketplace
      * @param idPedido
-     * @param pedidosNuevos
+     * @param pedidos
      * @return
      */
     public static int existePedido(String marketplace, String idPedido, List<Pedido> pedidos) {

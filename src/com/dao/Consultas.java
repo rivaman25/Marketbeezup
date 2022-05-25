@@ -606,7 +606,7 @@ public class Consultas {
             albaranesVenta ON (articulos.idPedido = albaranesVenta.idPedido
                 AND articulos.marketplace = albaranesVenta.marketplace
                 AND articulos.codigoArticulo = albaranesVenta.codigoArticulo)
-            WHERE compras.idCompras LIKE ?
+            WHERE compras.idCompra LIKE ?
             GROUP BY articulos.marketplace, articulos.idPedido, articulos.codigoArticulo
             ORDER BY pedidos.fechaPedido DESC""";
 
@@ -925,6 +925,9 @@ public class Consultas {
         if (filtro.isExiste()) {
             predicados.add((" (articulos.tipoArticulo <> 'EXISTE' OR articulos.tipoArticulo IS NULL)"));
         }
+        if (filtro.isFechaSalida()) {
+            predicados.add(" envios.fechaSalida is null");
+        }
         if (filtro.getFechaSalidaDesde() != null) {
             predicados.add(" envios.fechaSalida >= ?");
         }
@@ -949,17 +952,26 @@ public class Consultas {
             predicadoAux.append(")");
             predicados.add(predicadoAux.toString());
         }
+        if (filtro.isFechaCompra()) {
+            predicados.add(" compras.fechaCompra is null");
+        }
         if (filtro.getFechaCompraDesde() != null) {
             predicados.add(" compras.fechaCompra >= ?");
         }
         if (filtro.getFechaCompraHasta() != null) {
             predicados.add(" compras.fechaCompra <= ?");
         }
+        if (filtro.isFechaTicket()) {
+            predicados.add(" documentosVenta.fechaVenta is null");
+        }
         if (filtro.getFechaVentaDesde() != null) {
             predicados.add(" documentosVenta.fechaVenta >= ?");
         }
         if (filtro.getFechaVentaHasta() != null) {
             predicados.add(" documentosVenta.fechaVenta <= ?");
+        }
+        if  (filtro.isFechaAlbaran()) {
+            predicados.add(" albaranesVenta.fechaAlbaran is null");
         }
         if (filtro.getFechaAlbaranDesde() != null) {
             predicados.add(" albaranesVenta.fechaAlbaran >= ?");

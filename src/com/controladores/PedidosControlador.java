@@ -26,6 +26,7 @@ import java.util.logging.Logger;
 import com.modelos.Filtro;
 import com.vistas.FiltroVista;
 import com.vistas.ImprimirVista;
+import com.vistas.PedidoVista;
 
 /**
  *
@@ -111,6 +112,13 @@ public class PedidosControlador implements ActionListener, KeyListener {
                     imprimirVista.setControlador(imprimirControlador);
                     imprimirControlador.actualizarAgenciasVista();
                     imprimirControlador.actualizarVista();
+                    break;
+                case "NuevoPedido":
+                    Pedido pedido = new Pedido();
+                    PedidoVista pedidoVista = new PedidoVista(pedidosVista, true);
+                    PedidoControlador pedidoControlador = new PedidoControlador(pedidoVista, pedido);
+                    
+                    break;
             }
         } catch (Exception ex) {
             Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);

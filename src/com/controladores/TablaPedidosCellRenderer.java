@@ -13,6 +13,8 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 import com.modelos.Articulo;
 import com.modelos.Pedido;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -20,11 +22,10 @@ import com.modelos.Pedido;
  */
 public class TablaPedidosCellRenderer extends DefaultTableCellRenderer {
 
-    List<Articulo> articulos;
-    List<Pedido> pedidos;
+    private final List<Articulo> articulos;
+    private DateFormat formatter;
 
     public TablaPedidosCellRenderer(List<Pedido> pedidos) {
-        this.pedidos = pedidos;
         articulos = new ArrayList<>();
         for (Pedido pedido : pedidos) {
             articulos.addAll(pedido.getArticulos());
@@ -41,9 +42,11 @@ public class TablaPedidosCellRenderer extends DefaultTableCellRenderer {
         Color alternate = UIManager.getColor("Table.alternateRowColor");
         if (articulos.get(row).getEstado().equals("CANCELADO")) {
             if (isSelected) {
-                this.setBackground(Color.GRAY);
+                //this.setBackground(Color.GRAY);
+                this.setForeground(Color.RED);
             } else {
-                this.setBackground(Color.LIGHT_GRAY);
+                //this.setBackground(Color.LIGHT_GRAY);
+                this.setForeground(Color.RED);
             }
         } else {
             if (row < articulos.size() - 1) {
@@ -57,66 +60,38 @@ public class TablaPedidosCellRenderer extends DefaultTableCellRenderer {
             if (articulos.get(row).getIdPedido().equals(idPedidoAnterior)
                     & articulos.get(row).getMarketplace().equals(marketplaceAnterior)) {
                 if (isSelected) {
-                    this.setBackground(Color.YELLOW);
+                    // this.setBackground(Color.YELLOW);
+                    this.setForeground(Color.ORANGE);
                 } else {
-                    this.setBackground(Color.ORANGE);
+                    // this.setBackground(Color.ORANGE);
+                    this.setForeground(Color.ORANGE);
                 }
             } else {
                 if (articulos.get(row).getIdPedido().equals(idPedidoSiguiente)
                         & articulos.get(row).getMarketplace().equals(marketplaceSiguiente)) {
                     if (isSelected) {
-                        this.setBackground(Color.YELLOW);
+                        // this.setBackground(Color.YELLOW);
+                        this.setForeground(Color.ORANGE);
                     } else {
-                        this.setBackground(Color.ORANGE);
+                        // this.setBackground(Color.ORANGE);
+                        this.setForeground(Color.ORANGE);
                     }
                 } else {
                     if (!isSelected) {
-                        this.setBackground(alternate);
+                        // this.setBackground(alternate);
+                        this.setForeground(alternate);
                     }
                 }
             }
         }
-        /*String idPedido;
-        String marketplace;
-        if ((row + 1) < articulos.size()) {
-            
-                if (row > 0) {
-                    if (articulos.get(row).getIdPedido().equals(articulos.get(row - 1).getIdPedido()) & 
-                            articulos.get(row).getMarketplace().equals(articulos.get(row - 1).getMarketplace())) {
-                        this.setForeground(Color.orange);
-                    } else {
-                        this.setForeground();
-                    }
-                }
-                this.setForeground(Color.white);
-            }
-        } else {
-            this.setForeground(Color.white);
+        if (value instanceof java.sql.Timestamp) {
+            formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            this.setText(formatter.format(value));
         }
-        /*
-        switch (String.valueOf(table.getValueAt(row, 15))) {
-            case "Novedad":
-                this.setBackground(Color.white);
-                this.setForeground(Color.green);
-                break;
-            case "Actual":
-                this.setBackground(Color.white);
-                this.setForeground(Color.black);
-                break;
-            case "Preobsoleto":
-                this.setBackground(Color.white);
-                this.setForeground(Color.red);
-                break;
-            case "Obsoleto":
-                this.setBackground(Color.red);
-                this.setForeground(Color.white);
-                break;
-            default:
-                this.setBackground(Color.black);
-                this.setForeground(Color.white);
+        if (value instanceof java.sql.Date) {
+            formatter = new SimpleDateFormat("dd/MM/yyyy");
+            this.setText(formatter.format(value));
         }
-        this.setToolTipText(String.valueOf(table.getValueAt(row, column)));
-         */
         return this;
     }
 }

@@ -24,7 +24,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //IntelliJTheme.setup(Main.class.getResourceAsStream("/marketbeezup/themes/Material Oceanic Contrast.theme.json"));
+        IntelliJTheme.setup(Main.class.getResourceAsStream("/com/themes/Material Oceanic Contrast.theme.json"));
         try {
             List<Pedido> pedidos = new ArrayList<>();
             PedidosVista pedidosVista = new PedidosVista();

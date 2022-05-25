@@ -47,6 +47,15 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
+                          <Component id="botonImprimir" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="botonMarcar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="botonFiltrar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="botonLimpiar" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -57,19 +66,10 @@
                               <Component id="textoIdPedido" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="botonImprimir" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="botonMarcar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="botonFiltrar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="botonLimpiar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="botonCancelar" min="-2" max="-2" attributes="0"/>
-                      </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="168" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="botonCancelar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="147" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -80,31 +80,30 @@
                       <Component id="jScrollPane1" alignment="0" pref="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="botonCancelar" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jLabel2" max="32767" attributes="0"/>
-                                      <Component id="selectorFecha" max="32767" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="textoIdPedido" min="-2" pref="23" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="botonFiltrar" max="32767" attributes="0"/>
-                                              <Component id="botonImprimir" alignment="0" max="32767" attributes="0"/>
-                                          </Group>
-                                          <Component id="botonMarcar" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="botonLimpiar" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jLabel2" max="32767" attributes="0"/>
+                              <Component id="selectorFecha" max="32767" attributes="0"/>
                           </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                              <Component id="textoIdPedido" min="-2" pref="23" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="botonFiltrar" max="32767" attributes="0"/>
+                                      <Component id="botonImprimir" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="botonMarcar" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="botonLimpiar" alignment="1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="botonCancelar" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="1" max="32767" attributes="0"/>
@@ -115,18 +114,18 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
+            <Property name="text" type="java.lang.String" value="Fecha"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Fecha"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
+            <Property name="text" type="java.lang.String" value="Id Pedido"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Id Pedido"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -196,8 +195,8 @@
               <Image iconType="3" name="/com/imagenes/Imprimir32(1).png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Imprimir"/>
-            <Property name="toolTipText" type="java.lang.String" value="Imprimir Albaranes"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="toolTipText" type="java.lang.String" value="Imprimir Albaranes"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
         </Component>
@@ -207,8 +206,8 @@
               <Image iconType="3" name="/com/imagenes/Filtrar32.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Filtrar"/>
-            <Property name="toolTipText" type="java.lang.String" value="Filtrar"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="toolTipText" type="java.lang.String" value="Filtrar"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
         </Component>
@@ -218,8 +217,8 @@
               <Image iconType="3" name="/com/imagenes/Limipiar32.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Limpiar"/>
-            <Property name="toolTipText" type="java.lang.String" value="Limpiar Filtro"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="toolTipText" type="java.lang.String" value="Limpiar Filtro"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
         </Component>
@@ -229,8 +228,8 @@
               <Image iconType="3" name="/com/imagenes/Cancelar32.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Salir"/>
-            <Property name="toolTipText" type="java.lang.String" value="Salir"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="toolTipText" type="java.lang.String" value="Salir"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
         </Component>
@@ -240,8 +239,8 @@
               <Image iconType="3" name="/com/imagenes/Check.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Marcar"/>
-            <Property name="toolTipText" type="java.lang.String" value="Marcar como Impreso"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="toolTipText" type="java.lang.String" value="Marcar como Impreso"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
         </Component>

@@ -48,46 +48,45 @@ public class PedidosVista extends javax.swing.JFrame {
         tablaPedidos.setModel(modeloTablaPedidos);
         tablaPedidos.setDefaultRenderer(Double.class, tablaPedidosCellRender);
         tablaPedidos.setDefaultRenderer(String.class, tablaPedidosCellRender);
-        tablaPedidos.setDefaultRenderer(Boolean.class, tablaPedidosCellRender);
         tablaPedidos.setDefaultRenderer(java.sql.Timestamp.class, tablaPedidosCellRender);
         tablaPedidos.setDefaultRenderer(Float.class, tablaPedidosCellRender);
         tablaPedidos.setDefaultRenderer(Integer.class, tablaPedidosCellRender);
         tablaPedidos.setDefaultRenderer(java.sql.Date.class, tablaPedidosCellRender);
         TableColumnModel colModel = tablaPedidos.getColumnModel();
-        colModel.getColumn(0).setPreferredWidth(100);
-        colModel.getColumn(1).setPreferredWidth(40);
-        colModel.getColumn(2).setPreferredWidth(140);
-        colModel.getColumn(3).setPreferredWidth(140);
-        colModel.getColumn(4).setPreferredWidth(80);
-        colModel.getColumn(5).setPreferredWidth(200);
-        colModel.getColumn(6).setPreferredWidth(400);
-        colModel.getColumn(7).setPreferredWidth(45);
-        colModel.getColumn(8).setPreferredWidth(180);
-        colModel.getColumn(9).setPreferredWidth(180);
-        colModel.getColumn(10).setPreferredWidth(93);
-        colModel.getColumn(11).setPreferredWidth(73);
-        colModel.getColumn(12).setPreferredWidth(30);
-        colModel.getColumn(13).setPreferredWidth(76);
-        colModel.getColumn(14).setPreferredWidth(312);
-        colModel.getColumn(15).setPreferredWidth(73);
-        colModel.getColumn(16).setPreferredWidth(76);
-        colModel.getColumn(17).setPreferredWidth(33);
-        colModel.getColumn(18).setPreferredWidth(93);
-        colModel.getColumn(19).setPreferredWidth(73);
-        colModel.getColumn(20).setPreferredWidth(30);
-        colModel.getColumn(21).setPreferredWidth(76);
-        colModel.getColumn(22).setPreferredWidth(312);
-        colModel.getColumn(23).setPreferredWidth(73);
-        colModel.getColumn(24).setPreferredWidth(76);
-        colModel.getColumn(25).setPreferredWidth(33);
-        colModel.getColumn(26).setPreferredWidth(93);
-        colModel.getColumn(27).setPreferredWidth(73);
-        colModel.getColumn(28).setPreferredWidth(30);
-        colModel.getColumn(29).setPreferredWidth(76);
-        colModel.getColumn(30).setPreferredWidth(312);
-        colModel.getColumn(31).setPreferredWidth(73);
-        colModel.getColumn(32).setPreferredWidth(312);
-        colModel.getColumn(33).setPreferredWidth(73);
+        colModel.getColumn(0).setPreferredWidth(102); // tienda
+        colModel.getColumn(1).setPreferredWidth(45); // market
+        colModel.getColumn(2).setPreferredWidth(135); // pedido
+        colModel.getColumn(3).setPreferredWidth(133); // fecha pedido
+        colModel.getColumn(4).setPreferredWidth(75); // dni
+        colModel.getColumn(5).setPreferredWidth(200); // nombre
+        colModel.getColumn(6).setPreferredWidth(400); // dirección
+        colModel.getColumn(7).setPreferredWidth(45); // cp
+        colModel.getColumn(8).setPreferredWidth(180); // población
+        colModel.getColumn(9).setPreferredWidth(180); // provincia
+        colModel.getColumn(10).setPreferredWidth(100); // teléfono
+        colModel.getColumn(11).setPreferredWidth(80); // email
+        colModel.getColumn(12).setPreferredWidth(105); // idArticulo
+        colModel.getColumn(13).setPreferredWidth(300); // descripción
+        colModel.getColumn(14).setPreferredWidth(55); // precio
+        colModel.getColumn(15).setPreferredWidth(60); // unidades
+        colModel.getColumn(16).setPreferredWidth(55); // importe
+        colModel.getColumn(17).setPreferredWidth(60); // comision
+        colModel.getColumn(18).setPreferredWidth(30); // porte
+        colModel.getColumn(19).setPreferredWidth(50); // existe
+        colModel.getColumn(20).setPreferredWidth(40); // observaciones
+        colModel.getColumn(21).setPreferredWidth(135); // albarán impreso
+        colModel.getColumn(22).setPreferredWidth(100); // estado
+        colModel.getColumn(23).setPreferredWidth(78); // fecha salida
+        colModel.getColumn(24).setPreferredWidth(55); // almacen
+        colModel.getColumn(25).setPreferredWidth(120); // agencia
+        colModel.getColumn(26).setPreferredWidth(143); // idcompra
+        colModel.getColumn(27).setPreferredWidth(120); // proveedor
+        colModel.getColumn(28).setPreferredWidth(80); // fecha compra
+        colModel.getColumn(29).setPreferredWidth(80); // fecha entrega
+        colModel.getColumn(30).setPreferredWidth(62); // ticket
+        colModel.getColumn(31).setPreferredWidth(80); // fecha ticket
+        colModel.getColumn(32).setPreferredWidth(78); // albarán
+        colModel.getColumn(33).setPreferredWidth(80); // fecha albarán
         textoBuscar.setText(null);
     }
     
@@ -285,16 +284,14 @@ public class PedidosVista extends javax.swing.JFrame {
         jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton6);
 
-        comboBuscar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        comboBuscar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         comboBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pedido", "Nombre", "Dirección", "Teléfono", "Artículo", "Compra", "Ticket", "Albaran", " " }));
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Search.png"))); // NOI18N
 
-        textoBuscar.setBackground(new java.awt.Color(255, 255, 255));
-        textoBuscar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        textoBuscar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         textoBuscar.setBorder(null);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -304,8 +301,7 @@ public class PedidosVista extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addGap(4, 4, 4)
-                .addComponent(textoBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(textoBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,7 +318,7 @@ public class PedidosVista extends javax.swing.JFrame {
                 .addComponent(comboBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(349, Short.MAX_VALUE))
+                .addContainerGap(356, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -354,7 +350,7 @@ public class PedidosVista extends javax.swing.JFrame {
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pedidos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
 
-        tablaPedidos.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        tablaPedidos.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         tablaPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -435,7 +431,7 @@ public class PedidosVista extends javax.swing.JFrame {
         tablaPedidos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tablaPedidos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tablaPedidos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tablaPedidos.setShowGrid(false);
+        tablaPedidos.setShowGrid(true);
         jScrollPane1.setViewportView(tablaPedidos);
 
         getContentPane().add(jScrollPane1);
@@ -462,7 +458,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jMenu2.setText("Editar");
         jMenu2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
-        menuFiltrar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuFiltrar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         menuFiltrar.setText("Filtrar Pedidos");
         menuFiltrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -471,20 +467,20 @@ public class PedidosVista extends javax.swing.JFrame {
         });
         jMenu2.add(menuFiltrar);
 
-        jMenuItem5.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jMenuItem5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jMenuItem5.setText("Actualizar");
         jMenu2.add(jMenuItem5);
         jMenu2.add(jSeparator2);
 
-        jMenuItem1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jMenuItem1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jMenuItem1.setText("Almacenes");
         jMenu2.add(jMenuItem1);
 
-        jMenuItem2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jMenuItem2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jMenuItem2.setText("Agencias de transporte");
         jMenu2.add(jMenuItem2);
 
-        menuProvincias.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuProvincias.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         menuProvincias.setText("Provincias");
         menuProvincias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
