@@ -174,31 +174,31 @@ public class ImprimirVista extends javax.swing.JDialog {
         textoIdPedido.setMinimumSize(new java.awt.Dimension(219, 23));
         textoIdPedido.setPreferredSize(new java.awt.Dimension(219, 23));
 
-        botonImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Imprimir32.png"))); // NOI18N
+        botonImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Imprimir32(1).png"))); // NOI18N
         botonImprimir.setText("Imprimir");
         botonImprimir.setToolTipText("Imprimir Albaranes");
         botonImprimir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonImprimir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        botonFiltrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Filtrar32.png"))); // NOI18N
+        botonFiltrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Filtrar32.png"))); // NOI18N
         botonFiltrar.setText("Filtrar");
         botonFiltrar.setToolTipText("Filtrar");
         botonFiltrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonFiltrar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        botonLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Limipiar32.png"))); // NOI18N
+        botonLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Limipiar32.png"))); // NOI18N
         botonLimpiar.setText("Limpiar");
         botonLimpiar.setToolTipText("Limpiar Filtro");
         botonLimpiar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonLimpiar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        botonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Cancelar32.png"))); // NOI18N
+        botonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Cancelar32.png"))); // NOI18N
         botonCancelar.setText("Salir");
         botonCancelar.setToolTipText("Salir");
         botonCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonCancelar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        botonMarcar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Check.png"))); // NOI18N
+        botonMarcar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Check.png"))); // NOI18N
         botonMarcar.setText("Marcar");
         botonMarcar.setToolTipText("Marcar como Impreso");
         botonMarcar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

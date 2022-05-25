@@ -29,7 +29,7 @@ public class PedidosVista extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setTitle("MarketBeezUp");
-        Image icon = new ImageIcon(getClass().getResource("/marketbeezup/imagenes/AlbarenesWEB-ico.png")).getImage();
+        Image icon = new ImageIcon(getClass().getResource("/com/imagenes/AlbarenesWEB-ico.png")).getImage();
         setIconImage(icon);
         modeloComboBuscar.addElement("Pedido");
         modeloComboBuscar.addElement("Nombre");
@@ -190,7 +190,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jToolBar1.setPreferredSize(new java.awt.Dimension(1366, 60));
 
         botonFiltrar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        botonFiltrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Filtrar32(1).png"))); // NOI18N
+        botonFiltrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Filtrar32(1).png"))); // NOI18N
         botonFiltrar.setText("Filtro");
         botonFiltrar.setToolTipText("Modificar Filtro");
         botonFiltrar.setFocusable(false);
@@ -199,7 +199,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jToolBar1.add(botonFiltrar);
 
         botonAplicarFiltro.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        botonAplicarFiltro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Filtrar32(2).png"))); // NOI18N
+        botonAplicarFiltro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Filtrar32(2).png"))); // NOI18N
         botonAplicarFiltro.setText("Filtrar");
         botonAplicarFiltro.setToolTipText("Aplicar Filtro");
         botonAplicarFiltro.setFocusable(false);
@@ -208,7 +208,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jToolBar1.add(botonAplicarFiltro);
 
         botonNuevoEnvio.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        botonNuevoEnvio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Envio32.png"))); // NOI18N
+        botonNuevoEnvio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Envio32.png"))); // NOI18N
         botonNuevoEnvio.setText("Envío");
         botonNuevoEnvio.setToolTipText("Añadir Envío");
         botonNuevoEnvio.setFocusable(false);
@@ -222,7 +222,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jToolBar1.add(botonNuevoEnvio);
 
         botonNuevaCompra.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        botonNuevaCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Compra32(1).png"))); // NOI18N
+        botonNuevaCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Compra32(1).png"))); // NOI18N
         botonNuevaCompra.setText("Compra");
         botonNuevaCompra.setToolTipText("Añadir Compra");
         botonNuevaCompra.setFocusable(false);
@@ -236,7 +236,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jToolBar1.add(botonNuevaCompra);
 
         botonImprimirAlbaran.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        botonImprimirAlbaran.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Imprimir32(1).png"))); // NOI18N
+        botonImprimirAlbaran.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Imprimir32(1).png"))); // NOI18N
         botonImprimirAlbaran.setText("Albaranes");
         botonImprimirAlbaran.setToolTipText("Imprimir Albaranes");
         botonImprimirAlbaran.setFocusable(false);
@@ -245,7 +245,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jToolBar1.add(botonImprimirAlbaran);
 
         jButton4.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Ticket32.png"))); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Ticket32.png"))); // NOI18N
         jButton4.setText("Tickets");
         jButton4.setToolTipText("Obtener tickets");
         jButton4.setFocusable(false);
@@ -254,7 +254,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jToolBar1.add(jButton4);
 
         jButton5.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Listado32.png"))); // NOI18N
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Listado32.png"))); // NOI18N
         jButton5.setText("Listados");
         jButton5.setToolTipText("Obtener Listados");
         jButton5.setFocusable(false);
@@ -268,8 +268,8 @@ public class PedidosVista extends javax.swing.JFrame {
         jToolBar1.add(jButton5);
 
         jButton7.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Cancelar32.png"))); // NOI18N
-        jButton7.setText("Cancelar\n");
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Cancelar32.png"))); // NOI18N
+        jButton7.setText("Cancelar ");
         jButton7.setToolTipText("Cancelar Pedido");
         jButton7.setFocusable(false);
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -277,7 +277,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jToolBar1.add(jButton7);
 
         jButton6.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Observaciones32.png"))); // NOI18N
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Observaciones32.png"))); // NOI18N
         jButton6.setText("Observaciones");
         jButton6.setToolTipText("Obtener Observaciones");
         jButton6.setFocusable(false);
@@ -291,7 +291,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/marketbeezup/imagenes/Search.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Search.png"))); // NOI18N
 
         textoBuscar.setBackground(new java.awt.Color(255, 255, 255));
         textoBuscar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -322,7 +322,7 @@ public class PedidosVista extends javax.swing.JFrame {
                 .addComponent(comboBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(352, Short.MAX_VALUE))
+                .addContainerGap(349, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
