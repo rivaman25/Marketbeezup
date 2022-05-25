@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package marketbeezup.controladores;
+package com.controladores;
 
-import marketbeezup.dao.ConexionBD;
-import marketbeezup.dao.DAOArticuloImpl;
-import marketbeezup.daoInterfaces.DAOArticulo;
+import com.dao.ConexionBD;
+import com.dao.DAOArticuloImpl;
+import com.daoInterfaces.DAOArticulo;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.InputStream;
@@ -18,9 +18,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
-import marketbeezup.modelos.Articulo;
+import com.modelos.Articulo;
 import net.sf.jasperreports.engine.JRException;
-import marketbeezup.vistas.ImprimirVista;
+import com.vistas.ImprimirVista;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;

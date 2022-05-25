@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package marketbeezup.vistas;
+package com.vistas;
 
-import marketbeezup.controladores.PedidosControlador;
+import com.controladores.PedidosControlador;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import marketbeezup.modelos.Filtro;
+import com.modelos.Filtro;
 
 /**
  *

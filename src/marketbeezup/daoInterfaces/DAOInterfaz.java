@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package marketbeezup.daoInterfaces;
+package com.daoInterfaces;
 
 import java.sql.Connection;
-import marketbeezup.modelos.Articulo;
-import marketbeezup.modelos.Filtro;
+import com.modelos.Articulo;
+import com.modelos.Filtro;
 
 /**
  *

@@ -2,15 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package marketbeezup.controladores;
+package com.controladores;
 
 import java.sql.Timestamp;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import marketbeezup.modelos.Articulo;
-import marketbeezup.modelos.Pedido;
+import com.modelos.Articulo;
+import com.modelos.Pedido;
 
 /**
  *
@@ -31,14 +31,14 @@ public class ModeloTablaPedidos extends AbstractTableModel {
         String.class, String.class, String.class, Float.class, Integer.class,
         //      16          17          18          19              20
         Float.class, Float.class, Float.class, String.class, Boolean.class,
-        //      21                  22          23              24
+        //      21             22          23            24
         Timestamp.class, String.class, Date.class, String.class,
-        //      25          26          27                  28              29
+        //      25          26          27            28          29
         String.class, String.class, String.class, Date.class, Date.class,
-        //      30          31              32            33
+        //      30          31          32           33
         String.class, Date.class, String.class, Date.class};
 
-    private final String[] columnNames = {"Tienda", "Marketplace", "Pedido",
+    private final String[] columnNames = {"Tienda", "Market", "Pedido",
         "Fecha Pedido", "DNI", "Nombre", "Dirección", "C.P.", "Población",
         "Provincia", "Teléfono", "Email", "Id Artículo", "Descripción", "Precio",
         "Unidades", "Importe", "Comisión", "Porte", "Existe", "Observaciones", "Albarán Impreso",

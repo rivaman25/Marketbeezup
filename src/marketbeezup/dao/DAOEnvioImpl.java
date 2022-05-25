@@ -2,18 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package marketbeezup.dao;
+package com.dao;
 
-import marketbeezup.daoInterfaces.DAOInterfaz;
+import com.daoInterfaces.DAOInterfaz;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Connection;
-import marketbeezup.modelos.Articulo;
-import marketbeezup.modelos.Envio;
+import com.modelos.Articulo;
+import com.modelos.Envio;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import marketbeezup.modelos.Filtro;
+import com.modelos.Filtro;
 
 public class DAOEnvioImpl extends ConexionBD implements DAOInterfaz<Envio> {
 

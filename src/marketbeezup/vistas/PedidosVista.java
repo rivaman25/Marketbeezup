@@ -2,14 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package marketbeezup.vistas;
+package com.vistas;
 
-import marketbeezup.controladores.ModeloTablaPedidos;
-import marketbeezup.controladores.PedidosControlador;
+import com.controladores.ModeloTablaPedidos;
+import com.controladores.PedidosControlador;
 import java.awt.Image;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import marketbeezup.controladores.TablaPedidosCellRenderer;
+import javax.swing.table.TableColumnModel;
+import com.controladores.TablaPedidosCellRenderer;
 
 /**
  *
@@ -52,6 +53,41 @@ public class PedidosVista extends javax.swing.JFrame {
         tablaPedidos.setDefaultRenderer(Float.class, tablaPedidosCellRender);
         tablaPedidos.setDefaultRenderer(Integer.class, tablaPedidosCellRender);
         tablaPedidos.setDefaultRenderer(java.sql.Date.class, tablaPedidosCellRender);
+        TableColumnModel colModel = tablaPedidos.getColumnModel();
+        colModel.getColumn(0).setPreferredWidth(100);
+        colModel.getColumn(1).setPreferredWidth(40);
+        colModel.getColumn(2).setPreferredWidth(140);
+        colModel.getColumn(3).setPreferredWidth(140);
+        colModel.getColumn(4).setPreferredWidth(80);
+        colModel.getColumn(5).setPreferredWidth(200);
+        colModel.getColumn(6).setPreferredWidth(400);
+        colModel.getColumn(7).setPreferredWidth(45);
+        colModel.getColumn(8).setPreferredWidth(180);
+        colModel.getColumn(9).setPreferredWidth(180);
+        colModel.getColumn(10).setPreferredWidth(93);
+        colModel.getColumn(11).setPreferredWidth(73);
+        colModel.getColumn(12).setPreferredWidth(30);
+        colModel.getColumn(13).setPreferredWidth(76);
+        colModel.getColumn(14).setPreferredWidth(312);
+        colModel.getColumn(15).setPreferredWidth(73);
+        colModel.getColumn(16).setPreferredWidth(76);
+        colModel.getColumn(17).setPreferredWidth(33);
+        colModel.getColumn(18).setPreferredWidth(93);
+        colModel.getColumn(19).setPreferredWidth(73);
+        colModel.getColumn(20).setPreferredWidth(30);
+        colModel.getColumn(21).setPreferredWidth(76);
+        colModel.getColumn(22).setPreferredWidth(312);
+        colModel.getColumn(23).setPreferredWidth(73);
+        colModel.getColumn(24).setPreferredWidth(76);
+        colModel.getColumn(25).setPreferredWidth(33);
+        colModel.getColumn(26).setPreferredWidth(93);
+        colModel.getColumn(27).setPreferredWidth(73);
+        colModel.getColumn(28).setPreferredWidth(30);
+        colModel.getColumn(29).setPreferredWidth(76);
+        colModel.getColumn(30).setPreferredWidth(312);
+        colModel.getColumn(31).setPreferredWidth(73);
+        colModel.getColumn(32).setPreferredWidth(312);
+        colModel.getColumn(33).setPreferredWidth(73);
         textoBuscar.setText(null);
     }
     

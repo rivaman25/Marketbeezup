@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package marketbeezup.dao;
+package com.dao;
 
-import marketbeezup.daoInterfaces.DAOArticulo;
-import marketbeezup.daoInterfaces.DAOInterfaz;
+import com.daoInterfaces.DAOArticulo;
+import com.daoInterfaces.DAOInterfaz;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,12 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import marketbeezup.modelos.AlbaranVenta;
-import marketbeezup.modelos.Articulo;
-import marketbeezup.modelos.Compra;
-import marketbeezup.modelos.DocumentoVenta;
-import marketbeezup.modelos.Envio;
-import marketbeezup.modelos.Filtro;
+import com.modelos.AlbaranVenta;
+import com.modelos.Articulo;
+import com.modelos.Compra;
+import com.modelos.DocumentoVenta;
+import com.modelos.Envio;
+import com.modelos.Filtro;
 
 /**
  *

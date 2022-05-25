@@ -2,30 +2,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package marketbeezup.controladores;
+package com.controladores;
 
-import marketbeezup.dao.DAOAgenciaImpl;
-import marketbeezup.dao.DAOAlmacenImpl;
-import marketbeezup.dao.DAOArticuloImpl;
-import marketbeezup.dao.DAOPedidoImpl;
+import com.dao.DAOAgenciaImpl;
+import com.dao.DAOAlmacenImpl;
+import com.dao.DAOArticuloImpl;
+import com.dao.DAOPedidoImpl;
 import java.util.List;
-import marketbeezup.modelos.Pedido;
-import marketbeezup.vistas.PedidosVista;
-import marketbeezup.daoInterfaces.DAOPedido;
-import marketbeezup.daoInterfaces.DAOPedidoNuevos;
-import marketbeezup.dao.DAOPedidoNuevosImpl;
-import marketbeezup.daoInterfaces.DAOAgencia;
-import marketbeezup.daoInterfaces.DAOAlmacen;
-import marketbeezup.daoInterfaces.DAOArticulo;
+import com.modelos.Pedido;
+import com.vistas.PedidosVista;
+import com.daoInterfaces.DAOPedido;
+import com.daoInterfaces.DAOPedidoNuevos;
+import com.dao.DAOPedidoNuevosImpl;
+import com.daoInterfaces.DAOAgencia;
+import com.daoInterfaces.DAOAlmacen;
+import com.daoInterfaces.DAOArticulo;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import marketbeezup.modelos.Filtro;
-import marketbeezup.vistas.FiltroVista;
-import marketbeezup.vistas.ImprimirVista;
+import com.modelos.Filtro;
+import com.vistas.FiltroVista;
+import com.vistas.ImprimirVista;
 
 /**
  *

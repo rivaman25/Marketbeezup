@@ -2,16 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package marketbeezup.vistas;
+package com.vistas;
 
-import marketbeezup.controladores.ImprimirControlador;
-import marketbeezup.controladores.ModeloTablaAlbaranesImpr;
+import com.controladores.ImprimirControlador;
+import com.controladores.ModeloTablaAlbaranesImpr;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
-import marketbeezup.modelos.Articulo;
+import com.modelos.Articulo;
 
 /**
  *
