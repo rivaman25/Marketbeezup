@@ -197,7 +197,7 @@
 			</frame>
 			<image evaluationTime="Page">
 				<reportElement x="2" y="40" width="180" height="60" uuid="6d65678a-6e17-4131-82c2-398750267e42"/>
-				<imageExpression><![CDATA[(($F{marketplace}.equalsIgnoreCase( "WEB")) ? "Bombay_logo.png" : "Electromueble_logo.png")]]></imageExpression>
+				<imageExpression><![CDATA[(($F{marketplace}.equalsIgnoreCase( "WEB")) ? "scr/informes/Bombay_logo.png" : "scr/informes/Electromueble_logo.png")]]></imageExpression>
 			</image>
 			<textField pattern="d MMMM yyyy">
 				<reportElement x="362" y="40" width="150" height="20" uuid="116d4254-ea64-47ec-9e51-668b24f7ba63"/>
