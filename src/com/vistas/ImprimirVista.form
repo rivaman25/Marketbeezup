@@ -114,18 +114,18 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Fecha"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="14" style="1"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="Fecha"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Id Pedido"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="14" style="1"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="Id Pedido"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -195,8 +195,8 @@
               <Image iconType="3" name="/com/imagenes/Imprimir32(1).png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Imprimir"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="toolTipText" type="java.lang.String" value="Imprimir Albaranes"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
         </Component>
@@ -206,8 +206,8 @@
               <Image iconType="3" name="/com/imagenes/Filtrar32.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Filtrar"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="toolTipText" type="java.lang.String" value="Filtrar"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
         </Component>
@@ -217,8 +217,8 @@
               <Image iconType="3" name="/com/imagenes/Limipiar32.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Limpiar"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="toolTipText" type="java.lang.String" value="Limpiar Filtro"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
         </Component>
@@ -228,8 +228,8 @@
               <Image iconType="3" name="/com/imagenes/Cancelar32.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Salir"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="toolTipText" type="java.lang.String" value="Salir"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
         </Component>
@@ -239,8 +239,8 @@
               <Image iconType="3" name="/com/imagenes/Check.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Marcar"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="toolTipText" type="java.lang.String" value="Marcar como Impreso"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
         </Component>
@@ -262,6 +262,7 @@
               <TableColumnModel selectionModel="0"/>
             </Property>
             <Property name="rowSelectionAllowed" type="boolean" value="false"/>
+            <Property name="showGrid" type="boolean" value="true"/>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>

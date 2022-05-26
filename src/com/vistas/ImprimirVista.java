@@ -275,6 +275,7 @@ public class ImprimirVista extends javax.swing.JDialog {
             }
         ));
         tablaAlbaranesImpr.setRowSelectionAllowed(false);
+        tablaAlbaranesImpr.setShowGrid(true);
         jScrollPane2.setViewportView(tablaAlbaranesImpr);
 
         getContentPane().add(jScrollPane2);

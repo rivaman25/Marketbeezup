@@ -48,6 +48,7 @@ public class PedidosVista extends javax.swing.JFrame {
     }
 
     public void actualizaTabla() {
+        articulos.clear();
         for (Pedido pedido : PedidosControlador.getPedidos()) {
             articulos.addAll(pedido.getArticulos());
         }
@@ -125,16 +126,12 @@ public class PedidosVista extends javax.swing.JFrame {
     }
 
     public Pedido obtenerPedidoSeleccionado() {
-        System.out.println(tablaPedidos.getSelectedRow());
-        System.out.println(articulos.get(tablaPedidos.getSelectedRow()).getMarketplace());
-        System.out.println(articulos.get(tablaPedidos.getSelectedRow()).getIdPedido());
-        /*if (tablaPedidos.getSelectedRow() == -1) {
+        if (tablaPedidos.getSelectedRow() == -1) {
             return null;
         } else {
             return PedidosControlador.getPedidos().get(Pedido.existePedido(articulos.get(tablaPedidos.getSelectedRow()).getMarketplace(),
                     articulos.get(tablaPedidos.getSelectedRow()).getIdPedido(), PedidosControlador.getPedidos()));
-        }*/
-        return null;
+        }
     }
 
     /**
