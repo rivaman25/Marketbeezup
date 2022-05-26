@@ -4,19 +4,19 @@
  */
 package com.vistas;
 
+import com.controladores.ModeloTablaArticulos;
 import com.controladores.PedidoControlador;
 import com.modelos.Articulo;
 import com.modelos.Pedido;
-import java.util.List;
 
 /**
  *
  * @author Manolo
  */
 public class PedidoVista extends javax.swing.JDialog {
-    
+
     private Pedido pedido;
-    private List<Articulo> articulos;
+    private ModeloTablaArticulos modeloTablaArticulos;
 
     /**
      * Creates new form Pedido
@@ -25,29 +25,131 @@ public class PedidoVista extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
-    
+
     public void actualizarVista(Pedido pedido) {
         this.pedido = pedido;
         textoTienda.setText(pedido.getTienda());
         textoMarketplace.setText(pedido.getMarketplace());
         textoIdPedido.setText(pedido.getIdPedido());
-        selectorFechaPedido.setDate(new java.util.Date(pedido.getFechaPedido().getTime()));
+        if (pedido.getFechaPedido() != null) {
+            selectorFechaPedido.setDate(new java.util.Date(pedido.getFechaPedido().getTime()));
+        }
         textoNIF.setText(pedido.getDni());
         textoNombre.setText(pedido.getNombreApellidos());
-        
+        textoDireccion.setText(pedido.getDireccion());
+        textoCP.setText(pedido.getDireccion());
+        textoPoblacion.setText(pedido.getPoblacion());
+        textoProvincia.setText(pedido.getProvincia());
+        textoTelefono.setText(pedido.getTelefono());
+        textoEmail.setText(pedido.getEmail());
+        modeloTablaArticulos = new ModeloTablaArticulos(pedido.getArticulos());
+        tablaArticulos.setModel(modeloTablaArticulos);
     }
-    
+
+    public void actualizarVistaArticulo(Articulo articulo) {
+        textoIdArticulo.setText(articulo.getCodigoArticulo());
+        textoDescripcion.setText(articulo.getDescripcion());
+        textoUnidades.setText(String.valueOf(articulo.getCantidad()));
+        textoPrecio.setText(String.valueOf(articulo.getPrecio()));
+    }
+
     public void setControlador(PedidoControlador pedidoControlador) {
         botonGuardar.addActionListener(pedidoControlador);
         botonGuardar.setActionCommand("Guardar");
+        botonRegistrarArticulo.addActionListener(pedidoControlador);
+        botonRegistrarArticulo.setActionCommand("Registrar");
+        botonEditar.addActionListener(pedidoControlador);
+        botonEditar.setActionCommand("Editar");
+        botonBorrar.addActionListener(pedidoControlador);
+        botonBorrar.setActionCommand("Borrar");
     }
-    
-    public Articulo obtenerArticulo() {
+
+    public void muestraMensaje(String mensaje) {
+        etiquetaMensaje.setText(mensaje);
+    }
+
+    public Articulo obtenerArticulo() throws NumberFormatException {
         Articulo articulo = new Articulo();
+        articulo.setCodigoArticulo(textoIdArticulo.getText());
+        articulo.setDescripcion(textoDescripcion.getText());
+        try {
+            articulo.setCantidad(Integer.valueOf(textoUnidades.getText()));
+            articulo.setPrecio(Float.valueOf(textoPrecio.getText()));
+        } catch (NumberFormatException ex) {
+            throw ex;
+        }
         return articulo;
     }
 
-    public Pedido getPedido() {
+    public void actualizarTabla() {
+        modeloTablaArticulos.setArticulos(pedido.getArticulos());
+        modeloTablaArticulos.fireTableDataChanged();
+        textoIdArticulo.setText(null);
+        textoDescripcion.setText(null);
+        textoUnidades.setText(null);
+        textoPrecio.setText(null);
+    }
+
+    public int getFilaSeleccionada() {
+        return tablaArticulos.getSelectedRow();
+    }
+
+    public Pedido getPedido() throws NumberFormatException {
+        if (!textoTienda.getText().isBlank()) {
+            pedido.setTienda(textoTienda.getText());
+        }
+        if (!textoMarketplace.getText().isBlank()) {
+            pedido.setMarketplace(textoMarketplace.getText());
+        }
+        if (!textoIdPedido.getText().isBlank()) {
+            pedido.setIdPedido(textoIdPedido.getText());
+        }
+        if (selectorFechaPedido.getDate() != null) {
+            pedido.setFechaPedido(new java.sql.Timestamp(selectorFechaPedido.getDate().getTime()));
+        }
+        if (!textoNIF.getText().isBlank()) {
+            pedido.setDni(textoNIF.getText());
+        }
+        if (!textoNombre.getText().isBlank()) {
+            pedido.setNombreApellidos(textoNombre.getText());
+        }
+        if (!textoDireccion.getText().isBlank()) {
+            pedido.setDireccion(textoDireccion.getText());
+        }
+        if (!textoCP.getText().isBlank()) {
+            pedido.setCp(textoCP.getText());
+        }
+        if (!textoPoblacion.getText().isBlank()) {
+            pedido.setPoblacion(textoPoblacion.getText());
+        }
+        if (!textoProvincia.getText().isBlank()) {
+            pedido.setProvincia(textoProvincia.getText());
+        }
+        if (!textoTelefono.getText().isBlank()) {
+            pedido.setTelefono(textoTelefono.getText());
+        }
+        if (!textoEmail.getText().isBlank()) {
+            pedido.setEmail(textoEmail.getText());
+        }
+        try {
+            if (textoComision.getText().isBlank()) {
+                pedido.setComision(0);
+            } else {
+                pedido.setComision(Float.valueOf(textoComision.getText()));
+            }
+            if (textoPorte.getText().isBlank()) {
+                pedido.setCostePorte(0);
+            } else {
+                pedido.setCostePorte(Float.valueOf(textoPorte.getText()));
+            }
+            if (textoImporte.getText().isBlank()) {
+                pedido.setImporte(0);
+            } else {
+                pedido.setImporte(Float.valueOf(textoImporte.getText()));
+            }
+        } catch (NumberFormatException ex) {
+            throw ex;
+        }
         return pedido;
     }
 
@@ -55,12 +157,12 @@ public class PedidoVista extends javax.swing.JDialog {
         this.pedido = pedido;
     }
 
-    public List<Articulo> getArticulos() {
-        return articulos;
+    public ModeloTablaArticulos getModeloTablaArticulos() {
+        return modeloTablaArticulos;
     }
 
-    public void setArticulos(List<Articulo> articulos) {
-        this.articulos = articulos;
+    public void setModeloTablaArticulos(ModeloTablaArticulos modeloTablaArticulos) {
+        this.modeloTablaArticulos = modeloTablaArticulos;
     }
 
     /**
@@ -73,7 +175,6 @@ public class PedidoVista extends javax.swing.JDialog {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        panelNuevoPedido = new javax.swing.JPanel();
         panelPedido = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         textoTienda = new javax.swing.JTextField();
@@ -99,6 +200,12 @@ public class PedidoVista extends javax.swing.JDialog {
         textoTelefono = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         textoEmail = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        textoComision = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        textoPorte = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        textoImporte = new javax.swing.JTextField();
         panelArticulo = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         textoIdArticulo = new javax.swing.JTextField();
@@ -108,16 +215,13 @@ public class PedidoVista extends javax.swing.JDialog {
         textoPrecio = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         textoUnidades = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
-        textoComision = new javax.swing.JTextField();
-        jLabel18 = new javax.swing.JLabel();
-        textoPorte = new javax.swing.JTextField();
-        botonRegistrarArtículo = new javax.swing.JButton();
+        botonRegistrarArticulo = new javax.swing.JButton();
         panelListaPedidos = new javax.swing.JPanel();
         botonEditar = new javax.swing.JButton();
         botonBorrar = new javax.swing.JButton();
         panelScrollArticulos = new javax.swing.JScrollPane();
         tablaArticulos = new javax.swing.JTable();
+        etiquetaMensaje = new javax.swing.JLabel();
         panelBotones = new javax.swing.JPanel();
         botonGuardar = new javax.swing.JButton();
         botonCancelar = new javax.swing.JButton();
@@ -126,9 +230,10 @@ public class PedidoVista extends javax.swing.JDialog {
         setTitle("Nuevo Pedido");
         setResizable(false);
 
-        panelNuevoPedido.setLayout(new javax.swing.BoxLayout(panelNuevoPedido, javax.swing.BoxLayout.Y_AXIS));
-
         panelPedido.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pedido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
+        panelPedido.setMaximumSize(new java.awt.Dimension(740, 218));
+        panelPedido.setMinimumSize(new java.awt.Dimension(740, 218));
+        panelPedido.setPreferredSize(new java.awt.Dimension(740, 218));
         panelPedido.setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -136,7 +241,7 @@ public class PedidoVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         panelPedido.add(jLabel1, gridBagConstraints);
 
@@ -149,29 +254,30 @@ public class PedidoVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 250;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 5);
         panelPedido.add(textoTienda, gridBagConstraints);
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel2.setText("Marketplace");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(5, 20, 5, 5);
         panelPedido.add(jLabel2, gridBagConstraints);
 
         textoMarketplace.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 65;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 5);
         panelPedido.add(textoMarketplace, gridBagConstraints);
 
         jLabel3.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -179,7 +285,7 @@ public class PedidoVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
         panelPedido.add(jLabel3, gridBagConstraints);
 
@@ -187,28 +293,30 @@ public class PedidoVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 250;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         panelPedido.add(textoIdPedido, gridBagConstraints);
 
         jLabel4.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel4.setText("Fecha");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 5);
         panelPedido.add(jLabel4, gridBagConstraints);
 
         selectorFechaPedido.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 65;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         panelPedido.add(selectorFechaPedido, gridBagConstraints);
 
         jLabel5.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -216,7 +324,7 @@ public class PedidoVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
         panelPedido.add(jLabel5, gridBagConstraints);
 
@@ -224,30 +332,31 @@ public class PedidoVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 250;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         panelPedido.add(textoNIF, gridBagConstraints);
 
         jLabel6.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel6.setText("Nombre");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 5);
         panelPedido.add(jLabel6, gridBagConstraints);
 
         textoNombre.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 250;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         panelPedido.add(textoNombre, gridBagConstraints);
 
         jLabel7.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -255,7 +364,7 @@ public class PedidoVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
         panelPedido.add(jLabel7, gridBagConstraints);
 
@@ -268,30 +377,31 @@ public class PedidoVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 250;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         panelPedido.add(textoDireccion, gridBagConstraints);
 
         jLabel8.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel8.setText("Código Postal");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 5);
         panelPedido.add(jLabel8, gridBagConstraints);
 
         textoCP.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 250;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         panelPedido.add(textoCP, gridBagConstraints);
 
         jLabel9.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -299,7 +409,7 @@ public class PedidoVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
         panelPedido.add(jLabel9, gridBagConstraints);
 
@@ -307,30 +417,31 @@ public class PedidoVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 250;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         panelPedido.add(textoPoblacion, gridBagConstraints);
 
         jLabel10.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel10.setText("Provincia");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 5);
         panelPedido.add(jLabel10, gridBagConstraints);
 
         textoProvincia.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 250;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         panelPedido.add(textoProvincia, gridBagConstraints);
 
         jLabel11.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -338,7 +449,7 @@ public class PedidoVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
         panelPedido.add(jLabel11, gridBagConstraints);
 
@@ -346,36 +457,96 @@ public class PedidoVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 250;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         panelPedido.add(textoTelefono, gridBagConstraints);
 
         jLabel12.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         jLabel12.setText("Email");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 5);
         panelPedido.add(jLabel12, gridBagConstraints);
 
         textoEmail.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 250;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         panelPedido.add(textoEmail, gridBagConstraints);
 
-        panelNuevoPedido.add(panelPedido);
+        jLabel17.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jLabel17.setText("Comisión");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
+        panelPedido.add(jLabel17, gridBagConstraints);
+
+        textoComision.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
+        panelPedido.add(textoComision, gridBagConstraints);
+
+        jLabel18.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jLabel18.setText("Porte");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 5);
+        panelPedido.add(jLabel18, gridBagConstraints);
+
+        textoPorte.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
+        panelPedido.add(textoPorte, gridBagConstraints);
+
+        jLabel19.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jLabel19.setText("Importe");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 5);
+        panelPedido.add(jLabel19, gridBagConstraints);
+
+        textoImporte.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
+        panelPedido.add(textoImporte, gridBagConstraints);
 
         panelArticulo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Artículo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Roboto", 1, 18))); // NOI18N
         panelArticulo.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        panelArticulo.setMaximumSize(new java.awt.Dimension(840, 2147483647));
+        panelArticulo.setMinimumSize(new java.awt.Dimension(840, 118));
+        panelArticulo.setPreferredSize(new java.awt.Dimension(840, 118));
         panelArticulo.setLayout(new java.awt.GridBagLayout());
 
         jLabel13.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -393,8 +564,8 @@ public class PedidoVista extends javax.swing.JDialog {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 250;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         panelArticulo.add(textoIdArticulo, gridBagConstraints);
 
@@ -415,6 +586,7 @@ public class PedidoVista extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 250;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         panelArticulo.add(textoDescripcion, gridBagConstraints);
 
@@ -432,8 +604,8 @@ public class PedidoVista extends javax.swing.JDialog {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 45;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
         panelArticulo.add(textoPrecio, gridBagConstraints);
 
@@ -442,7 +614,8 @@ public class PedidoVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 5);
         panelArticulo.add(jLabel16, gridBagConstraints);
 
@@ -451,61 +624,24 @@ public class PedidoVista extends javax.swing.JDialog {
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 45;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
         panelArticulo.add(textoUnidades, gridBagConstraints);
 
-        jLabel17.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel17.setText("Comisión");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 5);
-        panelArticulo.add(jLabel17, gridBagConstraints);
-
-        textoComision.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 45;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
-        panelArticulo.add(textoComision, gridBagConstraints);
-
-        jLabel18.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel18.setText("Porte");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 5);
-        panelArticulo.add(jLabel18, gridBagConstraints);
-
-        textoPorte.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        botonRegistrarArticulo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        botonRegistrarArticulo.setText("Registrar");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 7;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 45;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
-        panelArticulo.add(textoPorte, gridBagConstraints);
-
-        botonRegistrarArtículo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        botonRegistrarArtículo.setText("Registrar");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        panelArticulo.add(botonRegistrarArtículo, gridBagConstraints);
-
-        panelNuevoPedido.add(panelArticulo);
+        panelArticulo.add(botonRegistrarArticulo, gridBagConstraints);
 
         panelListaPedidos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lista de Artículos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Roboto", 1, 18))); // NOI18N
+        panelListaPedidos.setMaximumSize(new java.awt.Dimension(840, 2147483647));
+        panelListaPedidos.setMinimumSize(new java.awt.Dimension(840, 93));
+        panelListaPedidos.setPreferredSize(new java.awt.Dimension(840, 221));
         java.awt.GridBagLayout panelListaPedidosLayout = new java.awt.GridBagLayout();
         panelListaPedidosLayout.columnWidths = new int[] {0, 4, 0, 4, 0, 4, 0, 4, 0, 4, 0, 4, 0};
         panelListaPedidosLayout.rowHeights = new int[] {0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0};
@@ -529,29 +665,8 @@ public class PedidoVista extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         panelListaPedidos.add(botonBorrar, gridBagConstraints);
 
-        panelScrollArticulos.setPreferredSize(new java.awt.Dimension(460, 150));
-
         tablaArticulos.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        tablaArticulos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "CODIGO", "DESCRIPCIÓN", "PRECIO", "CANTIDAD"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Long.class, java.lang.Long.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        tablaArticulos.setPreferredSize(new java.awt.Dimension(400, 150));
+        tablaArticulos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         panelScrollArticulos.setViewportView(tablaArticulos);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -562,12 +677,14 @@ public class PedidoVista extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         panelListaPedidos.add(panelScrollArticulos, gridBagConstraints);
 
-        panelNuevoPedido.add(panelListaPedidos);
+        etiquetaMensaje.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        etiquetaMensaje.setForeground(java.awt.Color.red);
 
-        panelBotones.setPreferredSize(new java.awt.Dimension(728, 37));
+        panelBotones.setMaximumSize(new java.awt.Dimension(840, 37));
+        panelBotones.setMinimumSize(new java.awt.Dimension(840, 37));
+        panelBotones.setPreferredSize(new java.awt.Dimension(840, 37));
 
         botonGuardar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         botonGuardar.setText("Guardar");
@@ -577,22 +694,30 @@ public class PedidoVista extends javax.swing.JDialog {
         botonCancelar.setText("Cancelar");
         panelBotones.add(botonCancelar);
 
-        panelNuevoPedido.add(panelBotones);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(panelNuevoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(panelPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(etiquetaMensaje, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelListaPedidos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addComponent(panelBotones, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(panelNuevoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(panelPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(etiquetaMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelListaPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -656,7 +781,8 @@ public class PedidoVista extends javax.swing.JDialog {
     private javax.swing.JButton botonCancelar;
     private javax.swing.JButton botonEditar;
     private javax.swing.JButton botonGuardar;
-    private javax.swing.JButton botonRegistrarArtículo;
+    private javax.swing.JButton botonRegistrarArticulo;
+    private javax.swing.JLabel etiquetaMensaje;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -667,6 +793,7 @@ public class PedidoVista extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -678,7 +805,6 @@ public class PedidoVista extends javax.swing.JDialog {
     private javax.swing.JPanel panelArticulo;
     private javax.swing.JPanel panelBotones;
     private javax.swing.JPanel panelListaPedidos;
-    private javax.swing.JPanel panelNuevoPedido;
     private javax.swing.JPanel panelPedido;
     private javax.swing.JScrollPane panelScrollArticulos;
     private com.toedter.calendar.JDateChooser selectorFechaPedido;
@@ -690,6 +816,7 @@ public class PedidoVista extends javax.swing.JDialog {
     private javax.swing.JTextField textoEmail;
     private javax.swing.JTextField textoIdArticulo;
     private javax.swing.JTextField textoIdPedido;
+    private javax.swing.JTextField textoImporte;
     private javax.swing.JTextField textoMarketplace;
     private javax.swing.JTextField textoNIF;
     private javax.swing.JTextField textoNombre;

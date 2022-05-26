@@ -84,6 +84,9 @@ public class PedidosControlador implements ActionListener, KeyListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        PedidoVista pedidoVista;
+        Pedido pedido;
+        PedidoControlador pedidoControlador;
         try {
             switch (e.getActionCommand()) {
                 case "Filtrar":
@@ -114,10 +117,20 @@ public class PedidosControlador implements ActionListener, KeyListener {
                     imprimirControlador.actualizarVista();
                     break;
                 case "NuevoPedido":
-                    Pedido pedido = new Pedido();
-                    PedidoVista pedidoVista = new PedidoVista(pedidosVista, true);
-                    PedidoControlador pedidoControlador = new PedidoControlador(pedidoVista, pedido);
-                    
+                    pedido = new Pedido();
+                    pedidoVista = new PedidoVista(pedidosVista, true);
+                    pedidoControlador = new PedidoControlador(pedidoVista, pedido);
+                    pedidoVista.setControlador(pedidoControlador);
+                    pedidoControlador.actualizarVista();
+                    break;
+                case "EditarPedido":
+                    pedido = pedidosVista.obtenerPedidoSeleccionado();
+                    if (pedido != null) {
+                        pedidoVista = new PedidoVista(pedidosVista, true);
+                        pedidoControlador = new PedidoControlador(pedidoVista, pedido);
+                        pedidoVista.setControlador(pedidoControlador);
+                        pedidoControlador.actualizarVista();
+                    }
                     break;
             }
         } catch (Exception ex) {

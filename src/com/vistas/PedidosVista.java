@@ -11,6 +11,10 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.table.TableColumnModel;
 import com.controladores.TablaPedidosCellRenderer;
+import com.modelos.Articulo;
+import com.modelos.Pedido;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -20,7 +24,8 @@ public class PedidosVista extends javax.swing.JFrame {
 
     private ModeloTablaPedidos modeloTablaPedidos;
     private TablaPedidosCellRenderer tablaPedidosCellRender;
-    private final DefaultComboBoxModel<String> modeloComboBuscar = new DefaultComboBoxModel<>();;
+    private final DefaultComboBoxModel<String> modeloComboBuscar = new DefaultComboBoxModel<>();
+    private final List<Articulo> articulos = new ArrayList<>();
 
     /**
      * Creates new form Principal
@@ -43,6 +48,9 @@ public class PedidosVista extends javax.swing.JFrame {
     }
 
     public void actualizaTabla() {
+        for (Pedido pedido : PedidosControlador.getPedidos()) {
+            articulos.addAll(pedido.getArticulos());
+        }
         modeloTablaPedidos = new ModeloTablaPedidos(PedidosControlador.getPedidos());
         tablaPedidosCellRender = new TablaPedidosCellRenderer(PedidosControlador.getPedidos());
         tablaPedidos.setModel(modeloTablaPedidos);
@@ -89,7 +97,7 @@ public class PedidosVista extends javax.swing.JFrame {
         colModel.getColumn(33).setPreferredWidth(80); // fecha albarán
         textoBuscar.setText(null);
     }
-    
+
     public void setControlador(PedidosControlador pedidosControlador) {
         botonFiltrar.addActionListener(pedidosControlador);
         botonFiltrar.setActionCommand("Filtrar");
@@ -101,15 +109,28 @@ public class PedidosVista extends javax.swing.JFrame {
         botonImprimirAlbaran.setActionCommand("ImprimirAlbaran");
         menuImprimirAlbaran.addActionListener(pedidosControlador);
         menuImprimirAlbaran.setActionCommand("ImprimirAlbaran");
+        menuNuevoPedido.addActionListener(pedidosControlador);
+        menuNuevoPedido.setActionCommand("NuevoPedido");
+        menuEditarPedido.addActionListener(pedidosControlador);
+        menuEditarPedido.setActionCommand("EditarPedido");
         textoBuscar.addKeyListener(pedidosControlador);
     }
 
     public String getAtributoBuscar() {
         return (String) comboBuscar.getSelectedItem();
     }
-    
+
     public String getValorBuscar() {
         return textoBuscar.getText();
+    }
+
+    public Pedido obtenerPedidoSeleccionado() {
+        if (tablaPedidos.getSelectedRow() == -1) {
+            return null;
+        } else {
+            return PedidosControlador.getPedidos().get(Pedido.existePedido(articulos.get(tablaPedidos.getSelectedRow()).getMarketplace(),
+                    articulos.get(tablaPedidos.getSelectedRow()).getIdPedido(), PedidosControlador.getPedidos()));
+        }
     }
 
     /**
@@ -496,11 +517,6 @@ public class PedidosVista extends javax.swing.JFrame {
 
         menuNuevoPedido.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuNuevoPedido.setText("Nuevo");
-        menuNuevoPedido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuNuevoPedidoActionPerformed(evt);
-            }
-        });
         jMenu3.add(menuNuevoPedido);
 
         jMenuItem4.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -509,11 +525,6 @@ public class PedidosVista extends javax.swing.JFrame {
 
         menuEditarPedido.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuEditarPedido.setText("Editar");
-        menuEditarPedido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuEditarPedidoActionPerformed(evt);
-            }
-        });
         jMenu3.add(menuEditarPedido);
 
         jMenuItem3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -623,18 +634,6 @@ public class PedidosVista extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void menuNuevoPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNuevoPedidoActionPerformed
-        PedidoVista pedido = new PedidoVista(this, true);
-        pedido.setLocationRelativeTo(null);
-        pedido.setVisible(true);
-    }//GEN-LAST:event_menuNuevoPedidoActionPerformed
-
-    private void menuEditarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditarPedidoActionPerformed
-        PedidoVista pedido = new PedidoVista(this, true);
-        pedido.setLocationRelativeTo(null);
-        pedido.setVisible(true);
-    }//GEN-LAST:event_menuEditarPedidoActionPerformed
 
     private void menuNuevoEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNuevoEnvioActionPerformed
         EnvioVista envio = new EnvioVista(this, true);

@@ -74,6 +74,15 @@ public class Articulo {
         this.albaranVenta.setIdPedido(idPedido);
         this.albaranVenta.setMarketplace(marketplace);
     }
+    
+    public static int existeArticulo(String idArticulo, List<Articulo> articulos) {
+        for (Articulo articulo : articulos) {
+            if (articulo.getCodigoArticulo().equalsIgnoreCase(idArticulo)) {
+                return articulos.indexOf(articulo);
+            }
+        }
+        return -1;
+    }
 
     public AlbaranVenta getAlbaranVenta() {
         return albaranVenta;
