@@ -122,6 +122,10 @@ public class PedidosControlador implements ActionListener, KeyListener {
                     pedidoControlador = new PedidoControlador(pedidoVista, pedido);
                     pedidoVista.setControlador(pedidoControlador);
                     pedidoControlador.actualizarVista();
+                    if (pedidoControlador.isGuardar()) {
+                        obtenerPedidos();
+                        actualizarVista();
+                    }
                     break;
                 case "EditarPedido":
                     pedido = pedidosVista.obtenerPedidoSeleccionado();

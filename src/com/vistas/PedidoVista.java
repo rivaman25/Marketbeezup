@@ -70,11 +70,23 @@ public class PedidoVista extends javax.swing.JDialog {
 
     public Articulo obtenerArticulo() throws NumberFormatException {
         Articulo articulo = new Articulo();
-        articulo.setCodigoArticulo(textoIdArticulo.getText());
-        articulo.setDescripcion(textoDescripcion.getText());
+        if (!textoIdArticulo.getText().isBlank()) {
+            articulo.setCodigoArticulo(textoIdArticulo.getText());
+        }
+        if (!textoDescripcion.getText().isBlank()) {
+            articulo.setDescripcion(textoDescripcion.getText());
+        }
         try {
-            articulo.setCantidad(Integer.valueOf(textoUnidades.getText()));
-            articulo.setPrecio(Float.valueOf(textoPrecio.getText()));
+            if (textoUnidades.getText().isBlank()) {
+                articulo.setCantidad(0);
+            } else {
+                articulo.setCantidad(Integer.valueOf(textoUnidades.getText()));
+            }
+            if (textoPrecio.getText().isBlank()) {
+                articulo.setPrecio(0);
+            } else {
+                articulo.setPrecio(Float.valueOf(textoPrecio.getText()));
+            }
         } catch (NumberFormatException ex) {
             throw ex;
         }
@@ -93,8 +105,8 @@ public class PedidoVista extends javax.swing.JDialog {
     public int getFilaSeleccionada() {
         return tablaArticulos.getSelectedRow();
     }
-
-    public Pedido getPedido() throws NumberFormatException {
+    
+    public Pedido obtenerPedido() throws NumberFormatException {
         if (!textoTienda.getText().isBlank()) {
             pedido.setTienda(textoTienda.getText());
         }
@@ -150,6 +162,10 @@ public class PedidoVista extends javax.swing.JDialog {
         } catch (NumberFormatException ex) {
             throw ex;
         }
+        return pedido;
+    }
+
+    public Pedido getPedido() {
         return pedido;
     }
 
@@ -219,9 +235,9 @@ public class PedidoVista extends javax.swing.JDialog {
         panelListaPedidos = new javax.swing.JPanel();
         botonEditar = new javax.swing.JButton();
         botonBorrar = new javax.swing.JButton();
+        etiquetaMensaje = new javax.swing.JLabel();
         panelScrollArticulos = new javax.swing.JScrollPane();
         tablaArticulos = new javax.swing.JTable();
-        etiquetaMensaje = new javax.swing.JLabel();
         panelBotones = new javax.swing.JPanel();
         botonGuardar = new javax.swing.JButton();
         botonCancelar = new javax.swing.JButton();
@@ -665,8 +681,13 @@ public class PedidoVista extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         panelListaPedidos.add(botonBorrar, gridBagConstraints);
 
+        etiquetaMensaje.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        etiquetaMensaje.setForeground(java.awt.Color.red);
+        panelListaPedidos.add(etiquetaMensaje, new java.awt.GridBagConstraints());
+
         tablaArticulos.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         tablaArticulos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tablaArticulos.setShowGrid(true);
         panelScrollArticulos.setViewportView(tablaArticulos);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -678,9 +699,6 @@ public class PedidoVista extends javax.swing.JDialog {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         panelListaPedidos.add(panelScrollArticulos, gridBagConstraints);
-
-        etiquetaMensaje.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        etiquetaMensaje.setForeground(java.awt.Color.red);
 
         panelBotones.setMaximumSize(new java.awt.Dimension(840, 37));
         panelBotones.setMinimumSize(new java.awt.Dimension(840, 37));
@@ -698,20 +716,16 @@ public class PedidoVista extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(panelPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(panelPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panelArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(etiquetaMensaje, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelListaPedidos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(panelListaPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
             .addComponent(panelBotones, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(etiquetaMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

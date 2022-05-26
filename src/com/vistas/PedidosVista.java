@@ -125,12 +125,16 @@ public class PedidosVista extends javax.swing.JFrame {
     }
 
     public Pedido obtenerPedidoSeleccionado() {
-        if (tablaPedidos.getSelectedRow() == -1) {
+        System.out.println(tablaPedidos.getSelectedRow());
+        System.out.println(articulos.get(tablaPedidos.getSelectedRow()).getMarketplace());
+        System.out.println(articulos.get(tablaPedidos.getSelectedRow()).getIdPedido());
+        /*if (tablaPedidos.getSelectedRow() == -1) {
             return null;
         } else {
             return PedidosControlador.getPedidos().get(Pedido.existePedido(articulos.get(tablaPedidos.getSelectedRow()).getMarketplace(),
                     articulos.get(tablaPedidos.getSelectedRow()).getIdPedido(), PedidosControlador.getPedidos()));
-        }
+        }*/
+        return null;
     }
 
     /**

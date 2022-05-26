@@ -23,18 +23,24 @@ public class PedidoControlador implements ActionListener {
 
     private PedidoVista pedidoVista;
     private Pedido pedido;
-    DAOPedido daoPedido;
+    private final DAOPedido daoPedido;
+    private boolean guardar;
 
     public PedidoControlador(PedidoVista pedidoVista, Pedido pedido) {
         this.pedidoVista = pedidoVista;
         this.pedido = pedido;
         daoPedido = new DAOPedidoImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
+        guardar = false;
     }
 
     public void actualizarVista() {
         pedidoVista.actualizarVista(pedido);
         pedidoVista.setLocationRelativeTo(null);
         pedidoVista.setVisible(true);
+    }
+    
+    public boolean isGuardar() {
+        return guardar;
     }
 
     @Override
@@ -44,81 +50,94 @@ public class PedidoControlador implements ActionListener {
         switch (e.getActionCommand()) {
             case "Guardar":
                 try {
-                pedido = pedidoVista.getPedido();
-                if (pedido.getTienda() == null) {
-                    pedidoVista.muestraMensaje("Introduzca un valor para el campo Tienda");
-                    return;
-                }
-                if (pedido.getMarketplace() == null) {
-                    pedidoVista.muestraMensaje("Introduzca un valor para el campo Marketplace");
-                    return;
-                }
-                if (pedido.getIdPedido() == null) {
-                    pedidoVista.muestraMensaje("Introduzca un valor para el campo IdPedido");
-                    return;
-                }
-                if (pedido.getFechaPedido() == null) {
-                    pedidoVista.muestraMensaje("Introduzca un valor para el campo Fecha Pedido");
-                    return;
-                }
-                if (pedido.getNombreApellidos() == null) {
-                    pedidoVista.muestraMensaje("Introduzca un valor para el campo Nombre");
-                    return;
-                }
-                if (pedido.getDireccion() == null) {
-                    pedidoVista.muestraMensaje("Introduzca un valor para el campo Dirección");
-                    return;
-                }
-                if (pedido.getCp() == null) {
-                    pedidoVista.muestraMensaje("Introduzca un valor para el campo CP");
-                    return;
-                }
-                if (pedido.getArticulos().isEmpty()) {
-                    pedidoVista.muestraMensaje("Introduzca al menos un articulo para este pedido");
-                    return;
-                }
-                if (Pedido.existePedido(pedido.getMarketplace(), pedido.getIdPedido(), PedidosControlador.getPedidos()) == -1) {
-                    try {
-                        daoPedido.registrar(pedido);
-                    } catch (Exception ex) {
-                        Logger.getLogger(PedidoControlador.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                } else {
-                    try {
-                        if (JOptionPane.showConfirmDialog(pedidoVista, "El pedido existe, ¿Desea modificarlo?", "Modificar Pedido", JOptionPane.OK_CANCEL_OPTION) == 0) {
-                            daoPedido.modificar(pedido);
-                        }
-                    } catch (Exception ex) {
-
-                    }
-                }
+                pedido = pedidoVista.obtenerPedido();
             } catch (NumberFormatException ex) {
                 pedidoVista.muestraMensaje("Introduzca un valor numérico válido");
+                return;
+            }
+            if (pedido.getTienda() == null) {
+                pedidoVista.muestraMensaje("Introduzca un valor para el campo Tienda");
+                return;
+            }
+            if (pedido.getMarketplace() == null) {
+                pedidoVista.muestraMensaje("Introduzca un valor para el campo Marketplace");
+                return;
+            }
+            if (pedido.getIdPedido() == null) {
+                pedidoVista.muestraMensaje("Introduzca un valor para el campo IdPedido");
+                return;
+            }
+            if (pedido.getFechaPedido() == null) {
+                pedidoVista.muestraMensaje("Introduzca un valor para el campo Fecha Pedido");
+                return;
+            }
+            if (pedido.getNombreApellidos() == null) {
+                pedidoVista.muestraMensaje("Introduzca un valor para el campo Nombre");
+                return;
+            }
+            if (pedido.getDireccion() == null) {
+                pedidoVista.muestraMensaje("Introduzca un valor para el campo Dirección");
+                return;
+            }
+            if (pedido.getCp() == null) {
+                pedidoVista.muestraMensaje("Introduzca un valor para el campo CP");
+                return;
+            }
+            if (pedido.getArticulos().isEmpty()) {
+                pedidoVista.muestraMensaje("Introduzca al menos un articulo para este pedido");
+                return;
+            }
+            // Registro para cada artículo del pedido el marketplace y el idPedido
+            for (Articulo art : pedido.getArticulos()) {
+                art.setIdPedido(pedido.getIdPedido());
+                art.setMarketplace(pedido.getMarketplace());
+            }
+            if (Pedido.existePedido(pedido.getMarketplace(), pedido.getIdPedido(), PedidosControlador.getPedidos()) == -1) {
+                try {
+                    daoPedido.registrar(pedido);
+                    guardar = true;
+                    pedidoVista.dispose();
+                } catch (Exception ex) {
+                    Logger.getLogger(PedidoControlador.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                try {
+                    if (JOptionPane.showConfirmDialog(pedidoVista, "El pedido existe, ¿Desea modificarlo?", "Modificar Pedido", JOptionPane.OK_CANCEL_OPTION) == 0) {
+                        daoPedido.modificar(pedido);
+                        guardar = true;
+                        pedidoVista.dispose();
+                    }
+                } catch (Exception ex) {
+
+                }
             }
             break;
             case "Registrar":
                 try {
                 articulo = pedidoVista.obtenerArticulo();
-                if (articulo.getCodigoArticulo() == null || articulo.getDescripcion() == null) {
-                    JOptionPane.showMessageDialog(pedidoVista, "Introduzca un valor para IdPedido o Descripción", "Error", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    if (!articulo.getCodigoArticulo().isBlank() & !articulo.getDescripcion().isBlank()) {
-                        fila = Articulo.existeArticulo(articulo.getCodigoArticulo(), pedidoVista.getPedido().getArticulos());
-                        if (fila == -1) {
-                            pedidoVista.getPedido().NuevoArticulo(articulo);
-                        } else {
-                            pedidoVista.getPedido().getArticulos().get(fila).setDescripcion(articulo.getDescripcion());
-                            pedidoVista.getPedido().getArticulos().get(fila).setCantidad(articulo.getCantidad());
-                            pedidoVista.getPedido().getArticulos().get(fila).setPrecio(articulo.getPrecio());
-                        }
-                        pedidoVista.actualizarTabla();
-                    } else {
-                        JOptionPane.showMessageDialog(pedidoVista, "Introduzca un valor para IdPedido o Descripción", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
+                articulo.setEstado("NUEVO");
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(pedidoVista, "Introduzca un valor numérico válido en la cantidad o el precio", "Error", JOptionPane.ERROR_MESSAGE);
+                pedidoVista.muestraMensaje("Introduzca un valor numérico válido en la cantidad o el precio");
+                return;
             }
+
+            if (articulo.getCodigoArticulo() == null) {
+                pedidoVista.muestraMensaje("Introduzca un valor para el campo Código de Artículo");
+                return;
+            }
+            if (articulo.getDescripcion() == null) {
+                pedidoVista.muestraMensaje("Introduzca un valor para el campo Descripción");
+                return;
+            }
+            fila = Articulo.existeArticulo(articulo.getCodigoArticulo(), pedidoVista.getPedido().getArticulos());
+            if (fila == -1) {
+                pedidoVista.getPedido().NuevoArticulo(articulo);
+            } else {
+                pedidoVista.getPedido().getArticulos().get(fila).setDescripcion(articulo.getDescripcion());
+                pedidoVista.getPedido().getArticulos().get(fila).setCantidad(articulo.getCantidad());
+                pedidoVista.getPedido().getArticulos().get(fila).setPrecio(articulo.getPrecio());
+            }
+            pedidoVista.actualizarTabla();
             break;
             case "Editar":
                 fila = pedidoVista.getFilaSeleccionada();
