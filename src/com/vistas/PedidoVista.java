@@ -37,11 +37,14 @@ public class PedidoVista extends javax.swing.JDialog {
         textoNIF.setText(pedido.getDni());
         textoNombre.setText(pedido.getNombreApellidos());
         textoDireccion.setText(pedido.getDireccion());
-        textoCP.setText(pedido.getDireccion());
+        textoCP.setText(pedido.getCp());
         textoPoblacion.setText(pedido.getPoblacion());
         textoProvincia.setText(pedido.getProvincia());
         textoTelefono.setText(pedido.getTelefono());
         textoEmail.setText(pedido.getEmail());
+        textoImporte.setText(String.valueOf(pedido.getImporte()));
+        textoComision.setText(String.valueOf(pedido.getComision()));
+        textoPorte.setText(String.valueOf(pedido.getCostePorte()));
         modeloTablaArticulos = new ModeloTablaArticulos(pedido.getArticulos());
         tablaArticulos.setModel(modeloTablaArticulos);
     }

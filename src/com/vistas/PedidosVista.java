@@ -80,7 +80,7 @@ public class PedidosVista extends javax.swing.JFrame {
         colModel.getColumn(15).setPreferredWidth(60); // unidades
         colModel.getColumn(16).setPreferredWidth(55); // importe
         colModel.getColumn(17).setPreferredWidth(60); // comision
-        colModel.getColumn(18).setPreferredWidth(30); // porte
+        colModel.getColumn(18).setPreferredWidth(35); // porte
         colModel.getColumn(19).setPreferredWidth(50); // existe
         colModel.getColumn(20).setPreferredWidth(40); // observaciones
         colModel.getColumn(21).setPreferredWidth(135); // albarán impreso

@@ -243,13 +243,40 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
     public void modificar(Pedido pedido) throws Exception {
         try {
             this.openConnection();
-            PreparedStatement pstm = this.getConnection().prepareStatement(
-                    "UPDATE Pedidos SET tienda = ?, fechaPedido = ? WHERE "
-                    + "marketplace = ? AND idPedido = ?");
+            PreparedStatement pstm = this.getConnection().prepareStatement("""
+                UPDATE Pedidos SET 
+                    pedidos.tienda  = ?, 
+                    pedidos.fechaPedido = ?, 
+                    pedidos.dni = ?, 
+                    pedidos.nombreApellidos = ?, 
+                    pedidos.direccion = ?, 
+                    pedidos.cp = ?, 
+                    pedidos.poblacion = ?, 
+                    pedidos.provincia = ?, 
+                    pedidos.telefono = ?, 
+                    pedidos.email = ?, 
+                    pedidos.importe = ?, 
+                    pedidos.comision = ?, 
+                    pedidos.costePorte = ? 
+                WHERE 
+                    pedidos.marketplace = ? AND 
+                    pedidos.idPedido = ?;
+                """);
             pstm.setString(1, pedido.getTienda());
             pstm.setTimestamp(2, pedido.getFechaPedido());
-            pstm.setString(3, pedido.getMarketplace());
-            pstm.setString(4, pedido.getIdPedido());
+            pstm.setString(3, pedido.getDni());
+            pstm.setString(4, pedido.getNombreApellidos());
+            pstm.setString(5, pedido.getDireccion());
+            pstm.setString(6, pedido.getCp());
+            pstm.setString(7, pedido.getPoblacion());
+            pstm.setString(8, pedido.getProvincia());
+            pstm.setString(9, pedido.getTelefono());
+            pstm.setString(10, pedido.getEmail());
+            pstm.setFloat(11, pedido.getImporte());
+            pstm.setFloat(12, pedido.getComision());
+            pstm.setFloat(13, pedido.getCostePorte());
+            pstm.setString(14, pedido.getMarketplace());
+            pstm.setString(15, pedido.getIdPedido());
             pstm.executeUpdate();
             pstm.close();
         } catch (SQLException ex) {
