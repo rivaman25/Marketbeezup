@@ -49,7 +49,7 @@ public class PedidoControlador implements ActionListener {
         switch (e.getActionCommand()) {
             case "Guardar":
                 try {
-                pedido = pedidoVista.obtenerPedido();
+                pedidoVista.obtenerPedido();
             } catch (NumberFormatException ex) {
                 pedidoVista.muestraMensaje("Introduzca un valor numérico válido");
                 return;
@@ -126,13 +126,13 @@ public class PedidoControlador implements ActionListener {
                 pedidoVista.muestraMensaje("Introduzca un valor para el campo Descripción");
                 return;
             }
-            fila = Articulo.existeArticulo(articulo.getCodigoArticulo(), pedidoVista.getPedido().getArticulos());
+            fila = Articulo.existeArticulo(articulo.getCodigoArticulo(), pedido.getArticulos());
             if (fila == -1) {
-                pedidoVista.getPedido().NuevoArticulo(articulo);
+                pedido.NuevoArticulo(articulo);
             } else {
-                pedidoVista.getPedido().getArticulos().get(fila).setDescripcion(articulo.getDescripcion());
-                pedidoVista.getPedido().getArticulos().get(fila).setCantidad(articulo.getCantidad());
-                pedidoVista.getPedido().getArticulos().get(fila).setPrecio(articulo.getPrecio());
+                pedido.getArticulos().get(fila).setDescripcion(articulo.getDescripcion());
+                pedido.getArticulos().get(fila).setCantidad(articulo.getCantidad());
+                pedido.getArticulos().get(fila).setPrecio(articulo.getPrecio());
             }
             pedidoVista.actualizarTabla();
             break;
