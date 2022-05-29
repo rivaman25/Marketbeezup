@@ -21,6 +21,8 @@ public interface DAOPedido extends CRUD<Pedido> {
     public List<Pedido> listar(String atributo, String valor) throws Exception;
 
     public List<Pedido> listar(Filtro filtros) throws Exception;
+    
+    public Pedido obtener(String marketplace, String idPedido) throws Exception;
 
     public void registrar(List<Pedido> pedidos) throws Exception;
 

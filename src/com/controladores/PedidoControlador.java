@@ -13,7 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -38,7 +37,7 @@ public class PedidoControlador implements ActionListener {
         pedidoVista.setLocationRelativeTo(null);
         pedidoVista.setVisible(true);
     }
-    
+
     public boolean isGuardar() {
         return guardar;
     }
@@ -92,24 +91,22 @@ public class PedidoControlador implements ActionListener {
                 art.setIdPedido(pedido.getIdPedido());
                 art.setMarketplace(pedido.getMarketplace());
             }
-            if (Pedido.existePedido(pedido.getMarketplace(), pedido.getIdPedido(), PedidosControlador.getPedidos()) == -1) {
-                try {
+            try {
+                if (pedidoVista.isEditar()) {
+                    daoPedido.modificar(pedido);
+                    guardar = true;
+                    pedidoVista.dispose();
+                } else if (daoPedido.obtener(pedido.getMarketplace(), pedido.getIdPedido()).getIdPedido() == null
+                        || daoPedido.obtener(pedido.getMarketplace(), pedido.getIdPedido()).getMarketplace() == null) {
                     daoPedido.registrar(pedido);
                     guardar = true;
                     pedidoVista.dispose();
-                } catch (Exception ex) {
-                    Logger.getLogger(PedidoControlador.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } else {
-                try {
-                    if (JOptionPane.showConfirmDialog(pedidoVista, "El pedido existe, ¿Desea modificarlo?", "Modificar Pedido", JOptionPane.OK_CANCEL_OPTION) == 0) {
-                        daoPedido.modificar(pedido);
-                        guardar = true;
-                        pedidoVista.dispose();
-                    }
-                } catch (Exception ex) {
 
+                } else {
+                    pedidoVista.muestraMensaje("El pedido existe, no se puede guardar");
                 }
+            } catch (Exception ex) {
+                Logger.getLogger(PedidoControlador.class.getName()).log(Level.SEVERE, null, ex);
             }
             break;
             case "Registrar":

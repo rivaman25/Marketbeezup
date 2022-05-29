@@ -244,7 +244,7 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
                             result.getString("idAgencia"), result.getString("codigoArticulo"),
                             result.getString("idPedido"), result.getString("marketplace"));
                 }
-                if (result.getSQLXML("idCompra") != null) {
+                if (result.getString("idCompra") != null) {
                     articulo.NuevaCompra(result.getString("idCompra"), result.getString("proveedor"),
                             result.getDate("fechaCompra"), result.getDate("fechaEntrada"), result.getString("codigoArticulo"),
                             result.getString("idPedido"), result.getString("marketplace"));
@@ -490,6 +490,25 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
             pstm.setString(1, articulo.getCodigoArticulo());
             pstm.setString(2, articulo.getIdPedido());
             pstm.setString(3, articulo.getMarketplace());
+            pstm.executeUpdate();
+            pstm.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOArticuloImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw ex;
+        } finally {
+            this.closeConnection();
+        }
+    }
+    
+    @Override
+    public void eliminar(String marketplace, String idPedido) throws Exception {
+        try {
+            this.openConnection();
+            PreparedStatement pstm = this.getConnection().prepareStatement(
+                    "DELETE FROM Articulos WHERE marketplace = ? "
+                    + "AND idPedido = ?");
+            pstm.setString(1, marketplace);
+            pstm.setString(2, idPedido);
             pstm.executeUpdate();
             pstm.close();
         } catch (SQLException ex) {

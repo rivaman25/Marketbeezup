@@ -79,6 +79,31 @@ public class Consultas {
             pedidos.marketplace
         IN 
             (""";
+    
+    static String CONSULTA_OBTENER_PEDIDO = """
+        SELECT 
+            pedidos.tienda,
+            pedidos.marketplace,
+            pedidos.idPedido,
+            pedidos.fechaPedido,
+            pedidos.dni,
+            pedidos.nombreApellidos,
+            pedidos.direccion,
+            pedidos.cp,
+            pedidos.poblacion,
+            pedidos.provincia,
+            pedidos.telefono,
+            pedidos.email,
+            pedidos.importe,
+            pedidos.comision,
+            pedidos.costePorte
+        FROM
+            pedidos
+        WHERE 
+            pedidos.marketplace = ? AND
+            pedidos.idPedido = ?
+        ORDER BY
+            pedidos.fechaPedido""";
 
     static final String CONSULTA_ARTICULOS_SOLO_CON_OBSERVACIONES = """
         SELECT 
@@ -849,8 +874,8 @@ public class Consultas {
         return consulta.toString();
     }
 
-    public static String obtenerConsultaPedidos(String atributo, String valor) {
-        return null;
+    public static String obtenerConsultaObtenerPedidos(String marketplace, String idPedido) {
+        return CONSULTA_OBTENER_PEDIDO;
     }
 
     public static String obtenerConsultaPedidos(List<Articulo> articulos) {

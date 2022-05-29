@@ -17,6 +17,7 @@ public class PedidoVista extends javax.swing.JDialog {
 
     private Pedido pedido;
     private ModeloTablaArticulos modeloTablaArticulos;
+    private boolean editar;
 
     /**
      * Creates new form Pedido
@@ -24,6 +25,7 @@ public class PedidoVista extends javax.swing.JDialog {
     public PedidoVista(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        editar = false;
     }
 
     public void actualizarVista(Pedido pedido) {
@@ -108,7 +110,7 @@ public class PedidoVista extends javax.swing.JDialog {
     public int getFilaSeleccionada() {
         return tablaArticulos.getSelectedRow();
     }
-    
+
     public Pedido obtenerPedido() throws NumberFormatException {
         if (!textoTienda.getText().isBlank()) {
             pedido.setTienda(textoTienda.getText());
@@ -182,6 +184,16 @@ public class PedidoVista extends javax.swing.JDialog {
 
     public void setModeloTablaArticulos(ModeloTablaArticulos modeloTablaArticulos) {
         this.modeloTablaArticulos = modeloTablaArticulos;
+    }
+
+    public boolean isEditar() {
+        return editar;
+    }
+
+    public void setEditar(boolean editar) {
+        this.editar = editar;
+        textoMarketplace.setEnabled(!editar);
+        textoIdPedido.setEnabled(!editar);
     }
 
     /**
@@ -265,11 +277,6 @@ public class PedidoVista extends javax.swing.JDialog {
         panelPedido.add(jLabel1, gridBagConstraints);
 
         textoTienda.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        textoTienda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textoTiendaActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -388,11 +395,6 @@ public class PedidoVista extends javax.swing.JDialog {
         panelPedido.add(jLabel7, gridBagConstraints);
 
         textoDireccion.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        textoDireccion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textoDireccionActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
@@ -650,6 +652,11 @@ public class PedidoVista extends javax.swing.JDialog {
 
         botonRegistrarArticulo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         botonRegistrarArticulo.setText("Registrar");
+        botonRegistrarArticulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRegistrarArticuloActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 7;
         gridBagConstraints.gridy = 1;
@@ -668,6 +675,11 @@ public class PedidoVista extends javax.swing.JDialog {
 
         botonEditar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         botonEditar.setText("Editar");
+        botonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEditarActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -713,6 +725,11 @@ public class PedidoVista extends javax.swing.JDialog {
 
         botonCancelar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         botonCancelar.setText("Cancelar");
+        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCancelarActionPerformed(evt);
+            }
+        });
         panelBotones.add(botonCancelar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -740,13 +757,21 @@ public class PedidoVista extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textoTiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoTiendaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textoTiendaActionPerformed
+    private void botonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEditarActionPerformed
+        if (editar) {
+            textoIdArticulo.setEnabled(false);
+        }
+    }//GEN-LAST:event_botonEditarActionPerformed
 
-    private void textoDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoDireccionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textoDireccionActionPerformed
+    private void botonRegistrarArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarArticuloActionPerformed
+        if (editar) {
+            textoIdArticulo.setEnabled(true);
+        }
+    }//GEN-LAST:event_botonRegistrarArticuloActionPerformed
+
+    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_botonCancelarActionPerformed
 
     /**
      * @param args the command line arguments

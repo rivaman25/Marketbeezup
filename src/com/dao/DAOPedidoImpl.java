@@ -137,6 +137,43 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
         return pedidos;
     }
 
+    @Override
+    public Pedido obtener(String marketplace, String idPedido) throws Exception {
+        Pedido pedido = new Pedido();
+        // DAOObservacion daoObservacion = new DAOObservacionImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
+        // DAOArticulo daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
+        try {
+            this.openConnection();
+            PreparedStatement pstm = this.getConnection().prepareStatement(
+                    Consultas.obtenerConsultaObtenerPedidos(marketplace, idPedido));
+            pstm.setString(1, marketplace);
+            pstm.setString(2, idPedido);
+            ResultSet result = pstm.executeQuery();
+            if (result.next()) {
+                pedido.setTienda(result.getString("tienda"));
+                pedido.setMarketplace(result.getString("marketplace"));
+                pedido.setIdPedido(result.getString("idPedido"));
+                pedido.setFechaPedido(result.getTimestamp("fechaPedido"));
+                pedido.setDni(result.getString("dni"));
+                pedido.setNombreApellidos(result.getString("nombreApellidos"));
+                pedido.setDireccion(result.getString("direccion"));
+                pedido.setCp(result.getString("cp"));
+                pedido.setPoblacion(result.getString("poblacion"));
+                pedido.setProvincia(result.getString("provincia"));
+                pedido.setTelefono(result.getString("telefono"));
+                pedido.setEmail(result.getString("email"));
+                pedido.setImporte(result.getFloat("importe"));
+                pedido.setComision(result.getFloat("comision"));
+                pedido.setCostePorte(result.getFloat("costePorte"));
+                // pedido.setArticulos(daoArticulo.obtener(marketplace, idPedido));
+                // pedido.setObservaciones(daoObservacion.obtener(marketplace, idPedido));
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        return pedido;
+    }
+
     /**
      * Registra un pedido en la base de datos
      *
@@ -241,6 +278,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
 
     @Override
     public void modificar(Pedido pedido) throws Exception {
+        DAOArticulo daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
         try {
             this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement("""
@@ -278,6 +316,11 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
             pstm.setString(14, pedido.getMarketplace());
             pstm.setString(15, pedido.getIdPedido());
             pstm.executeUpdate();
+            // Elimino todos los artículos del pedido
+            // Esto se hace parar poder registrar a posterior los artículos modificados o nuevos, y eliminar los que se han borrado en la edición
+            daoArticulo.eliminar(pedido.getMarketplace(), pedido.getIdPedido());
+            // Registro de nuevo los artículos modificados y nuevos
+            daoArticulo.registrar(pedido.getArticulos(), this.getConnection());
             pstm.close();
         } catch (SQLException ex) {
             Logger.getLogger(DAOPedidoImpl.class.getName()).log(Level.SEVERE, null, ex);
