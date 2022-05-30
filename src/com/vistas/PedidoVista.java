@@ -26,7 +26,7 @@ public class PedidoVista extends javax.swing.JDialog {
     public PedidoVista(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        selectorFechaPedido.getJCalendar().setForeground(Color.WHITE);
+        selectorFechaPedido.setForeground(Color.WHITE);
         selectorFechaPedido.getJCalendar().setTodayButtonVisible(true);
         selectorFechaPedido.getJCalendar().setNullDateButtonVisible(true);
         editar = false;
