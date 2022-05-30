@@ -43,6 +43,28 @@ public class Pedido {
         observaciones = new ArrayList<>();
     }
     
+    public Pedido(Pedido pedido) {
+        articulos = new ArrayList<>();
+        observaciones = new ArrayList<>();
+        articulos.addAll(pedido.getArticulos());
+        observaciones.addAll(pedido.getObservaciones());
+        tienda = pedido.getTienda();
+        marketplace = pedido.getMarketplace();
+        idPedido = pedido.getIdPedido();
+        fechaPedido = pedido.getFechaPedido();
+        dni = pedido.getDni();
+        nombreApellidos = pedido.getNombreApellidos();
+        direccion = pedido.getDireccion();
+        cp = pedido.getCp();
+        poblacion = pedido.getPoblacion();
+        provincia = pedido.getProvincia();
+        telefono = pedido.getTelefono();
+        email = pedido.getEmail();
+        comision = pedido.getComision();
+        costePorte = pedido.getCostePorte();
+        importe = pedido.getImporte();
+    }
+    
     public void NuevoArticulo(Articulo articulo) {
         articulos.add(articulo);
     }

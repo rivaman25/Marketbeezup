@@ -27,6 +27,8 @@ public interface DAOArticulo extends CRUD<Articulo> {
 
     public void registrar(List<Articulo> objetos, Connection conexion) throws Exception;
     
+    public void modificarEstado(String marketplace, String idPedido, String estado) throws Exception;
+    
     public void eliminar(String marketplace, String idPedido) throws Exception;
 
     public List<String> listarEstados() throws Exception;

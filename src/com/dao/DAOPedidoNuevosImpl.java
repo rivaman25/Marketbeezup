@@ -108,7 +108,7 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
                     articulo.setCantidad(result.getInt("Bultos"));
                     articulo.setPrecio(result.getFloat("Importe"));
                     if (result.getBoolean("Cancelado")) {
-                        articulo.setEstado("CANCELADO");
+                        articulo.setEstado("ANULADO");
                     } else {
                         if (result.getString("Estado") != null) {
                             articulo.setEstado(result.getString("Estado"));

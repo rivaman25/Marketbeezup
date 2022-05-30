@@ -6,6 +6,7 @@ package com.principal;
 
 import com.formdev.flatlaf.IntelliJTheme;
 import com.controladores.PedidosControlador;
+import com.formdev.flatlaf.intellijthemes.FlatArcIJTheme;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,8 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        IntelliJTheme.setup(Main.class.getResourceAsStream("/com/themes/Material Oceanic Contrast.theme.json"));
+        FlatArcIJTheme.setup();
+        // IntelliJTheme.setup(Main.class.getResourceAsStream("/com/themes/GitHub.theme.json"));
         try {
             List<Pedido> pedidos = new ArrayList<>();
             PedidosVista pedidosVista = new PedidosVista();
@@ -41,7 +43,7 @@ public class Main {
     /**
      * Devuelve la fecha actual con tipo java.sql.Date
      */
-    private static java.sql.Date fechaActual() {
+    public static java.sql.Date fechaActual() {
         LocalDate fecha = LocalDate.now();
         return java.sql.Date.valueOf(fecha);
     }

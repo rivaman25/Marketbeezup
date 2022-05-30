@@ -446,6 +446,26 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
             this.closeConnection();
         }
     }
+    
+    @Override
+    public void modificarEstado(String marketplace, String idPedido, String estado) throws Exception {
+        try {
+            this.openConnection();
+            PreparedStatement pstm = this.getConnection().prepareStatement(
+                    "UPDATE Articulos SET estado = ? WHERE marketplace = ? "
+                    + "AND idPedido = ?");
+            pstm.setString(1, estado);
+            pstm.setString(2, marketplace);
+            pstm.setString(3, idPedido);
+            pstm.executeUpdate();
+            pstm.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOArticuloImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw ex;
+        } finally {
+            this.closeConnection();
+        }
+    }
 
     @Override
     public void modificar(Articulo articulo) throws Exception {

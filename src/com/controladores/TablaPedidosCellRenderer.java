@@ -40,49 +40,60 @@ public class TablaPedidosCellRenderer extends DefaultTableCellRenderer {
         String idPedidoSiguiente = null;
         String marketplaceSiguiente = null;
         Color alternate = UIManager.getColor("Table.alternateRowColor");
-        if (articulos.get(row).getEstado().equals("CANCELADO")) {
-            if (isSelected) {
-                //this.setBackground(Color.GRAY);
-                this.setForeground(Color.RED);
-            } else {
-                //this.setBackground(Color.LIGHT_GRAY);
-                this.setForeground(Color.RED);
-            }
-        } else {
-            if (row < articulos.size() - 1) {
-                idPedidoSiguiente = articulos.get(row + 1).getIdPedido();
-                marketplaceSiguiente = articulos.get(row + 1).getMarketplace();
-            }
-            if (row > 0) {
-                idPedidoAnterior = articulos.get(row - 1).getIdPedido();
-                marketplaceAnterior = articulos.get(row - 1).getMarketplace();
-            }
-            if (articulos.get(row).getIdPedido().equals(idPedidoAnterior)
-                    & articulos.get(row).getMarketplace().equals(marketplaceAnterior)) {
+        switch (articulos.get(row).getEstado()) {
+            case "ANULADO":
                 if (isSelected) {
-                    // this.setBackground(Color.YELLOW);
-                    this.setForeground(Color.ORANGE);
+                    //this.setBackground(Color.GRAY);
+                    this.setForeground(Color.RED);
                 } else {
-                    // this.setBackground(Color.ORANGE);
-                    this.setForeground(Color.ORANGE);
+                    //this.setBackground(Color.LIGHT_GRAY);
+                    this.setForeground(Color.RED);
                 }
-            } else {
-                if (articulos.get(row).getIdPedido().equals(idPedidoSiguiente)
-                        & articulos.get(row).getMarketplace().equals(marketplaceSiguiente)) {
+                break;
+            case "ENTREGADO":
+                if (isSelected) {
+                    //this.setBackground(Color.GRAY);
+                    this.setForeground(Color.GREEN);
+                } else {
+                    //this.setBackground(Color.LIGHT_GRAY);
+                    this.setForeground(Color.GREEN);
+                }
+                break;
+            default:
+                if (row < articulos.size() - 1) {
+                    idPedidoSiguiente = articulos.get(row + 1).getIdPedido();
+                    marketplaceSiguiente = articulos.get(row + 1).getMarketplace();
+                }
+                if (row > 0) {
+                    idPedidoAnterior = articulos.get(row - 1).getIdPedido();
+                    marketplaceAnterior = articulos.get(row - 1).getMarketplace();
+                }
+                if (articulos.get(row).getIdPedido().equals(idPedidoAnterior)
+                        & articulos.get(row).getMarketplace().equals(marketplaceAnterior)) {
                     if (isSelected) {
                         // this.setBackground(Color.YELLOW);
-                        this.setForeground(Color.ORANGE);
+                        this.setForeground(Color.BLUE);
                     } else {
                         // this.setBackground(Color.ORANGE);
-                        this.setForeground(Color.ORANGE);
+                        this.setForeground(Color.BLUE);
                     }
                 } else {
-                    if (!isSelected) {
-                        // this.setBackground(alternate);
-                        this.setForeground(alternate);
+                    if (articulos.get(row).getIdPedido().equals(idPedidoSiguiente)
+                            & articulos.get(row).getMarketplace().equals(marketplaceSiguiente)) {
+                        if (isSelected) {
+                            // this.setBackground(Color.YELLOW);
+                            this.setForeground(Color.BLUE);
+                        } else {
+                            // this.setBackground(Color.ORANGE);
+                            this.setForeground(Color.BLUE);
+                        }
+                    } else {
+                        if (!isSelected) {
+                            // this.setBackground(alternate);
+                            this.setForeground(alternate);
+                        }
                     }
                 }
-            }
         }
         if (value instanceof java.sql.Timestamp) {
             formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");

@@ -27,7 +27,7 @@ public class PedidoControlador implements ActionListener {
 
     public PedidoControlador(PedidoVista pedidoVista, Pedido pedido) {
         this.pedidoVista = pedidoVista;
-        this.pedido = pedido;
+        this.pedido = new Pedido(pedido);
         daoPedido = new DAOPedidoImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
         guardar = false;
     }

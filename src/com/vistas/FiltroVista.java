@@ -178,6 +178,7 @@ public class FiltroVista extends javax.swing.JDialog {
         checkSinAlbaran = new javax.swing.JCheckBox();
         checkObservaciones = new javax.swing.JCheckBox();
         checkExiste = new javax.swing.JCheckBox();
+        jPanel4 = new javax.swing.JPanel();
         botonAceptar = new javax.swing.JButton();
         botonCancelar = new javax.swing.JButton();
         botonLimpiar = new javax.swing.JButton();
@@ -275,7 +276,7 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 0);
         jPanel3.add(labelFechaPedido, gridBagConstraints);
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
@@ -336,7 +337,7 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 0);
         jPanel3.add(labelFechaSalida, gridBagConstraints);
 
         jLabel3.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
@@ -399,7 +400,7 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         jPanel3.add(checkSinEnvio, gridBagConstraints);
 
         labelFechaCompra.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
@@ -409,7 +410,7 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 0);
         jPanel3.add(labelFechaCompra, gridBagConstraints);
 
         jLabel5.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
@@ -472,7 +473,7 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         jPanel3.add(checkSinCompra, gridBagConstraints);
 
         labelFechaDoc.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
@@ -482,7 +483,7 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 0);
         jPanel3.add(labelFechaDoc, gridBagConstraints);
 
         jLabel7.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
@@ -545,7 +546,7 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         jPanel3.add(checkSinTicket, gridBagConstraints);
 
         labelFechaAlbaran.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
@@ -555,7 +556,7 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 0);
         jPanel3.add(labelFechaAlbaran, gridBagConstraints);
 
         jLabel9.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
@@ -618,7 +619,7 @@ public class FiltroVista extends javax.swing.JDialog {
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         jPanel3.add(checkSinAlbaran, gridBagConstraints);
 
         checkObservaciones.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -633,20 +634,14 @@ public class FiltroVista extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(checkObservaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(checkExiste)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(checkExiste))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -659,7 +654,7 @@ public class FiltroVista extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(checkObservaciones)
                     .addComponent(checkExiste))
-                .addGap(7, 7, 7))
+                .addContainerGap())
         );
 
         botonAceptar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -669,6 +664,7 @@ public class FiltroVista extends javax.swing.JDialog {
                 botonAceptarActionPerformed(evt);
             }
         });
+        jPanel4.add(botonAceptar);
 
         botonCancelar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         botonCancelar.setText("Cerrar");
@@ -677,6 +673,7 @@ public class FiltroVista extends javax.swing.JDialog {
                 botonCancelarActionPerformed(evt);
             }
         });
+        jPanel4.add(botonCancelar);
 
         botonLimpiar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         botonLimpiar.setText("Limpiar");
@@ -685,33 +682,24 @@ public class FiltroVista extends javax.swing.JDialog {
                 botonLimpiarActionPerformed(evt);
             }
         });
+        jPanel4.add(botonLimpiar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botonAceptar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botonCancelar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botonLimpiar)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botonCancelar)
-                    .addComponent(botonLimpiar)
-                    .addComponent(botonAceptar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -914,6 +902,7 @@ public class FiltroVista extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

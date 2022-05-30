@@ -17,6 +17,7 @@ import com.dao.DAOPedidoNuevosImpl;
 import com.daoInterfaces.DAOAgencia;
 import com.daoInterfaces.DAOAlmacen;
 import com.daoInterfaces.DAOArticulo;
+import com.modelos.Articulo;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -24,9 +25,11 @@ import java.awt.event.KeyListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.modelos.Filtro;
+import com.vistas.EnvioVista;
 import com.vistas.FiltroVista;
 import com.vistas.ImprimirVista;
 import com.vistas.PedidoVista;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -86,6 +89,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         PedidoVista pedidoVista;
         Pedido pedido;
+        Articulo articulo;
         PedidoControlador pedidoControlador;
         try {
             switch (e.getActionCommand()) {
@@ -141,6 +145,35 @@ public class PedidosControlador implements ActionListener, KeyListener {
                         }
                     }
                     break;
+                case "EliminarPedido":
+                    pedido = pedidosVista.obtenerPedidoSeleccionado();
+                    if (pedido != null) {
+                        if (JOptionPane.showConfirmDialog(pedidosVista, "¿Desea eliminar el pedido seleccionado?",
+                                "Borrar Pedido", JOptionPane.OK_CANCEL_OPTION) == 0) {
+                            daoPedido.eliminar(pedido);
+                            obtenerPedidos();
+                            actualizarVista();
+                        }
+                    }
+                    break;
+                case "AnularPedido":
+                    pedido = pedidosVista.obtenerPedidoSeleccionado();
+                    if (pedido != null) {
+                        if (JOptionPane.showConfirmDialog(pedidosVista, "¿Desea anular el pedido seleccionado?",
+                                "Borrar Pedido", JOptionPane.OK_CANCEL_OPTION) == 0) {
+                            daoArticulo.modificarEstado(pedido.getMarketplace(), pedido.getIdPedido(), "ANULADO");
+                            obtenerPedidos();
+                            actualizarVista();
+                        }
+                    }
+                    break;
+                case "NuevoEnvio":
+                    articulo = pedidosVista.obtenerArticuloSeleccionado();
+                    if (articulo != null) {
+                        EnvioVista envioVista = new EnvioVista(pedidosVista, true);
+                        EnvioControlador envioControlador = new EnvioControlador(articulo, envioVista);
+                        envioControlador.actualizarVista();
+                    }
             }
         } catch (Exception ex) {
             Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
@@ -162,9 +195,11 @@ public class PedidosControlador implements ActionListener, KeyListener {
                         PedidosControlador.pedidos.clear();
                         PedidosControlador.pedidos.addAll(pedidosBuscar);
                         actualizarVista();
+
                     }
                 } catch (Exception ex) {
-                    Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(PedidosControlador.class
+                            .getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

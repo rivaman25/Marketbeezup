@@ -115,6 +115,16 @@ public class PedidosVista extends javax.swing.JFrame {
         menuEditarPedido.addActionListener(pedidosControlador);
         menuEditarPedido.setActionCommand("EditarPedido");
         textoBuscar.addKeyListener(pedidosControlador);
+        menuEliminarPedido.addActionListener(pedidosControlador);
+        menuEliminarPedido.setActionCommand("EliminarPedido");
+        menuAnularPedido.addActionListener(pedidosControlador);
+        menuAnularPedido.setActionCommand("AnularPedido");
+        botonAnularPedido.addActionListener(pedidosControlador);
+        botonAnularPedido.setActionCommand("AnularPedido");
+        menuNuevoEnvio.addActionListener(pedidosControlador);
+        menuNuevoEnvio.setActionCommand("NuevoEnvio");
+        botonNuevoEnvio.addActionListener(pedidosControlador);
+        botonNuevoEnvio.setActionCommand("NuevoEnvio");
     }
 
     public String getAtributoBuscar() {
@@ -123,6 +133,14 @@ public class PedidosVista extends javax.swing.JFrame {
 
     public String getValorBuscar() {
         return textoBuscar.getText();
+    }
+    
+    public Articulo obtenerArticuloSeleccionado() {
+        if (tablaPedidos.getSelectedRow() == -1) {
+            return null;
+        } else {
+            return articulos.get(tablaPedidos.getSelectedRow());
+        }
     }
 
     public Pedido obtenerPedidoSeleccionado() {
@@ -151,7 +169,7 @@ public class PedidosVista extends javax.swing.JFrame {
         botonImprimirAlbaran = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        botonAnularPedido = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         comboBuscar = new javax.swing.JComboBox<>();
@@ -178,8 +196,8 @@ public class PedidosVista extends javax.swing.JFrame {
         menuNuevoPedido = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         menuEditarPedido = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
+        menuEliminarPedido = new javax.swing.JMenuItem();
+        menuAnularPedido = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         menuNuevoEnvio = new javax.swing.JMenuItem();
         menuEditarEnvio = new javax.swing.JMenuItem();
@@ -235,11 +253,6 @@ public class PedidosVista extends javax.swing.JFrame {
         botonNuevoEnvio.setFocusable(false);
         botonNuevoEnvio.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonNuevoEnvio.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        botonNuevoEnvio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonNuevoEnvioActionPerformed(evt);
-            }
-        });
         jToolBar1.add(botonNuevoEnvio);
 
         botonNuevaCompra.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
@@ -288,14 +301,14 @@ public class PedidosVista extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton5);
 
-        jButton7.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Cancelar32.png"))); // NOI18N
-        jButton7.setText("Cancelar ");
-        jButton7.setToolTipText("Cancelar Pedido");
-        jButton7.setFocusable(false);
-        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton7);
+        botonAnularPedido.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        botonAnularPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Cancelar32.png"))); // NOI18N
+        botonAnularPedido.setText("Anular");
+        botonAnularPedido.setToolTipText("Anular Pedido");
+        botonAnularPedido.setFocusable(false);
+        botonAnularPedido.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        botonAnularPedido.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(botonAnularPedido);
 
         jButton6.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Observaciones32.png"))); // NOI18N
@@ -340,7 +353,7 @@ public class PedidosVista extends javax.swing.JFrame {
                 .addComponent(comboBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(356, Short.MAX_VALUE))
+                .addContainerGap(363, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -528,13 +541,13 @@ public class PedidosVista extends javax.swing.JFrame {
         menuEditarPedido.setText("Editar");
         jMenu3.add(menuEditarPedido);
 
-        jMenuItem3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jMenuItem3.setText("Borrar");
-        jMenu3.add(jMenuItem3);
+        menuEliminarPedido.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuEliminarPedido.setText("Eliminar");
+        jMenu3.add(menuEliminarPedido);
 
-        jMenuItem10.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jMenuItem10.setText("Cancelar");
-        jMenu3.add(jMenuItem10);
+        menuAnularPedido.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuAnularPedido.setText("Anular");
+        jMenu3.add(menuAnularPedido);
 
         jMenuBar1.add(jMenu3);
 
@@ -543,11 +556,6 @@ public class PedidosVista extends javax.swing.JFrame {
 
         menuNuevoEnvio.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuNuevoEnvio.setText("Nuevo");
-        menuNuevoEnvio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuNuevoEnvioActionPerformed(evt);
-            }
-        });
         jMenu4.add(menuNuevoEnvio);
 
         menuEditarEnvio.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -636,12 +644,6 @@ public class PedidosVista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void menuNuevoEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNuevoEnvioActionPerformed
-        EnvioVista envio = new EnvioVista(this, true);
-        envio.setLocationRelativeTo(null);
-        envio.setVisible(true);
-    }//GEN-LAST:event_menuNuevoEnvioActionPerformed
-
     private void menuNuevaCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNuevaCompraActionPerformed
         CompraVista compra = new CompraVista(this, true);
         compra.setLocationRelativeTo(null);
@@ -669,12 +671,6 @@ public class PedidosVista extends javax.swing.JFrame {
     private void menuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_menuSalirActionPerformed
-
-    private void botonNuevoEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNuevoEnvioActionPerformed
-        EnvioVista envio = new EnvioVista(this, true);
-        envio.setLocationRelativeTo(null);
-        envio.setVisible(true);
-    }//GEN-LAST:event_botonNuevoEnvioActionPerformed
 
     private void botonNuevaCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNuevaCompraActionPerformed
         CompraVista compra = new CompraVista(this, true);
@@ -725,6 +721,7 @@ public class PedidosVista extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonAnularPedido;
     private javax.swing.JButton botonAplicarFiltro;
     private javax.swing.JButton botonFiltrar;
     private javax.swing.JButton botonImprimirAlbaran;
@@ -734,7 +731,6 @@ public class PedidosVista extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
@@ -748,14 +744,12 @@ public class PedidosVista extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem7;
@@ -767,8 +761,10 @@ public class PedidosVista extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JMenuItem menuAnularPedido;
     private javax.swing.JMenuItem menuEditarEnvio;
     private javax.swing.JMenuItem menuEditarPedido;
+    private javax.swing.JMenuItem menuEliminarPedido;
     private javax.swing.JMenuItem menuFiltrar;
     private javax.swing.JMenuItem menuImprimirAlbaran;
     private javax.swing.JMenuItem menuNuevaCompra;

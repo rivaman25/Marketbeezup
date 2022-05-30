@@ -723,7 +723,7 @@ public class PedidoVista extends javax.swing.JDialog {
         panelBotones.setMinimumSize(new java.awt.Dimension(840, 37));
         panelBotones.setPreferredSize(new java.awt.Dimension(840, 37));
 
-        botonGuardar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        botonGuardar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         botonGuardar.setText("Guardar");
         panelBotones.add(botonGuardar);
 
@@ -762,7 +762,7 @@ public class PedidoVista extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEditarActionPerformed
-        if (editar) {
+        if (editar & tablaArticulos.getSelectedRow() != -1) {
             textoIdArticulo.setEnabled(false);
         }
     }//GEN-LAST:event_botonEditarActionPerformed

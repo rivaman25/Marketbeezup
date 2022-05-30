@@ -341,7 +341,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
         try {
             this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement("DELETE "
-                    + "FROM pedido WHERE marketplace = ? AND idPedido = ?");
+                    + "FROM pedidos WHERE marketplace = ? AND idPedido = ?");
             pstm.setString(1, pedido.getMarketplace());
             pstm.setString(2, pedido.getIdPedido());
             pstm.executeUpdate();

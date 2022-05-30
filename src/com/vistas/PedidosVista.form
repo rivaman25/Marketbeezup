@@ -125,20 +125,20 @@
                 <Property name="text" type="java.lang.String" value="Editar"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
+            <MenuItem class="javax.swing.JMenuItem" name="menuEliminarPedido">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Borrar"/>
+                <Property name="text" type="java.lang.String" value="Eliminar"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem10">
+            <MenuItem class="javax.swing.JMenuItem" name="menuAnularPedido">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Cancelar"/>
+                <Property name="text" type="java.lang.String" value="Anular"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -158,9 +158,6 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Nuevo"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuNuevoEnvioActionPerformed"/>
-              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuEditarEnvio">
               <Properties>
@@ -403,9 +400,6 @@
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonNuevoEnvioActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="botonNuevaCompra">
           <Properties>
@@ -473,7 +467,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton7">
+        <Component class="javax.swing.JButton" name="botonAnularPedido">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="12" style="0"/>
@@ -481,8 +475,8 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/com/imagenes/Cancelar32.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Cancelar "/>
-            <Property name="toolTipText" type="java.lang.String" value="Cancelar Pedido"/>
+            <Property name="text" type="java.lang.String" value="Anular"/>
+            <Property name="toolTipText" type="java.lang.String" value="Anular Pedido"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -513,7 +507,7 @@
                       <Component id="comboBuscar" min="-2" pref="126" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="356" max="32767" attributes="0"/>
+                      <EmptySpace pref="363" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
