@@ -7,6 +7,7 @@ package com.controladores;
 import com.dao.DAOAgenciaImpl;
 import com.dao.DAOAlmacenImpl;
 import com.dao.DAOArticuloImpl;
+import com.dao.DAOEnvioImpl;
 import com.dao.DAOPedidoImpl;
 import java.util.List;
 import com.modelos.Pedido;
@@ -17,6 +18,7 @@ import com.dao.DAOPedidoNuevosImpl;
 import com.daoInterfaces.DAOAgencia;
 import com.daoInterfaces.DAOAlmacen;
 import com.daoInterfaces.DAOArticulo;
+import com.daoInterfaces.DAOEnvio;
 import com.modelos.Articulo;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,11 +31,14 @@ import com.vistas.EnvioVista;
 import com.vistas.FiltroVista;
 import com.vistas.ImprimirVista;
 import com.vistas.PedidoVista;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
+ * Gestiona el flujo de información de los pedidos entre los diferentes
+ * formularios de la aplicación
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class PedidosControlador implements ActionListener, KeyListener {
 
@@ -69,28 +74,49 @@ public class PedidosControlador implements ActionListener, KeyListener {
         PedidosControlador.estados = daoArticulo.listarEstados();
     }
 
+    /**
+     * Obtiene una lista de pedidos de la base de datos
+     *
+     * @return Número de pedidos obtenidos
+     * @throws Exception
+     */
     public int obtenerPedidos() throws Exception {
         PedidosControlador.pedidos.clear();
         PedidosControlador.pedidos.addAll(this.daoPedido.listar(filtro));
-        return pedidos.size();
+        return PedidosControlador.pedidos.size();
     }
 
+    /**
+     * Actualiza los pedidos accediendo a la base de datos online
+     *
+     * @return Número de pedidos nuevos
+     * @throws Exception
+     */
     public int actualizarPedidos() throws Exception {
         List<Pedido> pedidosNuevos = daoPedidoNuevos.obtenerPedidosNuevos();
         this.daoPedido.registrar(pedidosNuevos);
         return pedidosNuevos.size();
     }
 
+    /**
+     * Actualiza la tabla de pedidos en el formulario principal
+     */
     public void actualizarVista() {
         pedidosVista.actualizaTabla();
     }
 
+    /**
+     * Gestiona los eventos que se producen en el formulario principal
+     *
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         PedidoVista pedidoVista;
         Pedido pedido;
         Articulo articulo;
         PedidoControlador pedidoControlador;
+        DAOEnvio daoEnvio = new DAOEnvioImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
         try {
             switch (e.getActionCommand()) {
                 case "Filtrar":
@@ -114,6 +140,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
                     this.actualizarVista();
                     break;
                 case "ImprimirAlbaran":
+                    // Inicia el formulario de impresión de pedidos con envío
                     ImprimirVista imprimirVista = new ImprimirVista(pedidosVista, true);
                     ImprimirControlador imprimirControlador = new ImprimirControlador(imprimirVista);
                     imprimirVista.setControlador(imprimirControlador);
@@ -121,20 +148,25 @@ public class PedidosControlador implements ActionListener, KeyListener {
                     imprimirControlador.actualizarVista();
                     break;
                 case "NuevoPedido":
+                    // Introduce un nuevo pedido en la base de datos
                     pedido = new Pedido();
                     pedidoVista = new PedidoVista(pedidosVista, true);
+                    pedidoVista.setTitle("Nuevo Pedido");
                     pedidoControlador = new PedidoControlador(pedidoVista, pedido);
                     pedidoVista.setControlador(pedidoControlador);
                     pedidoControlador.actualizarVista();
+                    // Si se ha registrado un nuevo pedido, actualiza la tabla de pedidos
                     if (pedidoControlador.isGuardar()) {
                         obtenerPedidos();
                         actualizarVista();
                     }
                     break;
                 case "EditarPedido":
+                    // Edita el pedido seleccionado
                     pedido = pedidosVista.obtenerPedidoSeleccionado();
                     if (pedido != null) {
                         pedidoVista = new PedidoVista(pedidosVista, true);
+                        pedidoVista.setTitle("Editar Pedido");
                         pedidoControlador = new PedidoControlador(pedidoVista, pedido);
                         pedidoVista.setControlador(pedidoControlador);
                         pedidoVista.setEditar(true);
@@ -143,6 +175,8 @@ public class PedidosControlador implements ActionListener, KeyListener {
                             obtenerPedidos();
                             actualizarVista();
                         }
+                    } else {
+                        pedidosVista.mostrarMensaje("Seleccione un pedido");
                     }
                     break;
                 case "EliminarPedido":
@@ -154,26 +188,138 @@ public class PedidosControlador implements ActionListener, KeyListener {
                             obtenerPedidos();
                             actualizarVista();
                         }
+                    } else {
+                        pedidosVista.mostrarMensaje("Seleccione un pedido");
                     }
                     break;
                 case "AnularPedido":
                     pedido = pedidosVista.obtenerPedidoSeleccionado();
-                    if (pedido != null) {
-                        if (JOptionPane.showConfirmDialog(pedidosVista, "¿Desea anular el pedido seleccionado?",
-                                "Borrar Pedido", JOptionPane.OK_CANCEL_OPTION) == 0) {
-                            daoArticulo.modificarEstado(pedido.getMarketplace(), pedido.getIdPedido(), "ANULADO");
-                            obtenerPedidos();
-                            actualizarVista();
+                    articulo = pedidosVista.obtenerArticuloSeleccionado();
+                    List<Articulo> articulosSinAnular = new ArrayList<>();
+                    if (pedido != null) { // Se ha seleccionado un artículo del pedido
+                        if (articulo.getEstado().equals("ANULADO")) {
+                            pedidosVista.mostrarMensaje("Esta línea de pedido está anulada.");
+                        } else {
+                            // Obtengo una lista de artículos del pedido que están sin anular
+                            for (Articulo art : pedido.getArticulos()) {
+                                if (!art.getEstado().equals("ANULADO")) {
+                                    articulosSinAnular.add(art);
+                                }
+                            }
+                            // Si hay más de un artículo sin anular, pregunto si se quieren anular todos o solo el seleccionado
+                            if (articulosSinAnular.size() > 1) {
+                                Object[] options = {"TODO", "LINEA", "CANCELAR"};
+                                int opcion = JOptionPane.showOptionDialog(pedidosVista, "¿Desea anular todo el pedido o sólo la línea seleccionada?",
+                                        "Eliminar Pedido", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+                                switch (opcion) {
+                                    case 0: // Se anulan todos los artículos del pedido que no estaban anulados
+                                        for (Articulo art : articulosSinAnular) {
+                                            art.setEstado("ANULADO");
+                                            daoArticulo.modificar(art);
+                                            if (art.getEnvio() != null) {
+                                                daoEnvio.eliminar(art.getEnvio());
+                                            }
+                                        }
+                                        obtenerPedidos();
+                                        actualizarVista();
+                                        break;
+                                    case 1: // Se anula solo el artículo seleccionado
+                                        articulo.setEstado("ANULADO");
+                                        daoArticulo.modificar(articulo);
+                                        if (articulo.getEnvio() != null) {
+                                            daoEnvio.eliminar(articulo.getEnvio());
+                                        }
+                                        obtenerPedidos();
+                                        actualizarVista();
+                                        break;
+                                }
+                            } else { // Solo hay un artículo sin anular en el pedido, se pide confirmación de anulación
+                                if (JOptionPane.showConfirmDialog(pedidosVista, "¿Desea anular el pedido seleccionado?",
+                                        "Eliminar Pedido", JOptionPane.OK_CANCEL_OPTION) == 0) {
+                                    articulo.setEstado("ANULADO");
+                                    daoArticulo.modificar(articulo);
+                                    if (articulo.getEnvio() != null) {
+                                        daoEnvio.eliminar(pedido.getArticulos().get(0).getEnvio());
+                                    }
+                                    obtenerPedidos();
+                                    actualizarVista();
+                                }
+                            }
                         }
+                    } else {
+                        pedidosVista.mostrarMensaje("Seleccione una línea de pedido para anular.");
                     }
                     break;
                 case "NuevoEnvio":
                     articulo = pedidosVista.obtenerArticuloSeleccionado();
                     if (articulo != null) {
-                        EnvioVista envioVista = new EnvioVista(pedidosVista, true);
-                        EnvioControlador envioControlador = new EnvioControlador(articulo, envioVista);
-                        envioControlador.actualizarVista();
+                        if (articulo.getEstado().equals("ANULADO")) {
+                            pedidosVista.mostrarMensaje("El pedido está anulado.");
+                        } else {
+                            if (articulo.getEnvio() == null) {
+                                EnvioVista envioVista = new EnvioVista(pedidosVista, true);
+                                envioVista.setTitle("Nuevo Envío");
+                                EnvioControlador envioControlador = new EnvioControlador(articulo, envioVista);
+                                envioVista.setControlador(envioControlador);
+                                envioControlador.actualizarVista();
+                                if (envioControlador.isGuardado()) {
+                                    obtenerPedidos();
+                                    actualizarVista();
+                                }
+                            } else {
+                                pedidosVista.mostrarMensaje("El pedido ya tiene registrado un envío, puede seleccionar el menú Envíos y luego Editar.");
+                            }
+                        }
+                    } else {
+                        pedidosVista.mostrarMensaje("Seleccione un pedido.");
                     }
+                    break;
+                case "EditarEnvio":
+                    articulo = pedidosVista.obtenerArticuloSeleccionado();
+                    if (articulo != null) {
+                        if (articulo.getEstado().equals("ANULADO")) {
+                            pedidosVista.mostrarMensaje("El pedido está anulado.");
+                        } else {
+                            if (articulo.getEnvio() != null) {
+                                EnvioVista envioVista = new EnvioVista(pedidosVista, true);
+                                envioVista.setTitle("Editar Envío");
+                                EnvioControlador envioControlador = new EnvioControlador(articulo, envioVista);
+                                envioControlador.setEditar(true);
+                                envioVista.setControlador(envioControlador);
+                                envioControlador.actualizarVista();
+                                if (envioControlador.isGuardado()) {
+                                    obtenerPedidos();
+                                    actualizarVista();
+                                }
+                            } else {
+                                pedidosVista.mostrarMensaje("El pedido no tiene registrado un envío, puede seleccionar el menú Envíos y luego Nuevo.");
+                            }
+                        }
+                    } else {
+                        pedidosVista.mostrarMensaje("Seleccione un pedido.");
+                    }
+                    break;
+                case "EliminarEnvio":
+                    articulo = pedidosVista.obtenerArticuloSeleccionado();
+                    if (articulo != null) {
+                        if (articulo.getEstado().equals("ANULADO")) {
+                            pedidosVista.mostrarMensaje("El pedido está anulado.");
+                        } else {
+                            if (articulo.getEnvio() != null) {
+                                if (JOptionPane.showConfirmDialog(pedidosVista, "¿Desea anular el envío del pedido seleccionado?",
+                                        "Eliminar Envío", JOptionPane.OK_CANCEL_OPTION) == 0) {
+                                    daoEnvio.eliminar(articulo.getEnvio());
+                                    obtenerPedidos();
+                                    actualizarVista();
+                                }
+                            } else {
+                                pedidosVista.mostrarMensaje("El pedido no tiene registrado un envío.");
+                            }
+                        }
+                    } else {
+                        pedidosVista.mostrarMensaje("Seleccione un pedido.");
+                    }
+                    break;
             }
         } catch (Exception ex) {
             Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);

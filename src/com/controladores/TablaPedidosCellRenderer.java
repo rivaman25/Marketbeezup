@@ -50,6 +50,12 @@ public class TablaPedidosCellRenderer extends DefaultTableCellRenderer {
                     this.setForeground(Color.RED);
                 }
                 break;
+            case "IMPRIMIR":
+                this.setForeground(Color.ORANGE);
+                break;
+            case "PREPARAR":
+                this.setForeground(Color.PINK);
+                break;
             case "ENTREGADO":
                 if (isSelected) {
                     //this.setBackground(Color.GRAY);

@@ -5,6 +5,7 @@
 package com.dao;
 
 import com.daoInterfaces.DAOArticulo;
+import com.daoInterfaces.DAOEnvio;
 import com.daoInterfaces.DAOInterfaz;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +20,6 @@ import com.modelos.AlbaranVenta;
 import com.modelos.Articulo;
 import com.modelos.Compra;
 import com.modelos.DocumentoVenta;
-import com.modelos.Envio;
 import com.modelos.Filtro;
 
 /**
@@ -272,7 +272,7 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
 
     @Override
     public void registrar(Articulo articulo, Connection conexion) throws Exception {
-        DAOInterfaz<Envio> daoEnvio;
+        DAOEnvio daoEnvio;
         DAOInterfaz<Compra> daoCompra;
         DAOInterfaz<DocumentoVenta> daoDocumentoVenta;
         DAOInterfaz<AlbaranVenta> daoAlbaranVenta;
@@ -333,7 +333,7 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
 
     @Override
     public void registrar(List<Articulo> articulos, Connection conexion) throws Exception {
-        DAOInterfaz<Envio> daoEnvio;
+        DAOEnvio daoEnvio;
         DAOInterfaz<Compra> daoCompra;
         DAOInterfaz<DocumentoVenta> daoDocumentoVenta;
         DAOInterfaz<AlbaranVenta> daoAlbaranVenta;
@@ -397,7 +397,7 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
 
     @Override
     public void registrar(Articulo articulo) throws Exception {
-        DAOInterfaz<Envio> daoEnvio;
+        DAOEnvio daoEnvio;
         DAOInterfaz<Compra> daoCompra;
         DAOInterfaz<DocumentoVenta> daoDocumentoVenta;
         DAOInterfaz<AlbaranVenta> daoAlbaranVenta;
@@ -446,37 +446,30 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
             this.closeConnection();
         }
     }
-    
-    @Override
-    public void modificarEstado(String marketplace, String idPedido, String estado) throws Exception {
-        try {
-            this.openConnection();
-            PreparedStatement pstm = this.getConnection().prepareStatement(
-                    "UPDATE Articulos SET estado = ? WHERE marketplace = ? "
-                    + "AND idPedido = ?");
-            pstm.setString(1, estado);
-            pstm.setString(2, marketplace);
-            pstm.setString(3, idPedido);
-            pstm.executeUpdate();
-            pstm.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(DAOArticuloImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw ex;
-        } finally {
-            this.closeConnection();
-        }
-    }
 
     @Override
     public void modificar(Articulo articulo) throws Exception {
         try {
             this.openConnection();
-            PreparedStatement pstm = this.getConnection().prepareStatement(
-                    "UPDATE Articulos SET descripcion = ? AND precio = ? AND "
-                    + "cantidad = ? AND estado = ? AND puc = ? AND tipoArticulo = "
-                    + "? AND fechaHoraImpr = ? AND idFamilia = ? AND idSubfamilia = "
-                    + "? AND marca = ? WHERE codigoArticulo = ? AND idPedido = ? "
-                    + "AND marketplace = ?");
+            PreparedStatement pstm = this.getConnection().prepareStatement("""
+                UPDATE
+                    articulos
+                SET
+                    articulos.descripcion = ?,
+                    articulos.precio = ?,
+                    articulos.cantidad = ?,
+                    articulos.estado = ?,
+                    articulos.puc = ?,
+                    articulos.tipoArticulo = ?,
+                    articulos.fechaHoraImpr = ?,
+                    articulos.idFamilia = ?,
+                    articulos.idSubfamilia = ?,
+                    articulos.marca = ?
+                WHERE
+                    articulos.codigoArticulo = ? AND
+                    articulos.idPedido = ? AND
+                    articulos.marketplace = ?
+                """);    
             pstm.setString(1, articulo.getDescripcion());
             pstm.setFloat(2, articulo.getPrecio());
             pstm.setInt(3, articulo.getCantidad());

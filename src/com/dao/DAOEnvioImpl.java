@@ -4,7 +4,7 @@
  */
 package com.dao;
 
-import com.daoInterfaces.DAOInterfaz;
+import com.daoInterfaces.DAOEnvio;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +15,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.modelos.Filtro;
 
-public class DAOEnvioImpl extends ConexionBD implements DAOInterfaz<Envio> {
+public class DAOEnvioImpl extends ConexionBD implements DAOEnvio {
+
+    public DAOEnvioImpl(String url, String serverName, int portNumber, String databaseName, String userName, String password) {
+        super(url, serverName, portNumber, databaseName, userName, password);
+    }
+
+    public DAOEnvioImpl() {
+    }
 
     @Override
     public Envio obtener(Articulo articulo, Filtro filtro, Connection conexion) throws Exception {

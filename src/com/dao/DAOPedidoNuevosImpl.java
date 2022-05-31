@@ -117,7 +117,7 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
                                 articulo.setEstado("PREPARAR");
                             } else {
                                 if (result.getDate("fechaSalida") != null) {
-                                    articulo.setEstado("ENVIAR");
+                                    articulo.setEstado("IMPRIMIR");
                                 } else {
                                     articulo.setEstado("NUEVO");
                                 }
@@ -132,8 +132,8 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
                     articulo.setIdPedido(result.getString("idPedido"));
                     articulo.setMarketplace(result.getString("Marketplace"));
                     if (result.getDate("FechaSalida") != null
-                            & result.getString("AlmacenSalida") != null
-                            & result.getString("Agencia") != null) {
+                            & result.getString("AlmacenSalida") != null & !result.getString("AlmacenSalida").isBlank()
+                            & result.getString("Agencia") != null & !result.getString("Agencia").isBlank()) { 
                         articulo.NuevoEnvio(result.getDate("FechaSalida"),
                                 result.getString("AlmacenSalida"), result.getString("Agencia"),
                                 result.getString("idarticulo"), result.getString("idPedido"),

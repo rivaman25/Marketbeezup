@@ -13,12 +13,15 @@ import javax.swing.table.TableColumnModel;
 import com.controladores.TablaPedidosCellRenderer;
 import com.modelos.Articulo;
 import com.modelos.Pedido;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.Timer;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class PedidosVista extends javax.swing.JFrame {
 
@@ -26,6 +29,7 @@ public class PedidosVista extends javax.swing.JFrame {
     private TablaPedidosCellRenderer tablaPedidosCellRender;
     private final DefaultComboBoxModel<String> modeloComboBuscar = new DefaultComboBoxModel<>();
     private final List<Articulo> articulos = new ArrayList<>();
+    private final Timer TIMER;
 
     /**
      * Creates new form Principal
@@ -45,6 +49,25 @@ public class PedidosVista extends javax.swing.JFrame {
         modeloComboBuscar.addElement("Ticket");
         modeloComboBuscar.addElement("Albarán");
         comboBuscar.setModel(modeloComboBuscar);
+         // Repite una tarea cada cierto tiempo, en este caso oculta una etiqueta cada n milisegundos
+        TIMER = new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                etiquetaMensaje.setVisible(false);
+            }
+        });
+    }
+    
+    /**
+     * Muestra un mensaje durante un intervalo de tiempo controlado por el timer
+     * @param mensaje Mensaje que se muestra en la etiqueta
+     */
+    public void mostrarMensaje(String mensaje) {
+        TIMER.stop(); // Detiene el timer si está en ejecución
+        etiquetaMensaje.setText(mensaje);
+        etiquetaMensaje.setVisible(true);
+        TIMER.setRepeats(false); // El timer se ejecutará solo una vez
+        TIMER.start(); // Inicia el timer para que la etiqueta se oculte pasados n milisegundos
     }
 
     public void actualizaTabla() {
@@ -125,6 +148,10 @@ public class PedidosVista extends javax.swing.JFrame {
         menuNuevoEnvio.setActionCommand("NuevoEnvio");
         botonNuevoEnvio.addActionListener(pedidosControlador);
         botonNuevoEnvio.setActionCommand("NuevoEnvio");
+        menuEditarEnvio.addActionListener(pedidosControlador);
+        menuEditarEnvio.setActionCommand("EditarEnvio");
+        menuEliminarEnvio.addActionListener(pedidosControlador);
+        menuEliminarEnvio.setActionCommand("EliminarEnvio");
     }
 
     public String getAtributoBuscar() {
@@ -134,7 +161,7 @@ public class PedidosVista extends javax.swing.JFrame {
     public String getValorBuscar() {
         return textoBuscar.getText();
     }
-    
+
     public Articulo obtenerArticuloSeleccionado() {
         if (tablaPedidos.getSelectedRow() == -1) {
             return null;
@@ -177,31 +204,31 @@ public class PedidosVista extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         textoBuscar = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        etiquetaMensaje = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaPedidos = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        menuArchivo = new javax.swing.JMenu();
         menuOpciones = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         menuSalir = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        menuEditar = new javax.swing.JMenu();
         menuFiltrar = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         menuProvincias = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        menuPedidos = new javax.swing.JMenu();
         menuNuevoPedido = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        menuImportarPedido = new javax.swing.JMenuItem();
         menuEditarPedido = new javax.swing.JMenuItem();
         menuEliminarPedido = new javax.swing.JMenuItem();
         menuAnularPedido = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        menuEnvios = new javax.swing.JMenu();
         menuNuevoEnvio = new javax.swing.JMenuItem();
         menuEditarEnvio = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        menuEliminarEnvio = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         menuNuevaCompra = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
@@ -373,13 +400,12 @@ public class PedidosVista extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(250, 19));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(204, 0, 51));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel1.setText("Listado con filtros");
-        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel1.setMaximumSize(new java.awt.Dimension(3840, 19));
-        jPanel1.add(jLabel1, java.awt.BorderLayout.CENTER);
+        etiquetaMensaje.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        etiquetaMensaje.setForeground(new java.awt.Color(255, 51, 51));
+        etiquetaMensaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        etiquetaMensaje.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        etiquetaMensaje.setMaximumSize(new java.awt.Dimension(3840, 19));
+        jPanel1.add(etiquetaMensaje, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPanel1);
 
@@ -471,13 +497,13 @@ public class PedidosVista extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1);
 
-        jMenu1.setText("Archivo");
-        jMenu1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        menuArchivo.setText("Archivo");
+        menuArchivo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
         menuOpciones.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         menuOpciones.setText("Opciones");
-        jMenu1.add(menuOpciones);
-        jMenu1.add(jSeparator1);
+        menuArchivo.add(menuOpciones);
+        menuArchivo.add(jSeparator1);
 
         menuSalir.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         menuSalir.setText("Salir");
@@ -486,12 +512,12 @@ public class PedidosVista extends javax.swing.JFrame {
                 menuSalirActionPerformed(evt);
             }
         });
-        jMenu1.add(menuSalir);
+        menuArchivo.add(menuSalir);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(menuArchivo);
 
-        jMenu2.setText("Editar");
-        jMenu2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        menuEditar.setText("Editar");
+        menuEditar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
         menuFiltrar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         menuFiltrar.setText("Filtrar Pedidos");
@@ -500,20 +526,20 @@ public class PedidosVista extends javax.swing.JFrame {
                 menuFiltrarActionPerformed(evt);
             }
         });
-        jMenu2.add(menuFiltrar);
+        menuEditar.add(menuFiltrar);
 
         jMenuItem5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jMenuItem5.setText("Actualizar");
-        jMenu2.add(jMenuItem5);
-        jMenu2.add(jSeparator2);
+        menuEditar.add(jMenuItem5);
+        menuEditar.add(jSeparator2);
 
         jMenuItem1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jMenuItem1.setText("Almacenes");
-        jMenu2.add(jMenuItem1);
+        menuEditar.add(jMenuItem1);
 
         jMenuItem2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jMenuItem2.setText("Agencias de transporte");
-        jMenu2.add(jMenuItem2);
+        menuEditar.add(jMenuItem2);
 
         menuProvincias.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         menuProvincias.setText("Provincias");
@@ -522,51 +548,51 @@ public class PedidosVista extends javax.swing.JFrame {
                 menuProvinciasActionPerformed(evt);
             }
         });
-        jMenu2.add(menuProvincias);
+        menuEditar.add(menuProvincias);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(menuEditar);
 
-        jMenu3.setText("Pedidos");
-        jMenu3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        menuPedidos.setText("Pedidos");
+        menuPedidos.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
         menuNuevoPedido.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuNuevoPedido.setText("Nuevo");
-        jMenu3.add(menuNuevoPedido);
+        menuPedidos.add(menuNuevoPedido);
 
-        jMenuItem4.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jMenuItem4.setText("Importar");
-        jMenu3.add(jMenuItem4);
+        menuImportarPedido.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuImportarPedido.setText("Importar");
+        menuPedidos.add(menuImportarPedido);
 
         menuEditarPedido.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuEditarPedido.setText("Editar");
-        jMenu3.add(menuEditarPedido);
+        menuPedidos.add(menuEditarPedido);
 
         menuEliminarPedido.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuEliminarPedido.setText("Eliminar");
-        jMenu3.add(menuEliminarPedido);
+        menuPedidos.add(menuEliminarPedido);
 
         menuAnularPedido.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuAnularPedido.setText("Anular");
-        jMenu3.add(menuAnularPedido);
+        menuPedidos.add(menuAnularPedido);
 
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(menuPedidos);
 
-        jMenu4.setText("Envíos");
-        jMenu4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        menuEnvios.setText("Envíos");
+        menuEnvios.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
         menuNuevoEnvio.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuNuevoEnvio.setText("Nuevo");
-        jMenu4.add(menuNuevoEnvio);
+        menuEnvios.add(menuNuevoEnvio);
 
         menuEditarEnvio.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuEditarEnvio.setText("Editar");
-        jMenu4.add(menuEditarEnvio);
+        menuEnvios.add(menuEditarEnvio);
 
-        jMenuItem7.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jMenuItem7.setText("Borrar");
-        jMenu4.add(jMenuItem7);
+        menuEliminarEnvio.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuEliminarEnvio.setText("Eliminar");
+        menuEnvios.add(menuEliminarEnvio);
 
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(menuEnvios);
 
         jMenu5.setText("Compras");
         jMenu5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -728,15 +754,11 @@ public class PedidosVista extends javax.swing.JFrame {
     private javax.swing.JButton botonNuevaCompra;
     private javax.swing.JButton botonNuevoEnvio;
     private javax.swing.JComboBox<String> comboBuscar;
+    private javax.swing.JLabel etiquetaMensaje;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
@@ -750,9 +772,7 @@ public class PedidosVista extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -762,15 +782,21 @@ public class PedidosVista extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenuItem menuAnularPedido;
+    private javax.swing.JMenu menuArchivo;
+    private javax.swing.JMenu menuEditar;
     private javax.swing.JMenuItem menuEditarEnvio;
     private javax.swing.JMenuItem menuEditarPedido;
+    private javax.swing.JMenuItem menuEliminarEnvio;
     private javax.swing.JMenuItem menuEliminarPedido;
+    private javax.swing.JMenu menuEnvios;
     private javax.swing.JMenuItem menuFiltrar;
+    private javax.swing.JMenuItem menuImportarPedido;
     private javax.swing.JMenuItem menuImprimirAlbaran;
     private javax.swing.JMenuItem menuNuevaCompra;
     private javax.swing.JMenuItem menuNuevoEnvio;
     private javax.swing.JMenuItem menuNuevoPedido;
     private javax.swing.JMenuItem menuOpciones;
+    private javax.swing.JMenu menuPedidos;
     private javax.swing.JMenuItem menuProvincias;
     private javax.swing.JMenuItem menuReimprimirAlbaran;
     private javax.swing.JMenuItem menuSalir;

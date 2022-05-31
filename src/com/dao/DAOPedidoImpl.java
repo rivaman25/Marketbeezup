@@ -282,7 +282,9 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
         try {
             this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement("""
-                UPDATE Pedidos SET 
+                UPDATE 
+                    Pedidos
+                SET 
                     pedidos.tienda  = ?, 
                     pedidos.fechaPedido = ?, 
                     pedidos.dni = ?, 
@@ -298,7 +300,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
                     pedidos.costePorte = ? 
                 WHERE 
                     pedidos.marketplace = ? AND 
-                    pedidos.idPedido = ?;
+                    pedidos.idPedido = ?
                 """);
             pstm.setString(1, pedido.getTienda());
             pstm.setTimestamp(2, pedido.getFechaPedido());
