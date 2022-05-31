@@ -36,12 +36,14 @@ public class ImprimirControlador extends ConexionBD implements ActionListener {
     private ImprimirVista imprimirVista;
     private List<Articulo> articulosImpr;
     private final DAOArticulo DAO_ARTICULO;
+    private boolean impreso;
 
     public ImprimirControlador(ImprimirVista imprimirVista) throws Exception {
         super("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
         this.imprimirVista = imprimirVista;
         DAO_ARTICULO = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
         articulosImpr = DAO_ARTICULO.listar(null, null, new ArrayList<>(), false);
+        impreso = false;
     }
 
     public void actualizarVista() {
@@ -86,12 +88,15 @@ public class ImprimirControlador extends ConexionBD implements ActionListener {
                     break;
                 case "MarcarImpresos":
                     java.sql.Timestamp fechaHoraAct = java.sql.Timestamp.valueOf(LocalDateTime.now());
-                    DAO_ARTICULO.actualizarFechaHoraImpr(fechaHoraAct, articulosImpr);
+                    // DAO_ARTICULO.actualizarFechaHoraImpr(fechaHoraAct, articulosImpr);
                     for (Articulo articulo : articulosImpr) {
                         articulo.setFechaHoraImpr(fechaHoraAct);
+                        articulo.setEstado("ENVIAR");
+                        DAO_ARTICULO.modificar(articulo);
                     }
                     imprimirVista.actualizarTabla(articulosImpr);
                     imprimirVista.deshabilitarControles();
+                    impreso = true;
                     break;
                 case "FiltrarAlbaranes":
                     articulosImpr = DAO_ARTICULO.listar(imprimirVista.getIdPedido(),
@@ -128,5 +133,13 @@ public class ImprimirControlador extends ConexionBD implements ActionListener {
 
     public void setImprimirVista(ImprimirVista imprimirVista) {
         this.imprimirVista = imprimirVista;
+    }
+
+    public boolean isImpreso() {
+        return impreso;
+    }
+
+    public void setImpreso(boolean impreso) {
+        this.impreso = impreso;
     }
 }

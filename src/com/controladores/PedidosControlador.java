@@ -146,6 +146,10 @@ public class PedidosControlador implements ActionListener, KeyListener {
                     imprimirVista.setControlador(imprimirControlador);
                     imprimirControlador.actualizarAgenciasVista();
                     imprimirControlador.actualizarVista();
+                    if (imprimirControlador.isImpreso()) {
+                        this.obtenerPedidos();
+                        this.actualizarVista();
+                    }
                     break;
                 case "NuevoPedido":
                     // Introduce un nuevo pedido en la base de datos
