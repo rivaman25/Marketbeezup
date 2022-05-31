@@ -44,17 +44,17 @@ public class TablaPedidosCellRenderer extends DefaultTableCellRenderer {
             case "ANULADO":
                 if (isSelected) {
                     //this.setBackground(Color.GRAY);
-                    this.setForeground(Color.RED);
+                    this.setForeground(new Color(123, 36, 28));
                 } else {
                     //this.setBackground(Color.LIGHT_GRAY);
-                    this.setForeground(Color.RED);
+                    this.setForeground(new Color(123, 36, 28));
                 }
                 break;
             case "IMPRIMIR":
-                this.setForeground(Color.ORANGE);
+                this.setForeground(new Color(74, 35, 90));
                 break;
             case "PREPARAR":
-                this.setForeground(Color.PINK);
+                this.setForeground(new Color(14, 102, 85));
                 break;
             case "ENTREGADO":
                 if (isSelected) {
@@ -78,20 +78,20 @@ public class TablaPedidosCellRenderer extends DefaultTableCellRenderer {
                         & articulos.get(row).getMarketplace().equals(marketplaceAnterior)) {
                     if (isSelected) {
                         // this.setBackground(Color.YELLOW);
-                        this.setForeground(Color.BLUE);
+                        this.setForeground(new Color(33, 97, 140));
                     } else {
                         // this.setBackground(Color.ORANGE);
-                        this.setForeground(Color.BLUE);
+                        this.setForeground(new Color(33, 97, 140));
                     }
                 } else {
                     if (articulos.get(row).getIdPedido().equals(idPedidoSiguiente)
                             & articulos.get(row).getMarketplace().equals(marketplaceSiguiente)) {
                         if (isSelected) {
                             // this.setBackground(Color.YELLOW);
-                            this.setForeground(Color.BLUE);
+                            this.setForeground(new Color(33, 97, 140));
                         } else {
                             // this.setBackground(Color.ORANGE);
-                            this.setForeground(Color.BLUE);
+                            this.setForeground(new Color(33, 97, 140));
                         }
                     } else {
                         if (!isSelected) {

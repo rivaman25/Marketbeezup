@@ -64,13 +64,16 @@ public class ImprimirVista extends javax.swing.JDialog {
         modeloListaAgencias.addAll(agencias);
         listaAgencias.setModel(modeloListaAgencias);
     }
-
-    public void habilitarMarcar(boolean habilitar) {
-        botonMarcar.setEnabled(habilitar);
+    
+    public void deshabilitarControles() {
+        botonMarcar.setEnabled(false);
+        botonImprimir.setEnabled(false);
+        botonFiltrar.setEnabled(false);
+        botonLimpiar.setEnabled(false);
     }
     
-    public void habilitarImprimir(boolean habilitar) {
-        botonImprimir.setEnabled(habilitar);
+    public void habilitarMarcar(boolean habilitar) {
+        botonMarcar.setEnabled(habilitar);
     }
 
     public void setControlador(ImprimirControlador imprimirControlador) {
@@ -82,6 +85,8 @@ public class ImprimirVista extends javax.swing.JDialog {
         botonLimpiar.setActionCommand("LimpiarFiltroAlbaranes");
         botonMarcar.addActionListener(imprimirControlador);
         botonMarcar.setActionCommand("MarcarImpresos");
+        botonCancelar.addActionListener(imprimirControlador);
+        botonCancelar.setActionCommand("Salir");
         // selectorFecha.getDateEditor().adaddActionListener("FiltrarAlbaranes");
     }
 

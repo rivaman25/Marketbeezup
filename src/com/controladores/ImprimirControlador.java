@@ -91,8 +91,7 @@ public class ImprimirControlador extends ConexionBD implements ActionListener {
                         articulo.setFechaHoraImpr(fechaHoraAct);
                     }
                     imprimirVista.actualizarTabla(articulosImpr);
-                    imprimirVista.habilitarMarcar(false);
-                    imprimirVista.habilitarImprimir(false);
+                    imprimirVista.deshabilitarControles();
                     break;
                 case "FiltrarAlbaranes":
                     articulosImpr = DAO_ARTICULO.listar(imprimirVista.getIdPedido(),
@@ -106,6 +105,9 @@ public class ImprimirControlador extends ConexionBD implements ActionListener {
                     articulosImpr = DAO_ARTICULO.listar(imprimirVista.getIdPedido(),
                             imprimirVista.getFechaSeleccionada(), imprimirVista.getAgenciasSeleccionadas(), false);
                     imprimirVista.actualizarTabla(articulosImpr);
+                case "Salir":
+                    imprimirVista.dispose();
+                    break;
             }
         } catch (Exception ex) {
             Logger.getLogger(ImprimirControlador.class.getName()).log(Level.SEVERE, null, ex);
