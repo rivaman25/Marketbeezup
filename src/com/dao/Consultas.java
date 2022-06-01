@@ -870,7 +870,7 @@ public class Consultas {
             }
             consulta.delete(consulta.length() - 4, consulta.length());
         }
-        consulta.append(" GROUP BY pedidos.marketplace, pedidos.idPedido ORDER BY pedidos.fechaPedido DESC LIMIT 3000");
+        consulta.append(" GROUP BY pedidos.marketplace, pedidos.idPedido ORDER BY pedidos.fechaPedido DESC");
         return consulta.toString();
     }
 
@@ -1013,7 +1013,7 @@ public class Consultas {
             consulta.delete(consulta.length() - 4, consulta.length());
         }
         consulta.append(" GROUP BY articulos.marketplace, articulos.idPedido,"
-                + " articulos.codigoArticulo ORDER BY pedidos.fechaPedido DESC LIMIT 1500");
+                + " articulos.codigoArticulo ORDER BY pedidos.fechaPedido DESC");
         return consulta.toString();
     }
 

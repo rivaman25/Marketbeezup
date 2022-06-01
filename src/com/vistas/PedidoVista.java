@@ -9,6 +9,9 @@ import com.controladores.PedidoControlador;
 import com.modelos.Articulo;
 import com.modelos.Pedido;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
 
 /**
  *
@@ -19,6 +22,7 @@ public class PedidoVista extends javax.swing.JDialog {
     private Pedido pedido;
     private ModeloTablaArticulos modeloTablaArticulos;
     private boolean editar;
+    private final Timer TIMER;
 
     /**
      * Creates new form Pedido
@@ -30,6 +34,12 @@ public class PedidoVista extends javax.swing.JDialog {
         selectorFechaPedido.getJCalendar().setTodayButtonVisible(true);
         selectorFechaPedido.getJCalendar().setNullDateButtonVisible(true);
         editar = false;
+        TIMER = new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                etiquetaMensaje.setVisible(false);
+            }
+        });
     }
 
     public void actualizarVista(Pedido pedido) {
@@ -74,7 +84,10 @@ public class PedidoVista extends javax.swing.JDialog {
     }
 
     public void muestraMensaje(String mensaje) {
+        TIMER.stop();
+        etiquetaMensaje.setVisible(true);
         etiquetaMensaje.setText(mensaje);
+        TIMER.start();
     }
 
     public Articulo obtenerArticulo() throws NumberFormatException {
@@ -701,7 +714,7 @@ public class PedidoVista extends javax.swing.JDialog {
         panelListaPedidos.add(botonBorrar, gridBagConstraints);
 
         etiquetaMensaje.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        etiquetaMensaje.setForeground(java.awt.Color.red);
+        etiquetaMensaje.setForeground(new java.awt.Color(255, 51, 51));
         panelListaPedidos.add(etiquetaMensaje, new java.awt.GridBagConstraints());
 
         tablaArticulos.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N

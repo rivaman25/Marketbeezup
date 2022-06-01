@@ -9,6 +9,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import com.modelos.Filtro;
+import com.modelos.Preferencias;
+import com.principal.Main;
 
 /**
  *
@@ -18,6 +20,7 @@ public class FiltroVista extends javax.swing.JDialog {
 
     private Filtro filtroNuevo;
     private String botonSeleccionado;
+    private Preferencias preferencias;
 
     /**
      * Creates new form Filtro
@@ -67,8 +70,9 @@ public class FiltroVista extends javax.swing.JDialog {
         this.filtroNuevo = filtro;
     }
 
-    public void actualizarVista(Filtro filtro) {
+    public void actualizarVista(Filtro filtro, Preferencias preferencias) {
         this.filtroNuevo = filtro;
+        this.preferencias = preferencias;
         if (PedidosControlador.getFiltro().getAgencias() != null) {
             listaAgencias.setSelectedIndices(PedidosControlador.getFiltro().getAgencias());
         }
@@ -783,7 +787,8 @@ public class FiltroVista extends javax.swing.JDialog {
         selectorFechaCompraHasta.setDate(null);
         selectorFechaDocDesde.setDate(null);
         selectorFechaDocHasta.setDate(null);
-        selectorFechaPedidoDesde.setDate(null);
+        selectorFechaPedidoDesde.setDate(java.sql.Date.valueOf(
+                Main.fechaActual().toLocalDate().minusDays(preferencias.getDiasMarket())));
         selectorFechaPedidoHasta.setDate(null);
         selectorFechaSalidaDesde.setDate(null);
         selectorFechaSalidaHasta.setDate(null);

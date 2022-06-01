@@ -27,10 +27,14 @@ import java.awt.event.KeyListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.modelos.Filtro;
+import com.modelos.Preferencias;
+import com.principal.Main;
 import com.vistas.EnvioVista;
 import com.vistas.FiltroVista;
 import com.vistas.ImprimirVista;
 import com.vistas.PedidoVista;
+import com.vistas.PreferenciasVista;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -50,11 +54,12 @@ public class PedidosControlador implements ActionListener, KeyListener {
     private static List<String> tiendas;
     private static List<String> estados;
     private PedidosVista pedidosVista;
-    DAOPedido daoPedido;
-    DAOArticulo daoArticulo;
-    DAOPedidoNuevos daoPedidoNuevos;
-    DAOAgencia daoAgencias;
-    DAOAlmacen daoAlmacenes;
+    private DAOPedido daoPedido;
+    private DAOArticulo daoArticulo;
+    private DAOPedidoNuevos daoPedidoNuevos;
+    private DAOAgencia daoAgencias;
+    private DAOAlmacen daoAlmacenes;
+    private Preferencias preferencias;
 
     public PedidosControlador(List<Pedido> pedidos, PedidosVista pedidosVista) throws Exception {
         PedidosControlador.pedidos = pedidos;
@@ -72,6 +77,8 @@ public class PedidosControlador implements ActionListener, KeyListener {
         PedidosControlador.agencias = daoAgencias.obtener();
         PedidosControlador.almacenes = daoAlmacenes.obtener();
         PedidosControlador.estados = daoArticulo.listarEstados();
+        this.preferencias = new Preferencias();
+        filtro.setFechaPedidoDesde(java.sql.Date.valueOf(Main.fechaActual().toLocalDate().minusDays(preferencias.getDiasMarket())));
     }
 
     /**
@@ -119,10 +126,22 @@ public class PedidosControlador implements ActionListener, KeyListener {
         DAOEnvio daoEnvio = new DAOEnvioImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
         try {
             switch (e.getActionCommand()) {
+                case "Configuracion":
+                    PreferenciasVista preferenciasVista = new PreferenciasVista(pedidosVista, true);
+                    PreferenciasControlador preferenciasControlador
+                            = new PreferenciasControlador(preferencias, preferenciasVista);
+                    preferenciasVista.setControlador(preferenciasControlador);
+                    preferenciasControlador.actualizarVista();
+                    if (preferenciasControlador.isGuardar()) {
+                        filtro.setFechaPedidoDesde(java.sql.Date.valueOf(Main.fechaActual().toLocalDate().minusDays(preferencias.getDiasMarket())));
+                        this.obtenerPedidos();
+                        this.actualizarVista();
+                    }
+                    break;
                 case "Filtrar":
                     // Se inicia el formulario de selección de filtros para la lista de pedidos
                     FiltroVista filtroVista = new FiltroVista(pedidosVista, true);
-                    filtroVista.actualizarVista(filtro);
+                    filtroVista.actualizarVista(filtro, preferencias);
                     filtroVista.setLocationRelativeTo(null);
                     filtroVista.setVisible(true);
                     // Si se selecciona aplicar en el formulario de filtros se muestra la lista de pedidos filtrada

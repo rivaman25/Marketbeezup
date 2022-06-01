@@ -152,6 +152,8 @@ public class PedidosVista extends javax.swing.JFrame {
         menuEditarEnvio.setActionCommand("EditarEnvio");
         menuEliminarEnvio.addActionListener(pedidosControlador);
         menuEliminarEnvio.setActionCommand("EliminarEnvio");
+        menuConfiguracion.addActionListener(pedidosControlador);
+        menuConfiguracion.setActionCommand("Configuracion");
     }
 
     public String getAtributoBuscar() {
@@ -209,7 +211,7 @@ public class PedidosVista extends javax.swing.JFrame {
         tablaPedidos = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuArchivo = new javax.swing.JMenu();
-        menuOpciones = new javax.swing.JMenuItem();
+        menuConfiguracion = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         menuSalir = new javax.swing.JMenuItem();
         menuEditar = new javax.swing.JMenu();
@@ -500,9 +502,9 @@ public class PedidosVista extends javax.swing.JFrame {
         menuArchivo.setText("Archivo");
         menuArchivo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
-        menuOpciones.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        menuOpciones.setText("Opciones");
-        menuArchivo.add(menuOpciones);
+        menuConfiguracion.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        menuConfiguracion.setText("Configuración");
+        menuArchivo.add(menuConfiguracion);
         menuArchivo.add(jSeparator1);
 
         menuSalir.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -783,6 +785,7 @@ public class PedidosVista extends javax.swing.JFrame {
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenuItem menuAnularPedido;
     private javax.swing.JMenu menuArchivo;
+    private javax.swing.JMenuItem menuConfiguracion;
     private javax.swing.JMenu menuEditar;
     private javax.swing.JMenuItem menuEditarEnvio;
     private javax.swing.JMenuItem menuEditarPedido;
@@ -795,7 +798,6 @@ public class PedidosVista extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuNuevaCompra;
     private javax.swing.JMenuItem menuNuevoEnvio;
     private javax.swing.JMenuItem menuNuevoPedido;
-    private javax.swing.JMenuItem menuOpciones;
     private javax.swing.JMenu menuPedidos;
     private javax.swing.JMenuItem menuProvincias;
     private javax.swing.JMenuItem menuReimprimirAlbaran;
