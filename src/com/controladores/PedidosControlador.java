@@ -33,8 +33,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import com.modelos.Filtro;
 import com.modelos.Preferencias;
 import com.principal.Main;
@@ -43,6 +41,7 @@ import com.vistas.FiltroVista;
 import com.vistas.ImprimirVista;
 import com.vistas.PedidoVista;
 import com.vistas.PreferenciasVista;
+import java.awt.HeadlessException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -77,6 +76,11 @@ public class PedidosControlador implements ActionListener, KeyListener {
 
     public PedidosControlador(List<Pedido> pedidos, PedidosVista pedidosVista) {
         PedidosControlador.pedidos = pedidos;
+        PedidosControlador.tiendas = new ArrayList<>();
+        PedidosControlador.markets = new ArrayList<>();
+        PedidosControlador.agencias = new ArrayList<>();
+        PedidosControlador.almacenes = new ArrayList<>();
+        PedidosControlador.estados = new ArrayList<>();
         this.PREFERENCIAS = new Preferencias();
         this.pedidosVista = pedidosVista;
         PedidosControlador.filtro = new Filtro();
@@ -116,8 +120,8 @@ public class PedidosControlador implements ActionListener, KeyListener {
             PedidosControlador.tiendas = daoPedido.listarTiendas();
             PedidosControlador.markets = daoPedido.listarMarket();
             PedidosControlador.agencias = daoAgencias.obtener();
-            PedidosControlador.almacenes = daoAlmacenes.obtener();
-            PedidosControlador.estados = daoArticulo.listarEstados();
+            PedidosControlador.almacenes.addAll(daoAlmacenes.obtener());
+            PedidosControlador.estados.addAll(daoArticulo.listarEstados());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(pedidosVista, "No hay conexión con la Base de Datos", "Error al conectar", JOptionPane.ERROR_MESSAGE);
         }
@@ -128,11 +132,14 @@ public class PedidosControlador implements ActionListener, KeyListener {
      * Obtiene una lista de pedidos de la base de datos
      *
      * @return Número de pedidos obtenidos
-     * @throws Exception
      */
-    public int obtenerPedidos() throws Exception {
+    public int obtenerPedidos() {
         PedidosControlador.pedidos.clear();
-        PedidosControlador.pedidos.addAll(PedidosControlador.daoPedido.listar(filtro));
+        try {
+            PedidosControlador.pedidos.addAll(PedidosControlador.daoPedido.listar(filtro));
+        } catch (SQLException ex) {
+            pedidosVista.mostrarMensaje("No hay conexión con la Base de Datos.");
+        }
         return PedidosControlador.pedidos.size();
     }
 
@@ -140,11 +147,16 @@ public class PedidosControlador implements ActionListener, KeyListener {
      * Actualiza los pedidos accediendo a la base de datos online
      *
      * @return Número de pedidos nuevos
-     * @throws Exception
      */
-    public int actualizarPedidos() throws Exception {
-        List<Pedido> pedidosNuevos = daoPedidoNuevos.obtenerPedidosNuevos();
-        PedidosControlador.daoPedido.registrar(pedidosNuevos);
+    public int actualizarPedidos() {
+        List<Pedido> pedidosNuevos = new ArrayList<>();
+        try {
+            pedidosNuevos = daoPedidoNuevos.obtenerPedidosNuevos();
+            PedidosControlador.daoPedido.registrar(pedidosNuevos);
+
+        } catch (SQLException ex) {
+            pedidosVista.mostrarMensaje("No hay conexión con la Base de Datos.");
+        }
         return pedidosNuevos.size();
     }
 
@@ -413,8 +425,8 @@ public class PedidosControlador implements ActionListener, KeyListener {
                     }
                     break;
             }
-        } catch (Exception ex) {
-            Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (HeadlessException | SQLException ex) {
+            pedidosVista.mostrarMensaje("No hay conexión con la Base de Datos.");
         }
     }
 
@@ -436,8 +448,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
 
                     }
                 } catch (SQLException ex) {
-                    Logger.getLogger(PedidosControlador.class
-                            .getName()).log(Level.SEVERE, null, ex);
+                    pedidosVista.mostrarMensaje("No hay conexión con la Base de Datos.");
                 }
             }
         }

@@ -4,14 +4,11 @@
  */
 package com.principal;
 
-import com.formdev.flatlaf.IntelliJTheme;
 import com.controladores.PedidosControlador;
 import com.formdev.flatlaf.intellijthemes.FlatArcIJTheme;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import com.modelos.Pedido;
 import com.vistas.PedidosVista;
 
@@ -27,22 +24,19 @@ public class Main {
     public static void main(String[] args) {
         FlatArcIJTheme.setup();
         // IntelliJTheme.setup(Main.class.getResourceAsStream("/com/themes/GitHub.theme.json"));
-        try {
-            List<Pedido> pedidos = new ArrayList<>();
-            PedidosVista pedidosVista = new PedidosVista();
-            PedidosControlador pedidosControlador = new PedidosControlador(pedidos, pedidosVista);
-            pedidosVista.setControlador(pedidosControlador);
-            pedidosVista.setVisible(true);
-            pedidosControlador.obtenerPedidos();
-            pedidosControlador.actualizarVista();
-        } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        List<Pedido> pedidos = new ArrayList<>();
+        PedidosVista pedidosVista = new PedidosVista();
+        pedidosVista.setVisible(true);
+        PedidosControlador pedidosControlador = new PedidosControlador(pedidos, pedidosVista);
+        pedidosVista.setControlador(pedidosControlador);
+        pedidosControlador.obtenerPedidos();
+        pedidosControlador.actualizarVista();
     }
 
     /**
      * Devuelve la fecha actual con tipo java.sql.Date
-     * @return 
+     *
+     * @return
      */
     public static java.sql.Date fechaActual() {
         LocalDate fecha = LocalDate.now();

@@ -44,7 +44,10 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
 
     @Override
     public List<Pedido> listar(String atributo, String valor) throws SQLException {
-        List<Articulo> articulos = daoArticulo.listar(atributo, valor);
+        List<Articulo> articulos = new ArrayList<>();
+        if (daoArticulo != null) {
+            articulos = daoArticulo.listar(atributo, valor);
+        }
         return listarPedidos(articulos);
     }
 
@@ -58,7 +61,10 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
      */
     @Override
     public List<Pedido> listar(Filtro filtro) throws SQLException {
-        List<Articulo> articulos = daoArticulo.listar(filtro);
+        List<Articulo> articulos = new ArrayList<>();
+        if (daoArticulo != null) {
+            articulos = daoArticulo.listar(filtro);
+        }
         return listarPedidos(articulos);
     }
 
