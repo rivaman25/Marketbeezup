@@ -117,12 +117,12 @@ public class PedidosControlador implements ActionListener, KeyListener {
         try {
             List<Pedido> pedidosNuevos = daoPedidoNuevos.obtenerPedidosNuevos();
             PedidosControlador.daoPedido.registrar(pedidosNuevos);
-            PedidosControlador.tiendas = daoPedido.listarTiendas();
-            PedidosControlador.markets = daoPedido.listarMarket();
-            PedidosControlador.agencias = daoAgencias.obtener();
+            PedidosControlador.tiendas.addAll(daoPedido.listarTiendas());
+            PedidosControlador.markets.addAll(daoPedido.listarMarket());
+            PedidosControlador.agencias.addAll(daoAgencias.obtener());
             PedidosControlador.almacenes.addAll(daoAlmacenes.obtener());
             PedidosControlador.estados.addAll(daoArticulo.listarEstados());
-        } catch (SQLException ex) {
+        } catch (NullPointerException | SQLException ex) {
             JOptionPane.showMessageDialog(pedidosVista, "No hay conexión con la Base de Datos", "Error al conectar", JOptionPane.ERROR_MESSAGE);
         }
         filtro.setFechaPedidoDesde(java.sql.Date.valueOf(Main.fechaActual().toLocalDate().minusDays(PREFERENCIAS.getDiasMarket())));
@@ -215,6 +215,17 @@ public class PedidosControlador implements ActionListener, KeyListener {
                         PedidosControlador.daoAlbaranVenta = new DAOAlbaranVentaImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
                                 PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
                                 PREFERENCIAS.getPassMarket());
+                        try {
+                            List<Pedido> pedidosNuevos = daoPedidoNuevos.obtenerPedidosNuevos();
+                            PedidosControlador.daoPedido.registrar(pedidosNuevos);
+                            PedidosControlador.tiendas.addAll(daoPedido.listarTiendas());
+                            PedidosControlador.markets.addAll(daoPedido.listarMarket());
+                            PedidosControlador.agencias.addAll(daoAgencias.obtener());
+                            PedidosControlador.almacenes.addAll(daoAlmacenes.obtener());
+                            PedidosControlador.estados.addAll(daoArticulo.listarEstados());
+                        } catch (NullPointerException | SQLException ex) {
+                            JOptionPane.showMessageDialog(pedidosVista, "No hay conexión con la Base de Datos", "Error al conectar", JOptionPane.ERROR_MESSAGE);
+                        }
                         this.obtenerPedidos();
                         this.actualizarVista();
                     }
