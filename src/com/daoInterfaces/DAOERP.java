@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public interface DAOERP {
     public List<Stock> obtenerStock(String codigoArticulo) throws SQLException;

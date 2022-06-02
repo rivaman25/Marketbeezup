@@ -13,7 +13,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public interface DAOPedido extends CRUD<Pedido> {
 

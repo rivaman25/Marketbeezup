@@ -7,7 +7,7 @@ package com.daoInterfaces;
 import java.sql.SQLException;
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  * @param <T>
  */
 public interface CRUD<T> {
