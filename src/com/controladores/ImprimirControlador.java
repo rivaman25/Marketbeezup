@@ -110,6 +110,7 @@ public class ImprimirControlador extends ConexionBD implements ActionListener {
                     articulosImpr = DAO_ARTICULO.listar(imprimirVista.getIdPedido(),
                             imprimirVista.getFechaSeleccionada(), imprimirVista.getAgenciasSeleccionadas(), false);
                     imprimirVista.actualizarTabla(articulosImpr);
+                    break;
                 case "Salir":
                     imprimirVista.dispose();
                     break;

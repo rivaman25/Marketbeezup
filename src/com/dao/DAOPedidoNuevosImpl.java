@@ -53,10 +53,11 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
         Articulo articulo;
         Observacion observacion;
         DAOPedido daoPedido = PedidosControlador.getDaoPedido();
-        // Se obtiene la clave de los pedidos que ya están registrados
-        List<PedidoPK> pedidosPK = daoPedido.listarPK();
+        List<PedidoPK> pedidosPK;
         try {
             this.openConnection();
+            // Se obtiene la clave de los pedidos que ya están registrados
+            pedidosPK = daoPedido.listarPK();
             // Se obtienen los pedidos que no están registrados
             PreparedStatement pstm = this.getConnection().prepareStatement(
                     "SELECT * FROM pedidos WHERE marketplace NOT IN ("
@@ -207,13 +208,13 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
         }
         return pedidosNuevos;
     }
-    
+
     /**
      * Comprueba si existe el artículo en el pedido
-     * 
+     *
      * @param codigoArticulo Código del artículo a buscar
      * @param pedido Pedido donde se buscará el artículo
-     * @return 
+     * @return
      */
     private boolean existeArticuloPedido(String codigoArticulo, Pedido pedido) {
         for (Articulo articulo : pedido.getArticulos()) {
@@ -225,8 +226,8 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
     }
 
     /**
-     * Devuelve un string con los parámetros a introducir en la
-     * consulta preparada
+     * Devuelve un string con los parámetros a introducir en la consulta
+     * preparada
      *
      * @param pedidos Pedidos almacenados en la base de datos marketbeezup
      * @return Parámetros para la consulta preparada a la base de datos online

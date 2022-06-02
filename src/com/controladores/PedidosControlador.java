@@ -55,6 +55,7 @@ import javax.swing.JOptionPane;
 public class PedidosControlador implements ActionListener, KeyListener {
 
     private static List<Pedido> pedidos;
+    private List<Pedido> pedidosNuevos;
     private static Filtro filtro;
     private static List<String> agencias;
     private static List<String> almacenes;
@@ -76,6 +77,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
 
     public PedidosControlador(List<Pedido> pedidos, PedidosVista pedidosVista) {
         PedidosControlador.pedidos = pedidos;
+        pedidosNuevos = new ArrayList<>();
         PedidosControlador.tiendas = new ArrayList<>();
         PedidosControlador.markets = new ArrayList<>();
         PedidosControlador.agencias = new ArrayList<>();
@@ -84,15 +86,6 @@ public class PedidosControlador implements ActionListener, KeyListener {
         this.PREFERENCIAS = new Preferencias();
         this.pedidosVista = pedidosVista;
         PedidosControlador.filtro = new Filtro();
-        PedidosControlador.daoPedidoNuevos = new DAOPedidoNuevosImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPOnline(),
-                PREFERENCIAS.getPuertoOnline(), PREFERENCIAS.getBdOnline(), PREFERENCIAS.getUsuarioOnline(),
-                PREFERENCIAS.getPassOnline());
-        PedidosControlador.daoPedido = new DAOPedidoImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
-                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
-                PREFERENCIAS.getPassMarket());
-        PedidosControlador.daoArticulo = new DAOArticuloImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
-                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
-                PREFERENCIAS.getPassMarket());
         PedidosControlador.daoAgencias = new DAOAgenciaImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
                 PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
                 PREFERENCIAS.getPassMarket());
@@ -111,11 +104,24 @@ public class PedidosControlador implements ActionListener, KeyListener {
         PedidosControlador.daoAlbaranVenta = new DAOAlbaranVentaImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
                 PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
                 PREFERENCIAS.getPassMarket());
+        PedidosControlador.daoArticulo = new DAOArticuloImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                PREFERENCIAS.getPassMarket());
         PedidosControlador.daoObservacion = new DAOObservacionImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
                 PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
                 PREFERENCIAS.getPassMarket());
+        PedidosControlador.daoPedido = new DAOPedidoImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                PREFERENCIAS.getPassMarket());
+        PedidosControlador.daoPedidoNuevos = new DAOPedidoNuevosImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPOnline(),
+                PREFERENCIAS.getPuertoOnline(), PREFERENCIAS.getBdOnline(), PREFERENCIAS.getUsuarioOnline(),
+                PREFERENCIAS.getPassOnline());
         try {
-            List<Pedido> pedidosNuevos = daoPedidoNuevos.obtenerPedidosNuevos();
+            pedidosNuevos.addAll(daoPedidoNuevos.obtenerPedidosNuevos());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(pedidosVista, "No hay conexión con la Base de Datos, no se actulizarán los pedidos", "Error al conectar", JOptionPane.ERROR_MESSAGE);
+        }
+        try {
             PedidosControlador.daoPedido.registrar(pedidosNuevos);
             PedidosControlador.tiendas.addAll(daoPedido.listarTiendas());
             PedidosControlador.markets.addAll(daoPedido.listarMarket());
@@ -123,7 +129,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
             PedidosControlador.almacenes.addAll(daoAlmacenes.obtener());
             PedidosControlador.estados.addAll(daoArticulo.listarEstados());
         } catch (NullPointerException | SQLException ex) {
-            JOptionPane.showMessageDialog(pedidosVista, "No hay conexión con la Base de Datos", "Error al conectar", JOptionPane.ERROR_MESSAGE);
+            pedidosVista.mostrarMensaje("No hay conexión con la Base de Datos");
         }
         filtro.setFechaPedidoDesde(java.sql.Date.valueOf(Main.fechaActual().toLocalDate().minusDays(PREFERENCIAS.getDiasMarket())));
     }
@@ -138,7 +144,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
         try {
             PedidosControlador.pedidos.addAll(PedidosControlador.daoPedido.listar(filtro));
         } catch (SQLException ex) {
-            pedidosVista.mostrarMensaje("No hay conexión con la Base de Datos.");
+            pedidosVista.mostrarMensaje("No hay conexión con la Base de Datos");
         }
         return PedidosControlador.pedidos.size();
     }
@@ -149,13 +155,13 @@ public class PedidosControlador implements ActionListener, KeyListener {
      * @return Número de pedidos nuevos
      */
     public int actualizarPedidos() {
-        List<Pedido> pedidosNuevos = new ArrayList<>();
+        pedidosNuevos.clear();
         try {
             pedidosNuevos = daoPedidoNuevos.obtenerPedidosNuevos();
             PedidosControlador.daoPedido.registrar(pedidosNuevos);
 
         } catch (SQLException ex) {
-            pedidosVista.mostrarMensaje("No hay conexión con la Base de Datos.");
+            pedidosVista.mostrarMensaje("No hay conexión con la Base de Datos");
         }
         return pedidosNuevos.size();
     }
@@ -188,15 +194,6 @@ public class PedidosControlador implements ActionListener, KeyListener {
                     preferenciasControlador.actualizarVista();
                     if (preferenciasControlador.isGuardar()) {
                         filtro.setFechaPedidoDesde(java.sql.Date.valueOf(Main.fechaActual().toLocalDate().minusDays(PREFERENCIAS.getDiasMarket())));
-                        PedidosControlador.daoPedidoNuevos = new DAOPedidoNuevosImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPOnline(),
-                                PREFERENCIAS.getPuertoOnline(), PREFERENCIAS.getBdOnline(), PREFERENCIAS.getUsuarioOnline(),
-                                PREFERENCIAS.getPassOnline());
-                        PedidosControlador.daoPedido = new DAOPedidoImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
-                                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
-                                PREFERENCIAS.getPassMarket());
-                        PedidosControlador.daoArticulo = new DAOArticuloImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
-                                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
-                                PREFERENCIAS.getPassMarket());
                         PedidosControlador.daoAgencias = new DAOAgenciaImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
                                 PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
                                 PREFERENCIAS.getPassMarket());
@@ -215,18 +212,36 @@ public class PedidosControlador implements ActionListener, KeyListener {
                         PedidosControlador.daoAlbaranVenta = new DAOAlbaranVentaImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
                                 PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
                                 PREFERENCIAS.getPassMarket());
+                        PedidosControlador.daoArticulo = new DAOArticuloImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                                PREFERENCIAS.getPassMarket());
+                        PedidosControlador.daoObservacion = new DAOObservacionImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                                PREFERENCIAS.getPassMarket());
+                        PedidosControlador.daoPedido = new DAOPedidoImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                                PREFERENCIAS.getPassMarket());
+                        PedidosControlador.daoPedidoNuevos = new DAOPedidoNuevosImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPOnline(),
+                                PREFERENCIAS.getPuertoOnline(), PREFERENCIAS.getBdOnline(), PREFERENCIAS.getUsuarioOnline(),
+                                PREFERENCIAS.getPassOnline());
+                        pedidosNuevos.clear();
+                        PedidosControlador.pedidos.clear();
                         try {
-                            List<Pedido> pedidosNuevos = daoPedidoNuevos.obtenerPedidosNuevos();
+                            pedidosNuevos.addAll(daoPedidoNuevos.obtenerPedidosNuevos());
+                        } catch (SQLException ex) {
+                            JOptionPane.showMessageDialog(pedidosVista, "No hay conexión con la Base de Datos, no se actualizará la lista de pedidos", "Error al conectar", JOptionPane.ERROR_MESSAGE);
+                        }
+                        try {
                             PedidosControlador.daoPedido.registrar(pedidosNuevos);
                             PedidosControlador.tiendas.addAll(daoPedido.listarTiendas());
                             PedidosControlador.markets.addAll(daoPedido.listarMarket());
                             PedidosControlador.agencias.addAll(daoAgencias.obtener());
                             PedidosControlador.almacenes.addAll(daoAlmacenes.obtener());
                             PedidosControlador.estados.addAll(daoArticulo.listarEstados());
+                            PedidosControlador.pedidos.addAll(PedidosControlador.daoPedido.listar(filtro));
                         } catch (NullPointerException | SQLException ex) {
-                            JOptionPane.showMessageDialog(pedidosVista, "No hay conexión con la Base de Datos", "Error al conectar", JOptionPane.ERROR_MESSAGE);
+                            pedidosVista.mostrarMensaje("No hay conexión con la Base de Datos");
                         }
-                        this.obtenerPedidos();
                         this.actualizarVista();
                     }
                     break;

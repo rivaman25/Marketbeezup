@@ -16,8 +16,6 @@ import com.modelos.Observacion;
 import com.modelos.Pedido;
 import com.daoInterfaces.DAOObservacion;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import com.modelos.Articulo;
 import com.modelos.Filtro;
 import com.modelos.PedidoPK;
@@ -133,7 +131,6 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
                 result.close();
                 pstm.close();
             } catch (SQLException ex) {
-                Logger.getLogger(DAOPedidoImpl.class.getName()).log(Level.SEVERE, null, ex);
                 throw ex;
             } finally {
                 this.closeConnection();

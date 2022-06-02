@@ -119,6 +119,7 @@ public class PreferenciasVista extends javax.swing.JDialog {
         campoUsuario = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         campoPass = new javax.swing.JPasswordField();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         campoIP2 = new javax.swing.JTextField();
@@ -130,6 +131,7 @@ public class PreferenciasVista extends javax.swing.JDialog {
         campoUsuario2 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         campoPass2 = new javax.swing.JPasswordField();
+        jButton2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         campoIP3 = new javax.swing.JTextField();
@@ -141,6 +143,7 @@ public class PreferenciasVista extends javax.swing.JDialog {
         campoUsuario3 = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         campoPass3 = new javax.swing.JPasswordField();
+        jButton3 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         spinnerDias = new javax.swing.JSpinner();
@@ -170,6 +173,7 @@ public class PreferenciasVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
@@ -189,6 +193,7 @@ public class PreferenciasVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
@@ -208,6 +213,7 @@ public class PreferenciasVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
@@ -227,6 +233,7 @@ public class PreferenciasVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
@@ -247,10 +254,23 @@ public class PreferenciasVista extends javax.swing.JDialog {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 5);
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
         jPanel1.add(campoPass, gridBagConstraints);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Ojo.png"))); // NOI18N
+        jButton1.setToolTipText("Mostrar Password");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 5);
+        jPanel1.add(jButton1, gridBagConstraints);
 
         getContentPane().add(jPanel1);
 
@@ -272,6 +292,7 @@ public class PreferenciasVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
@@ -291,6 +312,7 @@ public class PreferenciasVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
@@ -310,6 +332,7 @@ public class PreferenciasVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
@@ -329,6 +352,7 @@ public class PreferenciasVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
@@ -351,8 +375,22 @@ public class PreferenciasVista extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 5);
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
         jPanel2.add(campoPass2, gridBagConstraints);
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Ojo.png"))); // NOI18N
+        jButton2.setToolTipText("Mostrar Password");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 5);
+        jPanel2.add(jButton2, gridBagConstraints);
 
         getContentPane().add(jPanel2);
 
@@ -374,6 +412,7 @@ public class PreferenciasVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
@@ -393,6 +432,7 @@ public class PreferenciasVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
@@ -412,6 +452,7 @@ public class PreferenciasVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
@@ -431,6 +472,7 @@ public class PreferenciasVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
@@ -451,10 +493,23 @@ public class PreferenciasVista extends javax.swing.JDialog {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 5);
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
         jPanel3.add(campoPass3, gridBagConstraints);
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Ojo.png"))); // NOI18N
+        jButton3.setToolTipText("Mostrar Password");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 5);
+        jPanel3.add(jButton3, gridBagConstraints);
 
         getContentPane().add(jPanel3);
 
@@ -515,6 +570,30 @@ public class PreferenciasVista extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (campoPass.getEchoChar() == (char) 0) {
+            campoPass.setEchoChar('*');
+        } else {
+            campoPass.setEchoChar((char) 0);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (campoPass2.getEchoChar() == (char) 0) {
+            campoPass2.setEchoChar('*');
+        } else {
+            campoPass2.setEchoChar((char) 0);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if (campoPass3.getEchoChar() == (char) 0) {
+            campoPass3.setEchoChar('*');
+        } else {
+            campoPass3.setEchoChar((char) 0);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -585,6 +664,9 @@ public class PreferenciasVista extends javax.swing.JDialog {
     private javax.swing.JTextField campoUsuario;
     private javax.swing.JTextField campoUsuario2;
     private javax.swing.JTextField campoUsuario3;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
