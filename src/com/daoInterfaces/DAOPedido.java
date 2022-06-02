@@ -9,6 +9,7 @@ import com.modelos.Articulo;
 import com.modelos.Filtro;
 import com.modelos.Pedido;
 import com.modelos.PedidoPK;
+import java.sql.SQLException;
 
 /**
  *
@@ -16,19 +17,19 @@ import com.modelos.PedidoPK;
  */
 public interface DAOPedido extends CRUD<Pedido> {
 
-    public List<Pedido> listar(List<Articulo> articulos) throws Exception;
+    public List<Pedido> listar(List<Articulo> articulos) throws SQLException;
 
-    public List<Pedido> listar(String atributo, String valor) throws Exception;
+    public List<Pedido> listar(String atributo, String valor) throws SQLException;
 
-    public List<Pedido> listar(Filtro filtros) throws Exception;
+    public List<Pedido> listar(Filtro filtros) throws SQLException;
     
-    public Pedido obtener(String marketplace, String idPedido) throws Exception;
+    public Pedido obtener(String marketplace, String idPedido) throws SQLException;
 
-    public void registrar(List<Pedido> pedidos) throws Exception;
+    public void registrar(List<Pedido> pedidos) throws SQLException;
 
-    public List<PedidoPK> listarPK() throws Exception;
+    public List<PedidoPK> listarPK() throws SQLException;
 
-    public List<String> listarTiendas() throws Exception;
+    public List<String> listarTiendas() throws SQLException;
 
-    public List<String> listarMarket() throws Exception;
+    public List<String> listarMarket() throws SQLException;
 }

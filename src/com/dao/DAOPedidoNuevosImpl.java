@@ -4,6 +4,7 @@
  */
 package com.dao;
 
+import com.controladores.PedidosControlador;
 import com.daoInterfaces.DAOPedido;
 import com.daoInterfaces.DAOPedidoNuevos;
 import java.sql.PreparedStatement;
@@ -22,11 +23,8 @@ import com.modelos.PedidoPK;
  */
 public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
 
-    public DAOPedidoNuevosImpl() {
-    }
-
     /**
-     * Consturctor inicializa los parámetros de conexión de la base de datos
+     * Inicializa los parámetros de conexión de la base de datos
      *
      * @param url
      * @param serverName
@@ -41,23 +39,24 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
     }
 
     /**
-     * Método que accede a la base de datos online y obtiene los pedidos que no
-     * están en la base de datos Marketbeezup
+     * Accede a la base de datos online y obtiene los pedidos que no están en la
+     * base de datos Marketbeezup
      *
      * @return Se obtiene una lista con los pedidos nuevos
-     * @throws java.lang.Exception
      */
     @Override
-    public List<Pedido> obtenerPedidosNuevos() throws Exception {
+    public List<Pedido> obtenerPedidosNuevos() throws SQLException {
         List<Pedido> pedidosNuevos = new ArrayList<>();
         int indicePedido;
         Pedido pedidoNuevo;
         Articulo articulo;
         Observacion observacion;
-        DAOPedido daoPedido = new DAOPedidoImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
+        DAOPedido daoPedido = PedidosControlador.getDaoPedido();
+        // Se obtiene la clave de los pedidos que ya están registrados
         List<PedidoPK> pedidosPK = daoPedido.listarPK();
         try {
             this.openConnection();
+            // Se obtienen los pedidos que no están registrados
             PreparedStatement pstm = this.getConnection().prepareStatement(
                     "SELECT * FROM pedidos WHERE marketplace NOT IN ("
                     + obtenerParametros(pedidosPK) + ") AND idPedido NOT IN("
@@ -66,7 +65,7 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
                 pstm.setString(i + 1, pedidosPK.get(i).getMarketplace());
             }
             for (int i = 0; i < pedidosPK.size(); i++) {
-                pstm.setString(i + pedidosPK.size() +1, pedidosPK.get(i).getIdPedido());
+                pstm.setString(i + pedidosPK.size() + 1, pedidosPK.get(i).getIdPedido());
             }
             ResultSet result = pstm.executeQuery();
             while (result.next()) {
@@ -107,6 +106,7 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
                     articulo.setDescripcion(result.getString("Descripcion"));
                     articulo.setCantidad(result.getInt("Bultos"));
                     articulo.setPrecio(result.getFloat("Importe"));
+                    // Según los valores de diferentes atributos registro el estado del pedido
                     if (result.getBoolean("Cancelado")) {
                         articulo.setEstado("ANULADO");
                     } else {
@@ -125,6 +125,8 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
                         }
 
                     }
+                    // Si se ha marcado el albarán como impreso registra la fecha del pedido.
+                    // En la nueva BD se va a registrar la hora de impresión de albaranes
                     if (result.getBoolean("Albaran")) {
                         articulo.setFechaHoraImpr(pedidoNuevo.getFechaPedido());
                     }
@@ -133,7 +135,7 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
                     articulo.setMarketplace(result.getString("Marketplace"));
                     if (result.getDate("FechaSalida") != null
                             & result.getString("AlmacenSalida") != null & !result.getString("AlmacenSalida").isBlank()
-                            & result.getString("Agencia") != null & !result.getString("Agencia").isBlank()) { 
+                            & result.getString("Agencia") != null & !result.getString("Agencia").isBlank()) {
                         articulo.NuevoEnvio(result.getDate("FechaSalida"),
                                 result.getString("AlmacenSalida"), result.getString("Agencia"),
                                 result.getString("idarticulo"), result.getString("idPedido"),
@@ -167,7 +169,6 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
                         pedidoNuevo.NuevaObservacion(observacion);
                     }
                 }
-
                 /*			
                     idArticuloA varchar(1) YES
                     AceptaCambio tinyint(1) NO
@@ -199,14 +200,13 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
             result.close();
             pstm.close();
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            throw ex;
         } finally {
             this.closeConnection();
         }
         return pedidosNuevos;
     }
 
-    
     private boolean existeArticuloPedido(String codigoArticulo, Pedido pedido) {
         for (Articulo articulo : pedido.getArticulos()) {
             if (articulo.getCodigoArticulo().equalsIgnoreCase(codigoArticulo)) {

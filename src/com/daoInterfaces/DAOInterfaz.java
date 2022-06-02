@@ -7,6 +7,7 @@ package com.daoInterfaces;
 import java.sql.Connection;
 import com.modelos.Articulo;
 import com.modelos.Filtro;
+import java.sql.SQLException;
 
 /**
  *
@@ -15,11 +16,11 @@ import com.modelos.Filtro;
  */
 public interface DAOInterfaz<T> {
     
-    public T obtener(Articulo articulo, Filtro filtro, Connection conexion) throws Exception;
+    public T obtener(Articulo articulo, Filtro filtro, Connection conexion) throws SQLException;
 
-    public void registrar(T  objeto, Connection conexion) throws Exception;
+    public void registrar(T  objeto, Connection conexion) throws SQLException;
 
-    public void modificar(T  objeto) throws Exception;
+    public void modificar(T  objeto) throws SQLException;
 
-    public void eliminar(T  objeto) throws Exception;
+    public void eliminar(T  objeto) throws SQLException;
 }

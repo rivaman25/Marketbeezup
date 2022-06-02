@@ -17,8 +17,12 @@ import com.modelos.Filtro;
 
 public class DAOCompraImpl extends ConexionBD implements DAOInterfaz<Compra> {
 
+    public DAOCompraImpl(String url, String serverName, int portNumber, String databaseName, String userName, String password) {
+        super(url, serverName, portNumber, databaseName, userName, password);
+    }
+
     @Override
-    public Compra obtener(Articulo articulo, Filtro filtro, Connection conexion) throws Exception {
+    public Compra obtener(Articulo articulo, Filtro filtro, Connection conexion) throws SQLException {
         Compra compra = null;
         try {
             // Si recibo una conexión a la BD por parámetro no creo una nueva
@@ -60,7 +64,7 @@ public class DAOCompraImpl extends ConexionBD implements DAOInterfaz<Compra> {
     }
 
     @Override
-    public void registrar(Compra compra, Connection conexion) throws Exception {
+    public void registrar(Compra compra, Connection conexion) throws SQLException {
         try {
             // Si recibo una conexión a la BD por parámetro no creo una nueva
             if (conexion == null) {
@@ -94,7 +98,7 @@ public class DAOCompraImpl extends ConexionBD implements DAOInterfaz<Compra> {
     }
 
     @Override
-    public void modificar(Compra compra) throws Exception {
+    public void modificar(Compra compra) throws SQLException {
         try {
             this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement(
@@ -119,7 +123,7 @@ public class DAOCompraImpl extends ConexionBD implements DAOInterfaz<Compra> {
     }
 
     @Override
-    public void eliminar(Compra compra) throws Exception {
+    public void eliminar(Compra compra) throws SQLException {
         try {
             this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement(

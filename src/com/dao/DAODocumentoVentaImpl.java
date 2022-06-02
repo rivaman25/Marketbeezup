@@ -17,8 +17,12 @@ import com.modelos.Filtro;
 
 public class DAODocumentoVentaImpl extends ConexionBD implements DAOInterfaz<DocumentoVenta> {
 
+    public DAODocumentoVentaImpl(String url, String serverName, int portNumber, String databaseName, String userName, String password) {
+        super(url, serverName, portNumber, databaseName, userName, password);
+    }
+
     @Override
-    public DocumentoVenta obtener(Articulo articulo, Filtro filtro, Connection conexion) throws Exception {
+    public DocumentoVenta obtener(Articulo articulo, Filtro filtro, Connection conexion) throws SQLException {
         DocumentoVenta documentoVenta = null;
         try {
             // Si recibo una conexión a la BD por parámetro no creo una nueva
@@ -58,7 +62,7 @@ public class DAODocumentoVentaImpl extends ConexionBD implements DAOInterfaz<Doc
     }
 
     @Override
-    public void registrar(DocumentoVenta documentoVenta, Connection conexion) throws Exception {
+    public void registrar(DocumentoVenta documentoVenta, Connection conexion) throws SQLException {
         try {
             // Si recibo una conexión a la BD por parámetro no creo una nueva
             if (conexion == null) {
@@ -90,7 +94,7 @@ public class DAODocumentoVentaImpl extends ConexionBD implements DAOInterfaz<Doc
     }
 
     @Override
-    public void modificar(DocumentoVenta documentoVenta) throws Exception {
+    public void modificar(DocumentoVenta documentoVenta) throws SQLException {
         try {
             this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement(
@@ -113,7 +117,7 @@ public class DAODocumentoVentaImpl extends ConexionBD implements DAOInterfaz<Doc
     }
 
     @Override
-    public void eliminar(DocumentoVenta documentoVenta) throws Exception {
+    public void eliminar(DocumentoVenta documentoVenta) throws SQLException {
         try {
             this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement(

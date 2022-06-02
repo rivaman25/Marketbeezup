@@ -5,9 +5,13 @@
 package com.controladores;
 
 import com.dao.DAOAgenciaImpl;
+import com.dao.DAOAlbaranVentaImpl;
 import com.dao.DAOAlmacenImpl;
 import com.dao.DAOArticuloImpl;
+import com.dao.DAOCompraImpl;
+import com.dao.DAODocumentoVentaImpl;
 import com.dao.DAOEnvioImpl;
+import com.dao.DAOObservacionImpl;
 import com.dao.DAOPedidoImpl;
 import java.util.List;
 import com.modelos.Pedido;
@@ -19,7 +23,12 @@ import com.daoInterfaces.DAOAgencia;
 import com.daoInterfaces.DAOAlmacen;
 import com.daoInterfaces.DAOArticulo;
 import com.daoInterfaces.DAOEnvio;
+import com.daoInterfaces.DAOInterfaz;
+import com.daoInterfaces.DAOObservacion;
+import com.modelos.AlbaranVenta;
 import com.modelos.Articulo;
+import com.modelos.Compra;
+import com.modelos.DocumentoVenta;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -34,7 +43,6 @@ import com.vistas.FiltroVista;
 import com.vistas.ImprimirVista;
 import com.vistas.PedidoVista;
 import com.vistas.PreferenciasVista;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -54,31 +62,65 @@ public class PedidosControlador implements ActionListener, KeyListener {
     private static List<String> tiendas;
     private static List<String> estados;
     private PedidosVista pedidosVista;
-    private DAOPedido daoPedido;
-    private DAOArticulo daoArticulo;
-    private DAOPedidoNuevos daoPedidoNuevos;
-    private DAOAgencia daoAgencias;
-    private DAOAlmacen daoAlmacenes;
-    private Preferencias preferencias;
+    private static DAOPedidoNuevos daoPedidoNuevos;
+    private static DAOPedido daoPedido;
+    private static DAOArticulo daoArticulo;
+    private static DAOAgencia daoAgencias;
+    private static DAOAlmacen daoAlmacenes;
+    private static DAOEnvio daoEnvio;
+    private static DAOInterfaz<Compra> daoCompra;
+    private static DAOInterfaz<DocumentoVenta> daoDocumentoVenta;
+    private static DAOInterfaz<AlbaranVenta> daoAlbaranVenta;
+    private static DAOObservacion daoObservacion;
+    private final Preferencias PREFERENCIAS;
 
-    public PedidosControlador(List<Pedido> pedidos, PedidosVista pedidosVista) throws Exception {
+    public PedidosControlador(List<Pedido> pedidos, PedidosVista pedidosVista) {
         PedidosControlador.pedidos = pedidos;
+        this.PREFERENCIAS = new Preferencias();
         this.pedidosVista = pedidosVista;
         PedidosControlador.filtro = new Filtro();
-        this.daoPedidoNuevos = new DAOPedidoNuevosImpl("jdbc:mysql://", "localhost", 3306, "online", "root", "Mrbmysql2536");
-        this.daoPedido = new DAOPedidoImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
-        this.daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
-        this.daoAgencias = new DAOAgenciaImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
-        this.daoAlmacenes = new DAOAlmacenImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
-        List<Pedido> pedidosNuevos = daoPedidoNuevos.obtenerPedidosNuevos();
-        this.daoPedido.registrar(pedidosNuevos);
-        PedidosControlador.tiendas = daoPedido.listarTiendas();
-        PedidosControlador.markets = daoPedido.listarMarket();
-        PedidosControlador.agencias = daoAgencias.obtener();
-        PedidosControlador.almacenes = daoAlmacenes.obtener();
-        PedidosControlador.estados = daoArticulo.listarEstados();
-        this.preferencias = new Preferencias();
-        filtro.setFechaPedidoDesde(java.sql.Date.valueOf(Main.fechaActual().toLocalDate().minusDays(preferencias.getDiasMarket())));
+        PedidosControlador.daoPedidoNuevos = new DAOPedidoNuevosImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPOnline(),
+                PREFERENCIAS.getPuertoOnline(), PREFERENCIAS.getBdOnline(), PREFERENCIAS.getUsuarioOnline(),
+                PREFERENCIAS.getPassOnline());
+        PedidosControlador.daoPedido = new DAOPedidoImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                PREFERENCIAS.getPassMarket());
+        PedidosControlador.daoArticulo = new DAOArticuloImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                PREFERENCIAS.getPassMarket());
+        PedidosControlador.daoAgencias = new DAOAgenciaImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                PREFERENCIAS.getPassMarket());
+        PedidosControlador.daoAlmacenes = new DAOAlmacenImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                PREFERENCIAS.getPassMarket());
+        PedidosControlador.daoEnvio = new DAOEnvioImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                PREFERENCIAS.getPassMarket());
+        PedidosControlador.daoCompra = new DAOCompraImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                PREFERENCIAS.getPassMarket());
+        PedidosControlador.daoDocumentoVenta = new DAODocumentoVentaImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                PREFERENCIAS.getPassMarket());
+        PedidosControlador.daoAlbaranVenta = new DAOAlbaranVentaImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                PREFERENCIAS.getPassMarket());
+        PedidosControlador.daoObservacion = new DAOObservacionImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                PREFERENCIAS.getPassMarket());
+        try {
+            List<Pedido> pedidosNuevos = daoPedidoNuevos.obtenerPedidosNuevos();
+            PedidosControlador.daoPedido.registrar(pedidosNuevos);
+            PedidosControlador.tiendas = daoPedido.listarTiendas();
+            PedidosControlador.markets = daoPedido.listarMarket();
+            PedidosControlador.agencias = daoAgencias.obtener();
+            PedidosControlador.almacenes = daoAlmacenes.obtener();
+            PedidosControlador.estados = daoArticulo.listarEstados();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(pedidosVista, "No hay conexión con la Base de Datos", "Error al conectar", JOptionPane.ERROR_MESSAGE);
+        }
+        filtro.setFechaPedidoDesde(java.sql.Date.valueOf(Main.fechaActual().toLocalDate().minusDays(PREFERENCIAS.getDiasMarket())));
     }
 
     /**
@@ -89,7 +131,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
      */
     public int obtenerPedidos() throws Exception {
         PedidosControlador.pedidos.clear();
-        PedidosControlador.pedidos.addAll(this.daoPedido.listar(filtro));
+        PedidosControlador.pedidos.addAll(PedidosControlador.daoPedido.listar(filtro));
         return PedidosControlador.pedidos.size();
     }
 
@@ -101,7 +143,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
      */
     public int actualizarPedidos() throws Exception {
         List<Pedido> pedidosNuevos = daoPedidoNuevos.obtenerPedidosNuevos();
-        this.daoPedido.registrar(pedidosNuevos);
+        PedidosControlador.daoPedido.registrar(pedidosNuevos);
         return pedidosNuevos.size();
     }
 
@@ -123,17 +165,43 @@ public class PedidosControlador implements ActionListener, KeyListener {
         Pedido pedido;
         Articulo articulo;
         PedidoControlador pedidoControlador;
-        DAOEnvio daoEnvio = new DAOEnvioImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
         try {
             switch (e.getActionCommand()) {
                 case "Configuracion":
                     PreferenciasVista preferenciasVista = new PreferenciasVista(pedidosVista, true);
                     PreferenciasControlador preferenciasControlador
-                            = new PreferenciasControlador(preferencias, preferenciasVista);
+                            = new PreferenciasControlador(PREFERENCIAS, preferenciasVista);
                     preferenciasVista.setControlador(preferenciasControlador);
                     preferenciasControlador.actualizarVista();
                     if (preferenciasControlador.isGuardar()) {
-                        filtro.setFechaPedidoDesde(java.sql.Date.valueOf(Main.fechaActual().toLocalDate().minusDays(preferencias.getDiasMarket())));
+                        filtro.setFechaPedidoDesde(java.sql.Date.valueOf(Main.fechaActual().toLocalDate().minusDays(PREFERENCIAS.getDiasMarket())));
+                        PedidosControlador.daoPedidoNuevos = new DAOPedidoNuevosImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPOnline(),
+                                PREFERENCIAS.getPuertoOnline(), PREFERENCIAS.getBdOnline(), PREFERENCIAS.getUsuarioOnline(),
+                                PREFERENCIAS.getPassOnline());
+                        PedidosControlador.daoPedido = new DAOPedidoImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                                PREFERENCIAS.getPassMarket());
+                        PedidosControlador.daoArticulo = new DAOArticuloImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                                PREFERENCIAS.getPassMarket());
+                        PedidosControlador.daoAgencias = new DAOAgenciaImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                                PREFERENCIAS.getPassMarket());
+                        PedidosControlador.daoAlmacenes = new DAOAlmacenImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                                PREFERENCIAS.getPassMarket());
+                        PedidosControlador.daoEnvio = new DAOEnvioImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                                PREFERENCIAS.getPassMarket());
+                        PedidosControlador.daoCompra = new DAOCompraImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                                PREFERENCIAS.getPassMarket());
+                        PedidosControlador.daoDocumentoVenta = new DAODocumentoVentaImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                                PREFERENCIAS.getPassMarket());
+                        PedidosControlador.daoAlbaranVenta = new DAOAlbaranVentaImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                                PREFERENCIAS.getPassMarket());
                         this.obtenerPedidos();
                         this.actualizarVista();
                     }
@@ -141,7 +209,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
                 case "Filtrar":
                     // Se inicia el formulario de selección de filtros para la lista de pedidos
                     FiltroVista filtroVista = new FiltroVista(pedidosVista, true);
-                    filtroVista.actualizarVista(filtro, preferencias);
+                    filtroVista.actualizarVista(filtro, PREFERENCIAS);
                     filtroVista.setLocationRelativeTo(null);
                     filtroVista.setVisible(true);
                     // Si se selecciona aplicar en el formulario de filtros se muestra la lista de pedidos filtrada
@@ -355,7 +423,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == e.VK_ENTER) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             List<Pedido> pedidosBuscar;
             if (!pedidosVista.getValorBuscar().isBlank()) {
                 try {
@@ -440,5 +508,85 @@ public class PedidosControlador implements ActionListener, KeyListener {
 
     public static void setEstados(List<String> estados) {
         PedidosControlador.estados = estados;
+    }
+
+    public static DAOPedidoNuevos getDaoPedidoNuevos() {
+        return daoPedidoNuevos;
+    }
+
+    public static void setDaoPedidoNuevos(DAOPedidoNuevos daoPedidoNuevos) {
+        PedidosControlador.daoPedidoNuevos = daoPedidoNuevos;
+    }
+
+    public static DAOPedido getDaoPedido() {
+        return daoPedido;
+    }
+
+    public static void setDaoPedido(DAOPedido daoPedido) {
+        PedidosControlador.daoPedido = daoPedido;
+    }
+
+    public static DAOArticulo getDaoArticulo() {
+        return daoArticulo;
+    }
+
+    public static void setDaoArticulo(DAOArticulo daoArticulo) {
+        PedidosControlador.daoArticulo = daoArticulo;
+    }
+
+    public static DAOAgencia getDaoAgencias() {
+        return daoAgencias;
+    }
+
+    public static void setDaoAgencias(DAOAgencia daoAgencias) {
+        PedidosControlador.daoAgencias = daoAgencias;
+    }
+
+    public static DAOAlmacen getDaoAlmacenes() {
+        return daoAlmacenes;
+    }
+
+    public static void setDaoAlmacenes(DAOAlmacen daoAlmacenes) {
+        PedidosControlador.daoAlmacenes = daoAlmacenes;
+    }
+
+    public static DAOEnvio getDaoEnvio() {
+        return daoEnvio;
+    }
+
+    public static void setDaoEnvio(DAOEnvio daoEnvio) {
+        PedidosControlador.daoEnvio = daoEnvio;
+    }
+
+    public static DAOInterfaz<Compra> getDaoCompra() {
+        return daoCompra;
+    }
+
+    public static void setDaoCompra(DAOInterfaz<Compra> daoCompra) {
+        PedidosControlador.daoCompra = daoCompra;
+    }
+
+    public static DAOInterfaz<DocumentoVenta> getDaoDocumentoVenta() {
+        return daoDocumentoVenta;
+    }
+
+    public static void setDaoDocumentoVenta(DAOInterfaz<DocumentoVenta> daoDocumentoVenta) {
+        PedidosControlador.daoDocumentoVenta = daoDocumentoVenta;
+    }
+
+    public static DAOInterfaz<AlbaranVenta> getDaoAlbaranVenta() {
+        return daoAlbaranVenta;
+    }
+
+    public static void setDaoAlbaranVenta(DAOInterfaz<AlbaranVenta> daoAlbaranVenta) {
+        PedidosControlador.daoAlbaranVenta = daoAlbaranVenta;
+    }
+
+    public static DAOObservacion getDaoObservacion() {
+        return daoObservacion;
+    }
+
+    public static void setDaoObservacion(DAOObservacion daoObservacion) {
+        PedidosControlador.daoObservacion = daoObservacion;
     }
 }

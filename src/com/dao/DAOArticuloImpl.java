@@ -4,6 +4,7 @@
  */
 package com.dao;
 
+import com.controladores.PedidosControlador;
 import com.daoInterfaces.DAOArticulo;
 import com.daoInterfaces.DAOEnvio;
 import com.daoInterfaces.DAOInterfaz;
@@ -28,15 +29,22 @@ import com.modelos.Filtro;
  */
 public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
 
-    public DAOArticuloImpl() {
-    }
+    DAOEnvio daoEnvio;
+    DAOInterfaz<Compra> daoCompra;
+    DAOInterfaz<DocumentoVenta> daoDocumentoVenta;
+    DAOInterfaz<AlbaranVenta> daoAlbaranVenta;
 
     public DAOArticuloImpl(String url, String serverName, int portNumber, String databaseName, String userName, String password) {
         super(url, serverName, portNumber, databaseName, userName, password);
+        daoEnvio = PedidosControlador.getDaoEnvio();
+        daoCompra = PedidosControlador.getDaoCompra();
+        daoDocumentoVenta = PedidosControlador.getDaoDocumentoVenta();
+        daoAlbaranVenta = PedidosControlador.getDaoAlbaranVenta();
     }
 
     @Override
-    public List<Articulo> listar(String idPedido, java.sql.Date fechaSalida, List<String> agencias, boolean reimprimir) throws Exception {
+    public List<Articulo> listar(String idPedido, java.sql.Date fechaSalida,
+            List<String> agencias, boolean reimprimir) throws SQLException {
         List<Articulo> articulos = new ArrayList<>();
         Articulo articulo;
         int indice = 1;
@@ -89,7 +97,7 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
     }
 
     @Override
-    public List<Articulo> listar(String atributo, String valor) throws Exception {
+    public List<Articulo> listar(String atributo, String valor) throws SQLException {
         Articulo articulo;
         List<Articulo> articulos = new ArrayList<>();
         try {
@@ -118,7 +126,7 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
                             result.getString("idAgencia"), result.getString("codigoArticulo"),
                             result.getString("idPedido"), result.getString("marketplace"));
                 }
-                if (result.getSQLXML("idCompra") != null) {
+                if (result.getString("idCompra") != null) {
                     articulo.NuevaCompra(result.getString("idCompra"), result.getString("proveedor"),
                             result.getDate("fechaCompra"), result.getDate("fechaEntrada"), result.getString("codigoArticulo"),
                             result.getString("idPedido"), result.getString("marketplace"));
@@ -136,7 +144,6 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
             result.close();
             pstm.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOArticuloImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         } finally {
             this.closeConnection();
@@ -145,7 +152,7 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
     }
 
     @Override
-    public List<Articulo> listar(Filtro filtro) throws Exception {
+    public List<Articulo> listar(Filtro filtro) throws SQLException {
         Articulo articulo;
         List<Articulo> articulos = new ArrayList<>();
         int indice = 1;
@@ -262,7 +269,6 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
             result.close();
             pstm.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOArticuloImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         } finally {
             this.closeConnection();
@@ -271,11 +277,7 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
     }
 
     @Override
-    public void registrar(Articulo articulo, Connection conexion) throws Exception {
-        DAOEnvio daoEnvio;
-        DAOInterfaz<Compra> daoCompra;
-        DAOInterfaz<DocumentoVenta> daoDocumentoVenta;
-        DAOInterfaz<AlbaranVenta> daoAlbaranVenta;
+    public void registrar(Articulo articulo, Connection conexion) throws SQLException {
         try {
             // Si recibo una conexión a la BD por parámetro no creo una nueva
             if (conexion == null) {
@@ -283,10 +285,6 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
             } else {
                 this.setConnection(conexion);
             }
-            daoEnvio = new DAOEnvioImpl();
-            daoCompra = new DAOCompraImpl();
-            daoDocumentoVenta = new DAODocumentoVentaImpl();
-            daoAlbaranVenta = new DAOAlbaranVentaImpl();
             PreparedStatement pstm = this.getConnection().prepareStatement(
                     "INSERT INTO Articulos (codigoArticulo, descripcion, precio, "
                     + "cantidad, estado, puc, tipoArticulo, fechaHoraImpr, "
@@ -320,7 +318,6 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
             }
             pstm.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOArticuloImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         } finally {
             // Si no he recibido la conexión por parámetro, cierro la que he obtenido
@@ -332,11 +329,7 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
     }
 
     @Override
-    public void registrar(List<Articulo> articulos, Connection conexion) throws Exception {
-        DAOEnvio daoEnvio;
-        DAOInterfaz<Compra> daoCompra;
-        DAOInterfaz<DocumentoVenta> daoDocumentoVenta;
-        DAOInterfaz<AlbaranVenta> daoAlbaranVenta;
+    public void registrar(List<Articulo> articulos, Connection conexion) throws SQLException {
         try {
             // Si recibo una conexión a la BD por parámetro no creo una nueva
             if (conexion == null) {
@@ -344,10 +337,6 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
             } else {
                 this.setConnection(conexion);
             }
-            daoEnvio = new DAOEnvioImpl();
-            daoCompra = new DAOCompraImpl();
-            daoDocumentoVenta = new DAODocumentoVentaImpl();
-            daoAlbaranVenta = new DAOAlbaranVentaImpl();
             PreparedStatement pstm = this.getConnection().prepareStatement(
                     "INSERT INTO Articulos (codigoArticulo, descripcion, precio, "
                     + "cantidad, estado, puc, tipoArticulo, fechaHoraImpr, "
@@ -384,7 +373,6 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
             }
             pstm.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOArticuloImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         } finally {
             // Si no he recibido la conexión por parámetro, cierro la que he obtenido
@@ -396,17 +384,9 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
     }
 
     @Override
-    public void registrar(Articulo articulo) throws Exception {
-        DAOEnvio daoEnvio;
-        DAOInterfaz<Compra> daoCompra;
-        DAOInterfaz<DocumentoVenta> daoDocumentoVenta;
-        DAOInterfaz<AlbaranVenta> daoAlbaranVenta;
+    public void registrar(Articulo articulo) throws SQLException {
         try {
             this.openConnection();
-            daoEnvio = new DAOEnvioImpl();
-            daoCompra = new DAOCompraImpl();
-            daoDocumentoVenta = new DAODocumentoVentaImpl();
-            daoAlbaranVenta = new DAOAlbaranVentaImpl();
             PreparedStatement pstm = this.getConnection().prepareStatement(
                     "INSERT INTO Articulos (codigoArticulo, descripcion, precio, "
                     + "cantidad, estado, puc, tipoArticulo, fechaHoraImpr, "
@@ -440,7 +420,6 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
             }
             pstm.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOArticuloImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         } finally {
             this.closeConnection();
@@ -448,7 +427,7 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
     }
 
     @Override
-    public void modificar(Articulo articulo) throws Exception {
+    public void modificar(Articulo articulo) throws SQLException {
         try {
             this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement("""
@@ -469,7 +448,7 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
                     articulos.codigoArticulo = ? AND
                     articulos.idPedido = ? AND
                     articulos.marketplace = ?
-                """);    
+                """);
             pstm.setString(1, articulo.getDescripcion());
             pstm.setFloat(2, articulo.getPrecio());
             pstm.setInt(3, articulo.getCantidad());
@@ -486,7 +465,6 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
             pstm.executeUpdate();
             pstm.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOArticuloImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         } finally {
             this.closeConnection();
@@ -494,7 +472,7 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
     }
 
     @Override
-    public void eliminar(Articulo articulo) throws Exception {
+    public void eliminar(Articulo articulo) throws SQLException {
         try {
             this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement(
@@ -512,20 +490,23 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
             this.closeConnection();
         }
     }
-    
+
     @Override
-    public void eliminar(String marketplace, String idPedido) throws Exception {
+    public void eliminar(String marketplace, String idPedido) throws SQLException {
         try {
             this.openConnection();
-            PreparedStatement pstm = this.getConnection().prepareStatement(
-                    "DELETE FROM Articulos WHERE marketplace = ? "
-                    + "AND idPedido = ?");
+            PreparedStatement pstm = this.getConnection().prepareStatement("""
+                DELETE FROM 
+                    Articulos
+                WHERE
+                    marketplace = ? AND
+                    idPedido = ?
+                """);
             pstm.setString(1, marketplace);
             pstm.setString(2, idPedido);
             pstm.executeUpdate();
             pstm.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOArticuloImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         } finally {
             this.closeConnection();
@@ -533,38 +514,7 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
     }
 
     @Override
-    public void actualizarFechaHoraImpr(java.sql.Timestamp fechaHoraImpr, List<Articulo> articulos) throws Exception {
-        int indice = 1;
-        if (!articulos.isEmpty()) {
-            try {
-                this.openConnection();
-                PreparedStatement pstm = this.getConnection().prepareStatement(Consultas.obtenerConsultaActualizarFechaHoraImpr(articulos));
-                pstm.setTimestamp(indice, fechaHoraImpr);
-                indice++;
-                for (String codigoArticulo : Articulo.getCodigoArticulos(articulos)) {
-                    pstm.setString(indice, codigoArticulo);
-                    indice++;
-                }
-                for (String idPedido : Articulo.getIdpedidos(articulos)) {
-                    pstm.setString(indice, idPedido);
-                    indice++;
-                }
-                for (String marketplace : Articulo.getMarketplace(articulos)) {
-                    pstm.setString(indice, marketplace);
-                    indice++;
-                }
-                pstm.executeUpdate();
-                pstm.close();
-            } catch (SQLException ex) {
-                throw ex;
-            } finally {
-                this.closeConnection();
-            }
-        }
-    }
-
-    @Override
-    public List<String> listarEstados() {
+    public List<String> listarEstados() throws SQLException {
         List<String> lista = new ArrayList<>();
         try {
             this.openConnection();
@@ -576,7 +526,7 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
             result.close();
             st.close();
         } catch (SQLException ex) {
-
+            throw ex;
         } finally {
             this.closeConnection();
         }

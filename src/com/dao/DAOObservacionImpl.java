@@ -22,11 +22,8 @@ public class DAOObservacionImpl extends ConexionBD implements DAOObservacion {
         super(url, serverName, portNumber, databaseName, userName, password);
     }
 
-    public DAOObservacionImpl() {
-    }
-
     @Override
-    public List<Observacion> listar(List<Articulo> articulos) throws Exception {
+    public List<Observacion> listar(List<Articulo> articulos) throws SQLException {
         List<String> idPedidos = new ArrayList<>();
         List<String> marketplace = new ArrayList<>();
         Observacion observacion;
@@ -78,7 +75,7 @@ public class DAOObservacionImpl extends ConexionBD implements DAOObservacion {
     }
 
     @Override
-    public void registrar(Observacion observacion) throws Exception {
+    public void registrar(Observacion observacion) throws SQLException {
         try {
             this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement(
@@ -100,7 +97,7 @@ public class DAOObservacionImpl extends ConexionBD implements DAOObservacion {
     }
 
     @Override
-    public void registrar(List<Observacion> observaciones, Connection conexion) throws Exception {
+    public void registrar(List<Observacion> observaciones, Connection conexion) throws SQLException {
         try {
             if (conexion == null) {
                 this.openConnection();
@@ -131,7 +128,7 @@ public class DAOObservacionImpl extends ConexionBD implements DAOObservacion {
     }
 
     @Override
-    public void modificar(Observacion observacion) throws Exception {
+    public void modificar(Observacion observacion) throws SQLException {
         try {
             this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement(
@@ -153,7 +150,7 @@ public class DAOObservacionImpl extends ConexionBD implements DAOObservacion {
     }
 
     @Override
-    public void eliminar(Observacion observacion) throws Exception {
+    public void eliminar(Observacion observacion) throws SQLException {
         try {
             this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement(

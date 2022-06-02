@@ -5,11 +5,9 @@
 package com.dao;
 
 import java.sql.*;
-import javax.swing.JOptionPane;
 
 /**
- * Permite obtener una conexión con la BD en función de los parámetro
- * almacenados
+ * Permite obtener una conexión con la BD en función de los parámetros
  *
  * @author Manuel Rivallo
  */
@@ -24,8 +22,7 @@ public class ConexionBD {
     private final String password;
 
     /**
-     * Constructor que inicializa los parámetro de conexión con la BD conforme a
-     * las preferencias almacenadas
+     * Inicializa los parámetro de conexión con la BD conforme
      *
      * @param url
      * @param serverName
@@ -43,15 +40,6 @@ public class ConexionBD {
         this.databaseName = databaseName;
         this.userName = userName;
         this.password = password;
-    }
-    
-    public ConexionBD() {
-        this.url = "jdbc:mysql://";
-        this.serverName = "localhost";
-        this.portNumber = 3306;
-        this.databaseName = "online";
-        this.userName = "root";
-        this.password = "Mrbmysql2536";
     }
 
     /**
@@ -75,31 +63,34 @@ public class ConexionBD {
      * Obtiene una conexión con la BD
      *
      * @return Conexión con la BD
+     * @throws java.sql.SQLException
      */
-    public Connection openConnection() {
+    public Connection openConnection() throws SQLException {
         try {
             connection = java.sql.DriverManager.getConnection(getConnectionUrl(),
                     userName, password);
             if (connection == null) {
-                JOptionPane.showMessageDialog(null, "No hay conexión con la Base de Datos", "Error al conectar", JOptionPane.ERROR_MESSAGE);
+                throw new SQLException("No hay conexión con la Base de Datos");
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error de conexión con la Base de Datos, revise los parámetro de conexión: \n" + e.getMessage(), "Error al conectar", JOptionPane.ERROR_MESSAGE);
+            throw e;
         }
         return connection;
     }
 
     /**
      * Cierra la conexión con la BD
+     *
+     * @throws java.sql.SQLException
      */
-    public void closeConnection() {
+    public void closeConnection() throws SQLException {
         try {
             if (connection != null) {
                 connection.close();
             }
             connection = null;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al cerrar la conexión con la Base de Datos: \n" + e.getMessage(), "Error al conectar", JOptionPane.ERROR_MESSAGE);
+            throw e;
         }
     }
 }

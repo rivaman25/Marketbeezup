@@ -8,6 +8,7 @@ import java.util.List;
 import com.modelos.Articulo;
 import com.modelos.Observacion;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  *
@@ -15,7 +16,7 @@ import java.sql.Connection;
  */
 public interface DAOObservacion extends CRUD<Observacion> {
 
-    public List<Observacion> listar(List<Articulo> articulos) throws Exception;
+    public List<Observacion> listar(List<Articulo> articulos) throws SQLException;
     
-    public void registrar(List<Observacion> observaciones, Connection conexion) throws Exception;
+    public void registrar(List<Observacion> observaciones, Connection conexion) throws SQLException;
 }

@@ -8,26 +8,25 @@ import java.sql.Connection;
 import java.util.List;
 import com.modelos.Articulo;
 import com.modelos.Filtro;
+import java.sql.SQLException;
 
 /**
  *
  * @author Manolo
  */
 public interface DAOArticulo extends CRUD<Articulo> {
+
+    public List<Articulo> listar(String idPedido, java.sql.Date fechaSalida, List<String> agencias, boolean reimprimir) throws SQLException;
+
+    public List<Articulo> listar(String atributo, String valor) throws SQLException;
+
+    public List<Articulo> listar(Filtro filtro) throws SQLException;
+
+    public void registrar(Articulo objet, Connection conexion) throws SQLException;
+
+    public void registrar(List<Articulo> objetos, Connection conexion) throws SQLException;
     
-    public void actualizarFechaHoraImpr(java.sql.Timestamp fechaHoraImpr, List<Articulo> articulos) throws Exception;
+    public void eliminar(String marketplace, String idPedido) throws SQLException;
 
-    public List<Articulo> listar(String idPedido, java.sql.Date fechaSalida, List<String> agencias, boolean reimprimir) throws Exception;
-
-    public List<Articulo> listar(String atributo, String valor) throws Exception;
-
-    public List<Articulo> listar(Filtro filtro) throws Exception;
-
-    public void registrar(Articulo objet, Connection conexion) throws Exception;
-
-    public void registrar(List<Articulo> objetos, Connection conexion) throws Exception;
-    
-    public void eliminar(String marketplace, String idPedido) throws Exception;
-
-    public List<String> listarEstados() throws Exception;
+    public List<String> listarEstados() throws SQLException;
 }

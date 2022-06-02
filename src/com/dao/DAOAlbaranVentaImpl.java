@@ -17,8 +17,12 @@ import com.modelos.Filtro;
 
 public class DAOAlbaranVentaImpl extends ConexionBD implements DAOInterfaz<AlbaranVenta> {
 
+    public DAOAlbaranVentaImpl(String url, String serverName, int portNumber, String databaseName, String userName, String password) {
+        super(url, serverName, portNumber, databaseName, userName, password);
+    }
+    
     @Override
-    public AlbaranVenta obtener(Articulo articulo, Filtro filtro, Connection conexion) throws Exception {
+    public AlbaranVenta obtener(Articulo articulo, Filtro filtro, Connection conexion) throws SQLException {
         AlbaranVenta albaranVenta = null;
         try {
             // Si recibo una conexión a la BD por parámetro no creo una nueva
@@ -58,7 +62,7 @@ public class DAOAlbaranVentaImpl extends ConexionBD implements DAOInterfaz<Albar
     }
 
     @Override
-    public void registrar(AlbaranVenta albaranVenta, Connection conexion) throws Exception {
+    public void registrar(AlbaranVenta albaranVenta, Connection conexion) throws SQLException {
         try {
             // Si recibo una conexión a la BD por parámetro no creo una nueva
             if (conexion == null) {
@@ -89,7 +93,7 @@ public class DAOAlbaranVentaImpl extends ConexionBD implements DAOInterfaz<Albar
     }
 
     @Override
-    public void modificar(AlbaranVenta albaranVenta) throws Exception {
+    public void modificar(AlbaranVenta albaranVenta) throws SQLException {
         try {
             this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement(
@@ -111,7 +115,7 @@ public class DAOAlbaranVentaImpl extends ConexionBD implements DAOInterfaz<Albar
     }
 
     @Override
-    public void eliminar(AlbaranVenta albaranVenta) throws Exception {
+    public void eliminar(AlbaranVenta albaranVenta) throws SQLException {
         try {
             this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement(

@@ -7,6 +7,7 @@ package com.daoInterfaces;
 import java.util.List;
 import com.modelos.Pedido;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  *
@@ -15,13 +16,13 @@ import java.sql.Connection;
  */
 public interface DAOInterfazLista<T> {
 
-    public List<T> listar(Pedido pedido, Connection conexion) throws Exception;
+    public List<T> listar(Pedido pedido, Connection conexion) throws SQLException;
 
-    public void registrar(T objet, Connection conexion) throws Exception;
+    public void registrar(T objet, Connection conexion) throws SQLException;
     
-    public void registrar(List<T> objetos, Connection conexion) throws Exception;
+    public void registrar(List<T> objetos, Connection conexion) throws SQLException;
 
-    public void modificar(T objetos) throws Exception;
+    public void modificar(T objetos) throws SQLException;
 
-    public void eliminar(T objetos) throws Exception;
+    public void eliminar(T objetos) throws SQLException;
 }

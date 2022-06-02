@@ -5,6 +5,7 @@
 package com.daoInterfaces;
 
 import java.util.List;
+import java.sql.SQLException;
 
 /**
  *
@@ -12,5 +13,5 @@ import java.util.List;
  */
 public interface DAOAgencia extends CRUD<String> {
 
-    public List<String> obtener() throws Exception;
+    public List<String> obtener() throws SQLException;
 }

@@ -6,6 +6,7 @@ package com.daoInterfaces;
 
 import java.util.List;
 import com.modelos.Pedido;
+import java.sql.SQLException;
 
 /**
  *
@@ -13,5 +14,5 @@ import com.modelos.Pedido;
  */
 public interface DAOPedidoNuevos {
 
-    public List<Pedido> obtenerPedidosNuevos() throws Exception;
+    public List<Pedido> obtenerPedidosNuevos() throws SQLException;
 }

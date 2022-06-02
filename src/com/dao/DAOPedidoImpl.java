@@ -4,6 +4,7 @@
  */
 package com.dao;
 
+import com.controladores.PedidosControlador;
 import com.daoInterfaces.DAOArticulo;
 import com.daoInterfaces.DAOPedido;
 import java.sql.PreparedStatement;
@@ -27,21 +28,22 @@ import com.modelos.PedidoPK;
  */
 public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
 
-    public DAOPedidoImpl() {
-    }
+    DAOArticulo daoArticulo;
+    DAOObservacion daoObservacion;
 
     public DAOPedidoImpl(String url, String serverName, int portNumber, String databaseName, String userName, String password) {
         super(url, serverName, portNumber, databaseName, userName, password);
+        daoArticulo = PedidosControlador.getDaoArticulo();
+        daoObservacion = PedidosControlador.getDaoObservacion();
     }
 
     @Override
-    public List<Pedido> listar(List<Articulo> articulos) throws Exception {
+    public List<Pedido> listar(List<Articulo> articulos) throws SQLException {
         return listarPedidos(articulos);
     }
 
     @Override
-    public List<Pedido> listar(String atributo, String valor) throws Exception {
-        DAOArticulo daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
+    public List<Pedido> listar(String atributo, String valor) throws SQLException {
         List<Articulo> articulos = daoArticulo.listar(atributo, valor);
         return listarPedidos(articulos);
     }
@@ -55,23 +57,20 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
      * @throws Exception
      */
     @Override
-    public List<Pedido> listar(Filtro filtro) throws Exception {
-        DAOArticulo daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
+    public List<Pedido> listar(Filtro filtro) throws SQLException {
         List<Articulo> articulos = daoArticulo.listar(filtro);
         return listarPedidos(articulos);
     }
 
-    private List<Pedido> listarPedidos(List<Articulo> articulos) throws Exception {
+    private List<Pedido> listarPedidos(List<Articulo> articulos) throws SQLException {
         List<String> idPedidos = new ArrayList<>();
         List<String> marketplace = new ArrayList<>();
         Pedido pedido;
         List<Observacion> observaciones;
-        DAOObservacion daoObservacion;
         List<Pedido> pedidos = new ArrayList<>();
         PreparedStatement pstm;
         ResultSet result;
         int indice = 1;
-        daoObservacion = new DAOObservacionImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
         if (!articulos.isEmpty()) {
             try {
                 this.openConnection();
@@ -138,10 +137,8 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
     }
 
     @Override
-    public Pedido obtener(String marketplace, String idPedido) throws Exception {
+    public Pedido obtener(String marketplace, String idPedido) throws SQLException {
         Pedido pedido = new Pedido();
-        // DAOObservacion daoObservacion = new DAOObservacionImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
-        // DAOArticulo daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
         try {
             this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement(
@@ -178,17 +175,13 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
      * Registra un pedido en la base de datos
      *
      * @param pedido Pedido a registrar
-     * @throws Exception
+     * @throws java.sql.SQLException
      */
     @Override
-    public void registrar(Pedido pedido) throws Exception {
-        DAOArticulo daoArticulo;
-        DAOObservacion daoObservacion;
+    public void registrar(Pedido pedido) throws SQLException {
         try {
             this.openConnection();
             this.getConnection().setAutoCommit(false);
-            daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
-            daoObservacion = new DAOObservacionImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
             PreparedStatement pstm = this.getConnection().prepareStatement(
                     "INSERT INTO Pedidos (tienda, marketplace, idPedido, "
                     + "fechaPedido, dni, nombreApellidos, direccion, cp, "
@@ -218,24 +211,24 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
             this.getConnection().commit();
             pstm.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOPedidoImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         } finally {
             this.closeConnection();
         }
     }
 
+    /**
+     *
+     * @param pedidos
+     * @throws SQLException
+     */
     @Override
-    public void registrar(List<Pedido> pedidos) throws Exception {
-        DAOArticulo daoArticulo;
-        DAOObservacion daoObservacion;
+    public void registrar(List<Pedido> pedidos) throws SQLException {
         List<Articulo> articulos = new ArrayList<>();
         List<Observacion> observaciones = new ArrayList<>();
         try {
             this.openConnection();
             this.getConnection().setAutoCommit(false);
-            daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
-            daoObservacion = new DAOObservacionImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
             PreparedStatement pstm = this.getConnection().prepareStatement(
                     "INSERT INTO Pedidos (tienda, marketplace, idPedido, "
                     + "fechaPedido, dni, nombreApellidos, direccion, cp, "
@@ -269,16 +262,19 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
             this.getConnection().commit();
             pstm.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOPedidoImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         } finally {
             this.closeConnection();
         }
     }
 
+    /**
+     *
+     * @param pedido
+     * @throws SQLException
+     */
     @Override
-    public void modificar(Pedido pedido) throws Exception {
-        DAOArticulo daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
+    public void modificar(Pedido pedido) throws SQLException {
         try {
             this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement("""
@@ -325,7 +321,6 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
             daoArticulo.registrar(pedido.getArticulos(), this.getConnection());
             pstm.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOPedidoImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         } finally {
             this.closeConnection();
@@ -336,10 +331,10 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
      * Elimina un pedido de la base de datos
      *
      * @param pedido Pedido a eliminar
-     * @throws Exception
+     * @throws java.sql.SQLException
      */
     @Override
-    public void eliminar(Pedido pedido) throws Exception {
+    public void eliminar(Pedido pedido) throws SQLException {
         try {
             this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement("DELETE "
@@ -349,7 +344,6 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
             pstm.executeUpdate();
             pstm.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOPedidoImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         } finally {
             this.closeConnection();
@@ -357,14 +351,15 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
     }
 
     /**
-     * Devuelve los valores de la clave primaria de la tabla pedidos. Se usará
+     * Devuelve los valores de la clave primaria de la tabla pedidos.Se usará
      * para cuando se vayan a añadir nuevos pedidos, comprobar que no estén
      * registrados
      *
      * @return
+     * @throws java.sql.SQLException
      */
     @Override
-    public List<PedidoPK> listarPK() {
+    public List<PedidoPK> listarPK() throws SQLException {
         List<PedidoPK> pedidosPK = new ArrayList<>();
         PedidoPK pedidoPK;
         try {
@@ -380,7 +375,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
             result.close();
             st.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOArticuloImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw ex;
         } finally {
             this.closeConnection();
         }
@@ -388,7 +383,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
     }
 
     @Override
-    public List<String> listarTiendas() throws Exception {
+    public List<String> listarTiendas() throws SQLException {
         List<String> lista = new ArrayList<>();
         try {
             this.openConnection();
@@ -400,7 +395,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
             result.close();
             st.close();
         } catch (SQLException ex) {
-
+            throw ex;
         } finally {
             this.closeConnection();
         }
@@ -408,7 +403,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
     }
 
     @Override
-    public List<String> listarMarket() throws Exception {
+    public List<String> listarMarket() throws SQLException {
         List<String> lista = new ArrayList<>();
         try {
             this.openConnection();
@@ -420,7 +415,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
             result.close();
             st.close();
         } catch (SQLException ex) {
-
+            throw ex;
         } finally {
             this.closeConnection();
         }

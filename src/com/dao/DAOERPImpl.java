@@ -18,8 +18,12 @@ import java.sql.ResultSet;
  */
 public class DAOERPImpl extends ConexionBD implements DAOERP {
 
+    public DAOERPImpl(String url, String serverName, int portNumber, String databaseName, String userName, String password) {
+        super(url, serverName, portNumber, databaseName, userName, password);
+    }
+
     @Override
-    public List<Stock> obtenerStock(String codigoArticulo) throws Exception {
+    public List<Stock> obtenerStock(String codigoArticulo) throws SQLException {
         List<Stock> listaStock = new ArrayList<>();
         Stock stock;
         try {

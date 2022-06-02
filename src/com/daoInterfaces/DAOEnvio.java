@@ -8,6 +8,7 @@ import com.modelos.Articulo;
 import com.modelos.Envio;
 import com.modelos.Filtro;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  *
@@ -15,11 +16,11 @@ import java.sql.Connection;
  */
 public interface DAOEnvio {
 
-    public Envio obtener(Articulo articulo, Filtro filtro, Connection conexion) throws Exception;
+    public Envio obtener(Articulo articulo, Filtro filtro, Connection conexion) throws SQLException;
 
-    public void registrar(Envio envio, Connection conexion) throws Exception;
+    public void registrar(Envio envio, Connection conexion) throws SQLException;
 
-    public void modificar(Envio envio) throws Exception;
+    public void modificar(Envio envio) throws SQLException;
 
-    public void eliminar(Envio envio) throws Exception;
+    public void eliminar(Envio envio) throws SQLException;
 }

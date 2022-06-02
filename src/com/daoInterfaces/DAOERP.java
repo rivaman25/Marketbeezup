@@ -6,11 +6,12 @@ package com.daoInterfaces;
 
 import com.modelos.Stock;
 import java.util.List;
+import java.sql.SQLException;
 
 /**
  *
  * @author Manolo
  */
 public interface DAOERP {
-    public List<Stock> obtenerStock(String codigoArticulo) throws Exception;
+    public List<Stock> obtenerStock(String codigoArticulo) throws SQLException;
 }

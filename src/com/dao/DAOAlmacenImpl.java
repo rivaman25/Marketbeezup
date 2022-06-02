@@ -21,11 +21,8 @@ public class DAOAlmacenImpl extends ConexionBD implements DAOAlmacen {
         super(url, serverName, portNumber, databaseName, userName, password);
     }
 
-    public DAOAlmacenImpl() {
-    }
-
     @Override
-    public List<String> obtener() throws Exception {
+    public List<String> obtener() throws SQLException {
          List<String> lista = new ArrayList<>();
         try {
             this.openConnection();
@@ -45,17 +42,17 @@ public class DAOAlmacenImpl extends ConexionBD implements DAOAlmacen {
     }
 
     @Override
-    public void registrar(String objeto) throws Exception {
+    public void registrar(String objeto) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void modificar(String objeto) throws Exception {
+    public void modificar(String objeto) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void eliminar(String objeto) throws Exception {
+    public void eliminar(String objeto) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
