@@ -25,7 +25,7 @@ import com.modelos.Filtro;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
 

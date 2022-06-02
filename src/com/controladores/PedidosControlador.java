@@ -43,6 +43,7 @@ import com.vistas.FiltroVista;
 import com.vistas.ImprimirVista;
 import com.vistas.PedidoVista;
 import com.vistas.PreferenciasVista;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -117,7 +118,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
             PedidosControlador.agencias = daoAgencias.obtener();
             PedidosControlador.almacenes = daoAlmacenes.obtener();
             PedidosControlador.estados = daoArticulo.listarEstados();
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(pedidosVista, "No hay conexión con la Base de Datos", "Error al conectar", JOptionPane.ERROR_MESSAGE);
         }
         filtro.setFechaPedidoDesde(java.sql.Date.valueOf(Main.fechaActual().toLocalDate().minusDays(PREFERENCIAS.getDiasMarket())));
@@ -229,7 +230,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
                 case "ImprimirAlbaran":
                     // Inicia el formulario de impresión de pedidos con envío
                     ImprimirVista imprimirVista = new ImprimirVista(pedidosVista, true);
-                    ImprimirControlador imprimirControlador = new ImprimirControlador(imprimirVista);
+                    ImprimirControlador imprimirControlador = new ImprimirControlador(imprimirVista, PREFERENCIAS);
                     imprimirVista.setControlador(imprimirControlador);
                     imprimirControlador.actualizarAgenciasVista();
                     imprimirControlador.actualizarVista();
@@ -434,7 +435,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
                         actualizarVista();
 
                     }
-                } catch (Exception ex) {
+                } catch (SQLException ex) {
                     Logger.getLogger(PedidosControlador.class
                             .getName()).log(Level.SEVERE, null, ex);
                 }

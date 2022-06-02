@@ -4,8 +4,6 @@
  */
 package com.controladores;
 
-import java.util.ArrayList;
-import com.dao.DAOPedidoImpl;
 import com.daoInterfaces.DAOPedido;
 import java.util.List;
 import java.util.logging.Level;
@@ -13,10 +11,11 @@ import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
 import com.modelos.Articulo;
 import com.modelos.Pedido;
+import java.sql.SQLException;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class ModeloTablaAlbaranesImpr extends AbstractTableModel {
 
@@ -29,11 +28,11 @@ public class ModeloTablaAlbaranesImpr extends AbstractTableModel {
         "Descripción", "Agencia", "Nombre Cliente"};
 
     public ModeloTablaAlbaranesImpr(List<Articulo> articulos) {
-        DAOPedido daoPedido = new DAOPedidoImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
+        DAOPedido daoPedido = PedidosControlador.getDaoPedido();
         this.articulos = articulos;
         try {
             this.pedidos = daoPedido.listar(articulos);
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(ModeloTablaAlbaranesImpr.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

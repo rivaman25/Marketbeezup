@@ -15,7 +15,7 @@ import com.modelos.Articulo;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class ImprimirVista extends javax.swing.JDialog {
 

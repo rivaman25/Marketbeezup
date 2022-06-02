@@ -15,6 +15,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.modelos.Filtro;
 
+/**
+ *
+ * @author Manuel Rivallo Bejarano
+ */
 public class DAOEnvioImpl extends ConexionBD implements DAOEnvio {
 
     public DAOEnvioImpl(String url, String serverName, int portNumber, String databaseName, String userName, String password) {

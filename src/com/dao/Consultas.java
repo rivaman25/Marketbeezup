@@ -11,7 +11,7 @@ import com.modelos.Filtro;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class Consultas {
 

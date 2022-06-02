@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class DAOAgenciaImpl extends ConexionBD implements DAOAgencia {
 

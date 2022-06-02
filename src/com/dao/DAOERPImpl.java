@@ -14,7 +14,7 @@ import java.sql.ResultSet;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class DAOERPImpl extends ConexionBD implements DAOERP {
 

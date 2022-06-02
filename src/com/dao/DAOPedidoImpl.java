@@ -24,7 +24,7 @@ import com.modelos.PedidoPK;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
 
@@ -54,7 +54,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
      *
      * @param filtro
      * @return Pedidos
-     * @throws Exception
+     * @throws java.sql.SQLException
      */
     @Override
     public List<Pedido> listar(Filtro filtro) throws SQLException {
@@ -218,6 +218,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
     }
 
     /**
+     * Registra una lista de pedidos en la base de datos
      *
      * @param pedidos
      * @throws SQLException
@@ -269,6 +270,7 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
     }
 
     /**
+     * Modifica el pedido que se pasa por parámetro
      *
      * @param pedido
      * @throws SQLException
@@ -314,10 +316,10 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
             pstm.setString(14, pedido.getMarketplace());
             pstm.setString(15, pedido.getIdPedido());
             pstm.executeUpdate();
-            // Elimino todos los artículos del pedido
+            // Elimina todos los artículos del pedido.
             // Esto se hace parar poder registrar a posterior los artículos modificados o nuevos, y eliminar los que se han borrado en la edición
             daoArticulo.eliminar(pedido.getMarketplace(), pedido.getIdPedido());
-            // Registro de nuevo los artículos modificados y nuevos
+            // Registra de nuevo los artículos modificados y nuevos
             daoArticulo.registrar(pedido.getArticulos(), this.getConnection());
             pstm.close();
         } catch (SQLException ex) {
@@ -351,9 +353,8 @@ public class DAOPedidoImpl extends ConexionBD implements DAOPedido {
     }
 
     /**
-     * Devuelve los valores de la clave primaria de la tabla pedidos.Se usará
-     * para cuando se vayan a añadir nuevos pedidos, comprobar que no estén
-     * registrados
+     * Devuelve los valores de la clave primaria de la tabla pedidos. Cuando se
+     * vayan a añadir nuevos pedidos, se comprobará que no estén registrados.
      *
      * @return
      * @throws java.sql.SQLException

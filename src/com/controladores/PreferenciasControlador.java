@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class PreferenciasControlador implements ActionListener {
 

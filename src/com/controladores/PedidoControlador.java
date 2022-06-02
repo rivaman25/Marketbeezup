@@ -4,19 +4,18 @@
  */
 package com.controladores;
 
-import com.dao.DAOPedidoImpl;
 import com.daoInterfaces.DAOPedido;
 import com.modelos.Articulo;
 import com.modelos.Pedido;
 import com.vistas.PedidoVista;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class PedidoControlador implements ActionListener {
 
@@ -28,7 +27,7 @@ public class PedidoControlador implements ActionListener {
     public PedidoControlador(PedidoVista pedidoVista, Pedido pedido) {
         this.pedidoVista = pedidoVista;
         this.pedido = new Pedido(pedido);
-        daoPedido = new DAOPedidoImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
+        daoPedido = PedidosControlador.getDaoPedido();
         guardar = false;
     }
 
@@ -105,8 +104,9 @@ public class PedidoControlador implements ActionListener {
                 } else {
                     pedidoVista.muestraMensaje("El pedido existe, no se puede guardar");
                 }
-            } catch (Exception ex) {
-                Logger.getLogger(PedidoControlador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(pedidoVista, "No hay conexión con la BD",
+                        "Error de Conexión", JOptionPane.ERROR_MESSAGE);
             }
             break;
             case "Registrar":

@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class TablaPedidosCellRenderer extends DefaultTableCellRenderer {
 

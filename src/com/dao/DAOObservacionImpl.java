@@ -16,6 +16,10 @@ import java.util.logging.Logger;
 import com.modelos.Articulo;
 import java.sql.Connection;
 
+/**
+ *
+ * @author Manuel Rivallo Bejarano
+ */
 public class DAOObservacionImpl extends ConexionBD implements DAOObservacion {
 
     public DAOObservacionImpl(String url, String serverName, int portNumber, String databaseName, String userName, String password) {

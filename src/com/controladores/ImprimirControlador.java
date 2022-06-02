@@ -5,7 +5,6 @@
 package com.controladores;
 
 import com.dao.ConexionBD;
-import com.dao.DAOArticuloImpl;
 import com.daoInterfaces.DAOArticulo;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,12 +14,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JDialog;
 import com.modelos.Articulo;
+import com.modelos.Preferencias;
 import net.sf.jasperreports.engine.JRException;
 import com.vistas.ImprimirVista;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -29,7 +29,7 @@ import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class ImprimirControlador extends ConexionBD implements ActionListener {
 
@@ -38,10 +38,11 @@ public class ImprimirControlador extends ConexionBD implements ActionListener {
     private final DAOArticulo DAO_ARTICULO;
     private boolean impreso;
 
-    public ImprimirControlador(ImprimirVista imprimirVista) throws Exception {
-        super("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
+    public ImprimirControlador(ImprimirVista imprimirVista, Preferencias preferencias) throws SQLException {
+        super("jdbc:mysql://", preferencias.getDireccionIPMarket(), preferencias.getPuertoMarket(),
+                preferencias.getBdMarket(), preferencias.getUsuarioMarket(), preferencias.getPassMarket());
         this.imprimirVista = imprimirVista;
-        DAO_ARTICULO = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
+        DAO_ARTICULO = PedidosControlador.getDaoArticulo();
         articulosImpr = DAO_ARTICULO.listar(null, null, new ArrayList<>(), false);
         impreso = false;
     }
@@ -80,7 +81,7 @@ public class ImprimirControlador extends ConexionBD implements ActionListener {
                             viewer.setVisible(true);
                             imprimirVista.habilitarMarcar(true);
                         } catch (JRException ex) {
-                            System.out.println(ex.getMessage());
+                            JOptionPane.showMessageDialog(imprimirVista, "No se puede obtener el Albarán", "Error Albarán", JOptionPane.ERROR_MESSAGE);
                         } finally {
                             this.closeConnection();
                         }
@@ -88,7 +89,6 @@ public class ImprimirControlador extends ConexionBD implements ActionListener {
                     break;
                 case "MarcarImpresos":
                     java.sql.Timestamp fechaHoraAct = java.sql.Timestamp.valueOf(LocalDateTime.now());
-                    // DAO_ARTICULO.actualizarFechaHoraImpr(fechaHoraAct, articulosImpr);
                     for (Articulo articulo : articulosImpr) {
                         articulo.setFechaHoraImpr(fechaHoraAct);
                         articulo.setEstado("ENVIAR");
@@ -114,8 +114,8 @@ public class ImprimirControlador extends ConexionBD implements ActionListener {
                     imprimirVista.dispose();
                     break;
             }
-        } catch (Exception ex) {
-            Logger.getLogger(ImprimirControlador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(imprimirVista, "No hay conexión con la Base de Datos", "Error al conectar", JOptionPane.ERROR_MESSAGE);
         }
     }
 

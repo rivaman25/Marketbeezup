@@ -4,8 +4,6 @@
  */
 package com.controladores;
 
-import com.dao.DAOArticuloImpl;
-import com.dao.DAOEnvioImpl;
 import com.daoInterfaces.DAOArticulo;
 import com.daoInterfaces.DAOEnvio;
 import com.modelos.Articulo;
@@ -13,12 +11,12 @@ import com.modelos.Envio;
 import com.vistas.EnvioVista;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class EnvioControlador implements ActionListener {
 
@@ -27,12 +25,16 @@ public class EnvioControlador implements ActionListener {
     private Envio envio;
     private boolean guardado;
     private boolean editar;
+    private DAOEnvio daoEnvio;
+    private DAOArticulo daoArticulo;
 
     public EnvioControlador(Articulo articulo, EnvioVista envioVista) {
         this.articulo = articulo;
         this.envioVista = envioVista;
         guardado = false;
         editar = false;
+        daoEnvio = PedidosControlador.getDaoEnvio();
+        daoArticulo = PedidosControlador.getDaoArticulo();
     }
 
     public void actualizarVista() {
@@ -41,8 +43,6 @@ public class EnvioControlador implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        DAOEnvio daoEnvio = new DAOEnvioImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
-        DAOArticulo daoArticulo = new DAOArticuloImpl("jdbc:mysql://", "localhost", 3306, "marketbeezup", "root", "Mrbmysql2536");
         switch (e.getActionCommand()) {
             case "GuardarNuevoEnvio":
                 envio = envioVista.obtenerEnvio();
@@ -68,10 +68,11 @@ public class EnvioControlador implements ActionListener {
                     }
                     guardado = true;
                     envioVista.dispose();
-                } catch (Exception ex) {
-                    Logger.getLogger(EnvioControlador.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(envioVista, "No hay conexión con la Base de Datos", "Error al conectar", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
+
             case "CancelarNuevoEnvio":
                 envioVista.dispose();
                 break;
@@ -108,5 +109,29 @@ public class EnvioControlador implements ActionListener {
 
     public void setEditar(boolean editar) {
         this.editar = editar;
+    }
+
+    public Envio getEnvio() {
+        return envio;
+    }
+
+    public void setEnvio(Envio envio) {
+        this.envio = envio;
+    }
+
+    public DAOEnvio getDaoEnvio() {
+        return daoEnvio;
+    }
+
+    public void setDaoEnvio(DAOEnvio daoEnvio) {
+        this.daoEnvio = daoEnvio;
+    }
+
+    public DAOArticulo getDaoArticulo() {
+        return daoArticulo;
+    }
+
+    public void setDaoArticulo(DAOArticulo daoArticulo) {
+        this.daoArticulo = daoArticulo;
     }
 }

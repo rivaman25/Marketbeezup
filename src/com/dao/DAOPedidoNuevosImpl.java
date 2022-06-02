@@ -19,7 +19,7 @@ import com.modelos.PedidoPK;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
 
@@ -43,6 +43,7 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
      * base de datos Marketbeezup
      *
      * @return Se obtiene una lista con los pedidos nuevos
+     * @throws java.sql.SQLException
      */
     @Override
     public List<Pedido> obtenerPedidosNuevos() throws SQLException {
@@ -206,7 +207,14 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
         }
         return pedidosNuevos;
     }
-
+    
+    /**
+     * Comprueba si existe el artículo en el pedido
+     * 
+     * @param codigoArticulo Código del artículo a buscar
+     * @param pedido Pedido donde se buscará el artículo
+     * @return 
+     */
     private boolean existeArticuloPedido(String codigoArticulo, Pedido pedido) {
         for (Articulo articulo : pedido.getArticulos()) {
             if (articulo.getCodigoArticulo().equalsIgnoreCase(codigoArticulo)) {
@@ -217,7 +225,7 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
     }
 
     /**
-     * Método que devuelve un string con los parámetros a introducir en la
+     * Devuelve un string con los parámetros a introducir en la
      * consulta preparada
      *
      * @param pedidos Pedidos almacenados en la base de datos marketbeezup

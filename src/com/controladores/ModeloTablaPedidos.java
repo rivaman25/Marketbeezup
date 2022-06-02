@@ -14,7 +14,7 @@ import com.modelos.Pedido;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class ModeloTablaPedidos extends AbstractTableModel {
 

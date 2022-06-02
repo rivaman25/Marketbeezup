@@ -22,7 +22,7 @@ public class ConexionBD {
     private final String password;
 
     /**
-     * Inicializa los parámetro de conexión con la BD conforme
+     * Inicializa los parámetro de conexión con la BD
      *
      * @param url
      * @param serverName

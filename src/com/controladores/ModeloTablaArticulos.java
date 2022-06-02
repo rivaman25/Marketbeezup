@@ -10,7 +10,7 @@ import javax.swing.table.AbstractTableModel;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class ModeloTablaArticulos extends AbstractTableModel {
 
