@@ -13,7 +13,7 @@ import java.util.Objects;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class Filtro {
     private int[] marketplace, tiendas, almacenes, agencias, estados;

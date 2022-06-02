@@ -6,12 +6,14 @@ package com.vistas;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class CompraVista extends javax.swing.JDialog {
 
     /**
      * Creates new form Compra
+     * @param parent
+     * @param modal
      */
     public CompraVista(java.awt.Frame parent, boolean modal) {
         super(parent, modal);

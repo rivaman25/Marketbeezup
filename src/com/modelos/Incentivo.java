@@ -8,7 +8,7 @@ import java.sql.Date;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class Incentivo {
     private String codigoArticulo, proveedor;

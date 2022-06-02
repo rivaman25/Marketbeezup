@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class Observacion {
     private String titulo, descripcion, marketplace, idPedido;

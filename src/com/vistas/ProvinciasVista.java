@@ -6,7 +6,7 @@ package com.vistas;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class ProvinciasVista extends javax.swing.JDialog {
 

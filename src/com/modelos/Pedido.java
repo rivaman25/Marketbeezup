@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class Pedido {
 

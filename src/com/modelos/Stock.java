@@ -6,7 +6,7 @@ package com.modelos;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class Stock {
     private int unidades;

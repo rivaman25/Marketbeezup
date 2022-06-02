@@ -17,7 +17,7 @@ import com.vistas.PedidosVista;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class Main {
 
@@ -42,6 +42,7 @@ public class Main {
 
     /**
      * Devuelve la fecha actual con tipo java.sql.Date
+     * @return 
      */
     public static java.sql.Date fechaActual() {
         LocalDate fecha = LocalDate.now();

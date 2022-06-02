@@ -14,7 +14,7 @@ import com.principal.Main;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class FiltroVista extends javax.swing.JDialog {
 

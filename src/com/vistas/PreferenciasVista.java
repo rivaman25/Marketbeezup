@@ -14,7 +14,7 @@ import javax.swing.Timer;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class PreferenciasVista extends javax.swing.JDialog {
 

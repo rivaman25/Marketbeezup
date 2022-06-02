@@ -15,7 +15,7 @@ import javax.swing.Timer;
 
 /**
  *
- * @author Manolo
+ * @author Manuel Rivallo Bejarano
  */
 public class PedidoVista extends javax.swing.JDialog {
 
