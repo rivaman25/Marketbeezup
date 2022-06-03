@@ -4,11 +4,23 @@
  */
 package com.vistas;
 
+import com.controladores.ProvinciasControlador;
+import com.modelos.Provincia;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import javax.swing.Timer;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Manuel Rivallo Bejarano
  */
 public class ProvinciasVista extends javax.swing.JDialog {
+
+    private final DefaultTableModel MODELO_TABLA_PROVINCIAS;
+    private List<Provincia> provincias;
+    private final Timer TIMER;
 
     /**
      * Creates new form Provincias
@@ -16,6 +28,75 @@ public class ProvinciasVista extends javax.swing.JDialog {
     public ProvinciasVista(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        MODELO_TABLA_PROVINCIAS = new DefaultTableModel();
+        MODELO_TABLA_PROVINCIAS.addColumn("Código");
+        MODELO_TABLA_PROVINCIAS.addColumn("Provincia");
+        tablaProvincias.setModel(MODELO_TABLA_PROVINCIAS);
+        TIMER = new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                etiquetaMensaje.setVisible(false);
+            }
+        });
+    }
+
+    public void actualizarVista(List<Provincia> provincias) {
+        this.provincias = provincias;
+        String[] arrayProvincia = new String[2];
+        for (Provincia provincia : provincias) {
+            arrayProvincia[0] = provincia.getCodigoProvincia();
+            arrayProvincia[1] = provincia.getNombreProvincia();
+            MODELO_TABLA_PROVINCIAS.addRow(arrayProvincia);
+        }
+    }
+
+    public void setControlador(ProvinciasControlador provinciasControlador) {
+        botonRegistrar.addActionListener(provinciasControlador);
+        botonRegistrar.setActionCommand("Registrar");
+        botonEditar.addActionListener(provinciasControlador);
+        botonEditar.setActionCommand("Editar");
+        botonBorrar.addActionListener(provinciasControlador);
+        botonBorrar.setActionCommand("Borrar");
+        botonSalir.addActionListener(provinciasControlador);
+        botonSalir.setActionCommand("Salir");
+    }
+
+    public Provincia obtenerProvincia() {
+        Provincia provincia = new Provincia();
+        provincia.setCodigoProvincia(textoCodigo.getText());
+        provincia.setNombreProvincia(textoNombre.getText());
+        return provincia;
+    }
+
+    public Provincia obtenerProvinciaSeleccionada() {
+        if (tablaProvincias.getSelectedRow() != -1) {
+            return provincias.get(tablaProvincias.getSelectedRow());
+        } else {
+            return null;
+        }
+    }
+
+    public void actualizarTabla(Provincia provincia) {
+        String[] valores = new String[2];
+        valores[0] = provincia.getCodigoProvincia();
+        valores[1] = provincia.getNombreProvincia();
+        MODELO_TABLA_PROVINCIAS.addRow(valores);
+    }
+
+    public void mostrarMensaje(String mensaje) {
+        TIMER.stop();
+        etiquetaMensaje.setText(mensaje);
+        etiquetaMensaje.setVisible(true);
+        TIMER.setRepeats(false);
+        TIMER.start();
+    }
+
+    public List<Provincia> getProvincias() {
+        return provincias;
+    }
+
+    public void setProvincias(List<Provincia> provincias) {
+        this.provincias = provincias;
     }
 
     /**
@@ -26,62 +107,136 @@ public class ProvinciasVista extends javax.swing.JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        jButton2 = new javax.swing.JButton();
+        etiquetaMensaje = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        textoCodigo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        textoNombre = new javax.swing.JTextField();
+        botonRegistrar = new javax.swing.JButton();
+        botonEditar = new javax.swing.JButton();
+        botonBorrar = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        textoBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-
-        jButton2.setText("jButton2");
+        tablaProvincias = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        botonSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Provincia");
+        setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        etiquetaMensaje.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        etiquetaMensaje.setForeground(new java.awt.Color(255, 51, 51));
+        etiquetaMensaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(etiquetaMensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 460, 20));
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Provincia", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
+        jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setText("Código");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        jPanel1.add(jLabel1, gridBagConstraints);
+
+        textoCodigo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        jPanel1.add(textoCodigo, gridBagConstraints);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("Provincia");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        jPanel1.add(jLabel2, gridBagConstraints);
 
-        jTextField1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        textoNombre.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        jPanel1.add(textoNombre, gridBagConstraints);
 
-        jTextField2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        botonRegistrar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        botonRegistrar.setText("Registrar");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        jPanel1.add(botonRegistrar, gridBagConstraints);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(176, 176, 176))
+        botonEditar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        botonEditar.setText("Editar");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        jPanel1.add(botonEditar, gridBagConstraints);
+
+        botonBorrar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        botonBorrar.setText("Borrar");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        jPanel1.add(botonBorrar, gridBagConstraints);
+
+        jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Search.png"))); // NOI18N
+
+        textoBuscar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        textoBuscar.setBorder(null);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addComponent(jLabel3)
+                .addGap(4, 4, 4)
+                .addComponent(textoBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(textoBuscar)
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        jPanel1.add(jPanel3, gridBagConstraints);
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, -1));
+
+        tablaProvincias.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        tablaProvincias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -100,58 +255,17 @@ public class ProvinciasVista extends javax.swing.JDialog {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        tablaProvincias.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tablaProvincias.setShowGrid(true);
+        jScrollPane1.setViewportView(tablaProvincias);
 
-        jButton1.setText("Guardar");
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 460, 152));
 
-        jButton3.setText("Editar");
+        botonSalir.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        botonSalir.setText("Salir");
+        jPanel2.add(botonSalir);
 
-        jButton4.setText("Borrar");
-
-        jButton5.setText("Salir");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton5)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(205, 205, 205)
-                                    .addComponent(jButton1)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jButton3)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jButton4))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addContainerGap()
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addComponent(jButton5)
-                .addContainerGap())
-        );
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 460, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -202,17 +316,21 @@ public class ProvinciasVista extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton botonBorrar;
+    private javax.swing.JButton botonEditar;
+    private javax.swing.JButton botonRegistrar;
+    private javax.swing.JButton botonSalir;
+    private javax.swing.JLabel etiquetaMensaje;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable tablaProvincias;
+    private javax.swing.JTextField textoBuscar;
+    private javax.swing.JTextField textoCodigo;
+    private javax.swing.JTextField textoNombre;
     // End of variables declaration//GEN-END:variables
 }

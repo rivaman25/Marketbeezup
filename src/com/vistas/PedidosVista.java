@@ -154,6 +154,8 @@ public class PedidosVista extends javax.swing.JFrame {
         menuEliminarEnvio.setActionCommand("EliminarEnvio");
         menuConfiguracion.addActionListener(pedidosControlador);
         menuConfiguracion.setActionCommand("Configuracion");
+        menuProvincias.addActionListener(pedidosControlador);
+        menuProvincias.setActionCommand("Provincias");
     }
 
     public String getAtributoBuscar() {
@@ -545,11 +547,6 @@ public class PedidosVista extends javax.swing.JFrame {
 
         menuProvincias.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         menuProvincias.setText("Provincias");
-        menuProvincias.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuProvinciasActionPerformed(evt);
-            }
-        });
         menuEditar.add(menuProvincias);
 
         jMenuBar1.add(menuEditar);
@@ -677,12 +674,6 @@ public class PedidosVista extends javax.swing.JFrame {
         compra.setLocationRelativeTo(null);
         compra.setVisible(true);
     }//GEN-LAST:event_menuNuevaCompraActionPerformed
-
-    private void menuProvinciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuProvinciasActionPerformed
-        ProvinciasVista provincias = new ProvinciasVista(this, true);
-        provincias.setLocationRelativeTo(null);
-        provincias.setVisible(true);
-    }//GEN-LAST:event_menuProvinciasActionPerformed
 
     private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
         // TODO add your handling code here:

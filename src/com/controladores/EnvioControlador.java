@@ -72,7 +72,6 @@ public class EnvioControlador implements ActionListener {
                     JOptionPane.showMessageDialog(envioVista, "No hay conexión con la Base de Datos", "Error al conectar", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
-
             case "CancelarNuevoEnvio":
                 envioVista.dispose();
                 break;

@@ -19,12 +19,14 @@ import com.vistas.PedidosVista;
 import com.daoInterfaces.DAOPedido;
 import com.daoInterfaces.DAOPedidoNuevos;
 import com.dao.DAOPedidoNuevosImpl;
+import com.dao.DAOProvinciaImpl;
 import com.daoInterfaces.DAOAgencia;
 import com.daoInterfaces.DAOAlmacen;
 import com.daoInterfaces.DAOArticulo;
 import com.daoInterfaces.DAOEnvio;
 import com.daoInterfaces.DAOInterfaz;
 import com.daoInterfaces.DAOObservacion;
+import com.daoInterfaces.DAOProvincia;
 import com.modelos.AlbaranVenta;
 import com.modelos.Articulo;
 import com.modelos.Compra;
@@ -35,12 +37,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import com.modelos.Filtro;
 import com.modelos.Preferencias;
+import com.modelos.Provincia;
 import com.principal.Main;
 import com.vistas.EnvioVista;
 import com.vistas.FiltroVista;
 import com.vistas.ImprimirVista;
 import com.vistas.PedidoVista;
 import com.vistas.PreferenciasVista;
+import com.vistas.ProvinciasVista;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -62,6 +66,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
     private static List<String> markets;
     private static List<String> tiendas;
     private static List<String> estados;
+    private static List<Provincia> provincias;
     private PedidosVista pedidosVista;
     private static DAOPedidoNuevos daoPedidoNuevos;
     private static DAOPedido daoPedido;
@@ -73,6 +78,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
     private static DAOInterfaz<DocumentoVenta> daoDocumentoVenta;
     private static DAOInterfaz<AlbaranVenta> daoAlbaranVenta;
     private static DAOObservacion daoObservacion;
+    private static DAOProvincia daoProvincia;
     private final Preferencias PREFERENCIAS;
 
     public PedidosControlador(List<Pedido> pedidos, PedidosVista pedidosVista) {
@@ -83,9 +89,13 @@ public class PedidosControlador implements ActionListener, KeyListener {
         PedidosControlador.agencias = new ArrayList<>();
         PedidosControlador.almacenes = new ArrayList<>();
         PedidosControlador.estados = new ArrayList<>();
+        PedidosControlador.provincias = new ArrayList<>();
         this.PREFERENCIAS = new Preferencias();
         this.pedidosVista = pedidosVista;
         PedidosControlador.filtro = new Filtro();
+        PedidosControlador.daoProvincia = new DAOProvinciaImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                PREFERENCIAS.getPassMarket());
         PedidosControlador.daoAgencias = new DAOAgenciaImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
                 PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
                 PREFERENCIAS.getPassMarket());
@@ -128,6 +138,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
             PedidosControlador.agencias.addAll(daoAgencias.obtener());
             PedidosControlador.almacenes.addAll(daoAlmacenes.obtener());
             PedidosControlador.estados.addAll(daoArticulo.listarEstados());
+            PedidosControlador.provincias.addAll(daoProvincia.listar());
         } catch (NullPointerException | SQLException ex) {
             pedidosVista.mostrarMensaje("No hay conexión con la Base de Datos");
         }
@@ -194,6 +205,9 @@ public class PedidosControlador implements ActionListener, KeyListener {
                     preferenciasControlador.actualizarVista();
                     if (preferenciasControlador.isGuardar()) {
                         filtro.setFechaPedidoDesde(java.sql.Date.valueOf(Main.fechaActual().toLocalDate().minusDays(PREFERENCIAS.getDiasMarket())));
+                        PedidosControlador.daoProvincia = new DAOProvinciaImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                                PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
+                                PREFERENCIAS.getPassMarket());
                         PedidosControlador.daoAgencias = new DAOAgenciaImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
                                 PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
                                 PREFERENCIAS.getPassMarket());
@@ -226,6 +240,13 @@ public class PedidosControlador implements ActionListener, KeyListener {
                                 PREFERENCIAS.getPassOnline());
                         pedidosNuevos.clear();
                         PedidosControlador.pedidos.clear();
+                        pedidosNuevos = new ArrayList<>();
+                        PedidosControlador.tiendas.clear();
+                        PedidosControlador.markets.clear();
+                        PedidosControlador.agencias.clear();
+                        PedidosControlador.almacenes.clear();
+                        PedidosControlador.estados.clear();
+                        PedidosControlador.provincias.clear();
                         try {
                             pedidosNuevos.addAll(daoPedidoNuevos.obtenerPedidosNuevos());
                         } catch (SQLException ex) {
@@ -239,11 +260,19 @@ public class PedidosControlador implements ActionListener, KeyListener {
                             PedidosControlador.almacenes.addAll(daoAlmacenes.obtener());
                             PedidosControlador.estados.addAll(daoArticulo.listarEstados());
                             PedidosControlador.pedidos.addAll(PedidosControlador.daoPedido.listar(filtro));
+                            PedidosControlador.provincias.addAll(daoProvincia.listar());
                         } catch (NullPointerException | SQLException ex) {
                             pedidosVista.mostrarMensaje("No hay conexión con la Base de Datos");
                         }
                         this.actualizarVista();
                     }
+                    break;
+                case "Provincias":
+                    ProvinciasVista provinciasVista = new ProvinciasVista(pedidosVista, true);
+                    ProvinciasControlador provinciasControlador
+                            = new ProvinciasControlador(provinciasVista, PedidosControlador.provincias);
+                    provinciasVista.setControlador(provinciasControlador);
+                    provinciasControlador.actualizarVista();
                     break;
                 case "Filtrar":
                     // Se inicia el formulario de selección de filtros para la lista de pedidos
@@ -626,5 +655,13 @@ public class PedidosControlador implements ActionListener, KeyListener {
 
     public static void setDaoObservacion(DAOObservacion daoObservacion) {
         PedidosControlador.daoObservacion = daoObservacion;
+    }
+
+    public static DAOProvincia getDaoProvincia() {
+        return daoProvincia;
+    }
+
+    public static void setDaoProvincia(DAOProvincia daoProvincia) {
+        PedidosControlador.daoProvincia = daoProvincia;
     }
 }

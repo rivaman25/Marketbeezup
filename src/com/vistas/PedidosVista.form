@@ -87,9 +87,6 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Provincias"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuProvinciasActionPerformed"/>
-              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
