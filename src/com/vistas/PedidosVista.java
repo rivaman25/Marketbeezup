@@ -523,15 +523,12 @@ public class PedidosVista extends javax.swing.JFrame {
         menuEditar.setText("Editar");
         menuEditar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
+        menuFiltrar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
         menuFiltrar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         menuFiltrar.setText("Filtrar Pedidos");
-        menuFiltrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuFiltrarActionPerformed(evt);
-            }
-        });
         menuEditar.add(menuFiltrar);
 
+        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
         jMenuItem5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jMenuItem5.setText("Actualizar");
         menuEditar.add(jMenuItem5);
@@ -562,6 +559,7 @@ public class PedidosVista extends javax.swing.JFrame {
         menuImportarPedido.setText("Importar");
         menuPedidos.add(menuImportarPedido);
 
+        menuEditarPedido.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
         menuEditarPedido.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuEditarPedido.setText("Editar");
         menuPedidos.add(menuEditarPedido);
@@ -570,6 +568,7 @@ public class PedidosVista extends javax.swing.JFrame {
         menuEliminarPedido.setText("Eliminar");
         menuPedidos.add(menuEliminarPedido);
 
+        menuAnularPedido.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, 0));
         menuAnularPedido.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuAnularPedido.setText("Anular");
         menuPedidos.add(menuAnularPedido);
@@ -579,6 +578,7 @@ public class PedidosVista extends javax.swing.JFrame {
         menuEnvios.setText("Envíos");
         menuEnvios.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
+        menuNuevoEnvio.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
         menuNuevoEnvio.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuNuevoEnvio.setText("Nuevo");
         menuEnvios.add(menuNuevoEnvio);
@@ -618,6 +618,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jMenu6.setText("Albaranes");
         jMenu6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
+        menuImprimirAlbaran.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
         menuImprimirAlbaran.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuImprimirAlbaran.setText("Imprimir");
         jMenu6.add(menuImprimirAlbaran);
@@ -682,10 +683,6 @@ public class PedidosVista extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void menuFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuFiltrarActionPerformed
-
-    }//GEN-LAST:event_menuFiltrarActionPerformed
 
     private void menuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSalirActionPerformed
         System.exit(0);

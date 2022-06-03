@@ -48,7 +48,11 @@ public class ProvinciasControlador implements ActionListener {
                 try {
                     if (PedidosControlador.getDaoProvincia().obtener(provincia.getCodigoProvincia()) == null) {
                         PedidosControlador.getDaoProvincia().registrar(provincia);
-                        provinciasVista.actualizarTabla(provincia);
+                        PedidosControlador.getProvincias().add(provincia);
+                        String[] arrayProvincia = new String[2];
+                        arrayProvincia[0] = provincia.getCodigoProvincia();
+                        arrayProvincia[1] = provincia.getNombreProvincia();
+                        provinciasVista.getMODELO_TABLA_PROVINCIAS().addRow(arrayProvincia);
                     } else {
                         provinciasVista.mostrarMensaje("El código de provincia ya existe en la Base de Datos");
                     }
@@ -60,10 +64,10 @@ public class ProvinciasControlador implements ActionListener {
                 if (provinciasVista.obtenerProvinciaSeleccionada() == null) {
                     provinciasVista.mostrarMensaje("No se ha seleccionado ninguna provincia");
                 } else {
-
+                    
                 }
                 break;
-            case "Borrar":
+            case "Eliminar":
                 if (provinciasVista.obtenerProvinciaSeleccionada() == null) {
                     provinciasVista.mostrarMensaje("No se ha seleccionado ninguna provincia");
                 } else {
@@ -71,6 +75,7 @@ public class ProvinciasControlador implements ActionListener {
                             "Eliminar Provincia", JOptionPane.OK_CANCEL_OPTION) == 0) {
                         try {
                             PedidosControlador.getDaoProvincia().eliminar(provinciasVista.obtenerProvinciaSeleccionada());
+                            provinciasVista.getMODELO_TABLA_PROVINCIAS().removeRow(provinciasVista.obtenerFilaSeleccionada());
                         } catch (SQLException ex) {
                             provinciasVista.mostrarMensaje("Error de conexión, no se ha podido eliminar");
                         }

@@ -664,4 +664,12 @@ public class PedidosControlador implements ActionListener, KeyListener {
     public static void setDaoProvincia(DAOProvincia daoProvincia) {
         PedidosControlador.daoProvincia = daoProvincia;
     }
+
+    public static List<Provincia> getProvincias() {
+        return provincias;
+    }
+
+    public static void setProvincias(List<Provincia> provincias) {
+        PedidosControlador.provincias = provincias;
+    }
 }

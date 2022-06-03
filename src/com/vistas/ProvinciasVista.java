@@ -55,8 +55,8 @@ public class ProvinciasVista extends javax.swing.JDialog {
         botonRegistrar.setActionCommand("Registrar");
         botonEditar.addActionListener(provinciasControlador);
         botonEditar.setActionCommand("Editar");
-        botonBorrar.addActionListener(provinciasControlador);
-        botonBorrar.setActionCommand("Borrar");
+        botonEliminar.addActionListener(provinciasControlador);
+        botonEliminar.setActionCommand("Eliminar");
         botonSalir.addActionListener(provinciasControlador);
         botonSalir.setActionCommand("Salir");
     }
@@ -75,12 +75,9 @@ public class ProvinciasVista extends javax.swing.JDialog {
             return null;
         }
     }
-
-    public void actualizarTabla(Provincia provincia) {
-        String[] valores = new String[2];
-        valores[0] = provincia.getCodigoProvincia();
-        valores[1] = provincia.getNombreProvincia();
-        MODELO_TABLA_PROVINCIAS.addRow(valores);
+    
+    public int obtenerFilaSeleccionada() {
+        return tablaProvincias.getSelectedRow();
     }
 
     public void mostrarMensaje(String mensaje) {
@@ -97,6 +94,10 @@ public class ProvinciasVista extends javax.swing.JDialog {
 
     public void setProvincias(List<Provincia> provincias) {
         this.provincias = provincias;
+    }
+
+    public DefaultTableModel getMODELO_TABLA_PROVINCIAS() {
+        return MODELO_TABLA_PROVINCIAS;
     }
 
     /**
@@ -117,7 +118,7 @@ public class ProvinciasVista extends javax.swing.JDialog {
         textoNombre = new javax.swing.JTextField();
         botonRegistrar = new javax.swing.JButton();
         botonEditar = new javax.swing.JButton();
-        botonBorrar = new javax.swing.JButton();
+        botonEliminar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         textoBuscar = new javax.swing.JTextField();
@@ -194,14 +195,14 @@ public class ProvinciasVista extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         jPanel1.add(botonEditar, gridBagConstraints);
 
-        botonBorrar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        botonBorrar.setText("Borrar");
+        botonEliminar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        botonEliminar.setText("Elminar");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        jPanel1.add(botonBorrar, gridBagConstraints);
+        jPanel1.add(botonEliminar, gridBagConstraints);
 
         jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
@@ -217,7 +218,7 @@ public class ProvinciasVista extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel3)
                 .addGap(4, 4, 4)
-                .addComponent(textoBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))
+                .addComponent(textoBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -316,8 +317,8 @@ public class ProvinciasVista extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonBorrar;
     private javax.swing.JButton botonEditar;
+    private javax.swing.JButton botonEliminar;
     private javax.swing.JButton botonRegistrar;
     private javax.swing.JButton botonSalir;
     private javax.swing.JLabel etiquetaMensaje;
