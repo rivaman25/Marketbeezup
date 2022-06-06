@@ -17,7 +17,8 @@ public class Consultas {
     
     static final String CONSULTA_STOCKS = """
         SELECT 
-            dbo.GES_stockAlmacen.IdAlmacen,
+            dbo.GES_StockAlmacen.IdEmpresa,
+                        dbo.GES_stockAlmacen.IdAlmacen,
             dbo.GES_StockAlmacen.UnidadesStock,
             dbo.GES_StockAlmacen.UnidadesStockReservado
         FROM
@@ -25,10 +26,8 @@ public class Consultas {
                 JOIN
             dbo.GES_StockAlmacen ON (dbo.GES_Articulos.IdArticulo = dbo.GES_StockAlmacen.idArticulo)
         WHERE
-            dbo.GES_Articulos.CodigoAlternativo1 = ?
-                AND dbo.GES_stockAlmacen.IdEmpresa = 'ZAR'
-        GROUP BY
-              dbo.GES_Aticulos.stockAlmacen.IdAlmacen;
+            dbo.GES_Articulos.CodigoAlternativo1 = '8806091218018'
+                AND dbo.GES_Articulos.IdEmpresa = 'ZAR'
         ORDER BY dbo.GES_stockAlmacen.IdAlmacen;
                                           """;
 
