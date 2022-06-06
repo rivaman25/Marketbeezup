@@ -70,7 +70,8 @@ public class EnvioVista extends javax.swing.JDialog {
         } else {
             selectorFechaSalida.setDate(new java.util.Date(articulo.getEnvio().getFechaSalida().getTime()));
             comboAgenciaSalida.setSelectedItem(articulo.getEnvio().getIdAgencia());
-            comboAlmacenSalida.setSelectedItem(articulo.getEnvio().getIdAlmacen());
+            int i = Almacen.obtenerIndiceAlmacen(articulo.getEnvio().getIdAlmacen(), PedidosControlador.getAlmacenes());
+            comboAlmacenSalida.setSelectedIndex(i);
         }
         this.setLocationRelativeTo(null);
         this.setVisible(true);
