@@ -90,7 +90,7 @@ public class Filtro {
     public static List<String> obtenerAlmacenesFiltrados(int[] almacenesSeleccionados) {
         List<String> lista = new ArrayList<>();
         for (int i : almacenesSeleccionados) {
-            lista.add(PedidosControlador.getAlmacenes().get(i));
+            lista.add(PedidosControlador.getAlmacenes().get(i).getIdAlmacen());
         }
         return lista;
     }

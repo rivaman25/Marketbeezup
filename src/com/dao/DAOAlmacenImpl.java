@@ -5,9 +5,11 @@
 package com.dao;
 
 import com.daoInterfaces.DAOAlmacen;
+import com.modelos.Almacen;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,19 +24,23 @@ public class DAOAlmacenImpl extends ConexionBD implements DAOAlmacen {
     }
 
     @Override
-    public List<String> obtener() throws SQLException {
-         List<String> lista = new ArrayList<>();
+    public List<Almacen> listar() throws SQLException {
+        List<Almacen> lista = new ArrayList<>();
+        Almacen almacen;
         try {
             this.openConnection();
             Statement st = this.getConnection().createStatement();
-            ResultSet result = st.executeQuery("SELECT idAlmacen FROM Almacenes ORDER BY idAlmacen");
+            ResultSet result = st.executeQuery("SELECT almacenes.idAlmacen, almacenes.almacen FROM almacenes ORDER BY idAlmacen");
             while (result.next()) {
-                lista.add(result.getString(1));
+                almacen = new Almacen();
+                almacen.setIdAlmacen(result.getString(1));
+                almacen.setAlmacen(result.getString(2));
+                lista.add(almacen);
             }
             result.close();
             st.close();
         } catch (SQLException ex) {
-
+            throw ex;
         } finally {
             this.closeConnection();
         }
@@ -42,17 +48,96 @@ public class DAOAlmacenImpl extends ConexionBD implements DAOAlmacen {
     }
 
     @Override
-    public void registrar(String objeto) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Almacen obtener(String idAlmacen) throws SQLException {
+        Almacen almacen = null;
+        try {
+            this.openConnection();
+            PreparedStatement pstm = this.getConnection().prepareStatement("""
+                SELECT
+                    *
+                FROM
+                    almacenes
+                WHERE
+                    almacenes.idAlmacen = ?                                                                                              
+                """);
+            pstm.setString(1, idAlmacen);
+            ResultSet result = pstm.executeQuery();
+            if (result.next()) {
+                almacen = new Almacen();
+                almacen.setIdAlmacen(result.getString("idAlmacen"));
+                almacen.setAlmacen(result.getString("almacen"));
+            }
+            result.close();
+            pstm.close();
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            this.closeConnection();
+        }
+        return almacen;
     }
 
     @Override
-    public void modificar(String objeto) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void registrar(Almacen almacen) throws SQLException {
+        try {
+            this.openConnection();
+            PreparedStatement pstm = this.getConnection().prepareStatement("""
+                INSERT INTO
+                    almacenes (idAlmacen, almacen)
+                VALUES
+                    (?, ?)                                                                                                             
+                """);
+            pstm.setString(1, almacen.getIdAlmacen());
+            pstm.setString(2, almacen.getAlmacen());
+            pstm.executeUpdate();
+            pstm.close();
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            this.closeConnection();
+        }
     }
 
     @Override
-    public void eliminar(String objeto) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void modificar(Almacen almacen) throws SQLException {
+        try {
+            this.openConnection();
+            PreparedStatement pstm = this.getConnection().prepareStatement("""
+                UPDATE
+                    almacenes
+                SET
+                    Almacen = ?     
+                WHERE
+                    iDalmacen = ?                                                                                                             
+                """);
+            pstm.setString(1, almacen.getAlmacen());
+            pstm.setString(2, almacen.getIdAlmacen());
+            pstm.executeUpdate();
+            pstm.close();
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            this.closeConnection();
+        }
+    }
+
+    @Override
+    public void eliminar(Almacen almacen) throws SQLException {
+        try {
+            this.openConnection();
+            PreparedStatement pstm = this.getConnection().prepareStatement("""
+                DELETE FROM
+                    almacenes                                                                                                                                           
+                WHERE
+                    idAlmacen = ?                                                                                                             
+                """);
+            pstm.setString(1, almacen.getIdAlmacen());
+            pstm.executeUpdate();
+            pstm.close();
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            this.closeConnection();
+        }
     }
 }

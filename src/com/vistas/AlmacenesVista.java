@@ -4,9 +4,9 @@
  */
 package com.vistas;
 
-import com.controladores.ModeloTablaProvincias;
-import com.controladores.ProvinciasControlador;
-import com.modelos.Provincia;
+import com.controladores.ModeloTablaAlmacenes;
+import com.controladores.AlmacenesControlador;
+import com.modelos.Almacen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -18,16 +18,16 @@ import javax.swing.Timer;
  *
  * @author Manuel Rivallo Bejarano
  */
-public class ProvinciasVista extends javax.swing.JDialog {
+public class AlmacenesVista extends javax.swing.JDialog {
 
-    private ModeloTablaProvincias modeloTablaProvincias;
-    private List<Provincia> provincias;
+    private ModeloTablaAlmacenes modeloTablaAlmacenes;
+    private List<Almacen> almacenes;
     private final Timer TIMER;
 
     /**
-     * Creates new form Provincias
+     * Creates new form Almacenes
      */
-    public ProvinciasVista(java.awt.Frame parent, boolean modal) {
+    public AlmacenesVista(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         TIMER = new Timer(5000, new ActionListener() {
@@ -38,43 +38,43 @@ public class ProvinciasVista extends javax.swing.JDialog {
         });
     }
 
-    public void actualizarVista(List<Provincia> provincias) {
-        this.provincias = provincias;
-        modeloTablaProvincias = new ModeloTablaProvincias(provincias);
-        tablaProvincias.setModel(modeloTablaProvincias);
+    public void actualizarVista(List<Almacen> almacenes) {
+        this.almacenes = almacenes;
+        modeloTablaAlmacenes = new ModeloTablaAlmacenes(almacenes);
+        tablaAlmacenes.setModel(modeloTablaAlmacenes);
     }
 
-    public void setControlador(ProvinciasControlador provinciasControlador) {
-        botonRegistrar.addActionListener(provinciasControlador);
+    public void setControlador(AlmacenesControlador almacenesControlador) {
+        botonRegistrar.addActionListener(almacenesControlador);
         botonRegistrar.setActionCommand("Registrar");
-        botonEliminar.addActionListener(provinciasControlador);
+        botonEliminar.addActionListener(almacenesControlador);
         botonEliminar.setActionCommand("Eliminar");
-        botonSalir.addActionListener(provinciasControlador);
+        botonSalir.addActionListener(almacenesControlador);
         botonSalir.setActionCommand("Salir");
-        textoBuscar.addKeyListener(provinciasControlador);
+        textoBuscar.addKeyListener(almacenesControlador);
     }
 
-    public Provincia obtenerProvincia() {
-        Provincia provincia = new Provincia();
-        provincia.setCodigoProvincia(textoCodigo.getText());
-        provincia.setNombreProvincia(textoNombre.getText());
-        return provincia;
+    public Almacen obtenerAlmacen() {
+        Almacen almacen = new Almacen();
+        almacen.setIdAlmacen(textoIdAlmacen.getText());
+        almacen.setAlmacen(textoAlmacen.getText());
+        return almacen;
     }
     
     public String obtenerTextoBuscar() {
         return textoBuscar.getText();
     }
 
-    public Provincia obtenerProvinciaSeleccionada() {
-        if (tablaProvincias.getSelectedRow() != -1) {
-            return provincias.get(tablaProvincias.getSelectedRow());
+    public Almacen obtenerAlmacenSeleccionado() {
+        if (tablaAlmacenes.getSelectedRow() != -1) {
+            return almacenes.get(tablaAlmacenes.getSelectedRow());
         } else {
             return null;
         }
     }
 
     public int obtenerFilaSeleccionada() {
-        return tablaProvincias.getSelectedRow();
+        return tablaAlmacenes.getSelectedRow();
     }
 
     public void mostrarMensaje(String mensaje) {
@@ -86,37 +86,37 @@ public class ProvinciasVista extends javax.swing.JDialog {
     }
     
     public void limpiarTexto() {
-        textoCodigo.setText(null);
-        textoNombre.setText(null);
-        textoCodigo.requestFocus();
+        textoIdAlmacen.setText(null);
+        textoAlmacen.setText(null);
+        textoIdAlmacen.requestFocus();
     }
     
     public void limpiarTextoBuscar() {
         textoBuscar.setText(null);
     }
 
-    public List<Provincia> getProvincias() {
-        return provincias;
+    public List<Almacen> getAlmacenes() {
+        return almacenes;
     }
 
-    public void setProvincias(List<Provincia> provincias) {
-        this.provincias = provincias;
+    public void setAlmacenes(List<Almacen> almacenes) {
+        this.almacenes = almacenes;
     }
 
-    public ModeloTablaProvincias getModeloTablaProvincias() {
-        return modeloTablaProvincias;
+    public ModeloTablaAlmacenes getModeloTablaAlmacenes() {
+        return modeloTablaAlmacenes;
     }
 
-    public void setModeloTablaProvincias(ModeloTablaProvincias modeloTablaProvincias) {
-        this.modeloTablaProvincias = modeloTablaProvincias;
+    public void setModeloTablaAlmacenes(ModeloTablaAlmacenes modeloTablaAlmacenes) {
+        this.modeloTablaAlmacenes = modeloTablaAlmacenes;
     }
 
-    public JTable getTablaProvincias() {
-        return tablaProvincias;
+    public JTable getTablaAlmacenes() {
+        return tablaAlmacenes;
     }
 
-    public void setTablaProvincias(JTable tablaProvincias) {
-        this.tablaProvincias = tablaProvincias;
+    public void setTablaAlmacenes(JTable tablaAlmacenes) {
+        this.tablaAlmacenes = tablaAlmacenes;
     }
 
     /**
@@ -132,16 +132,16 @@ public class ProvinciasVista extends javax.swing.JDialog {
         etiquetaMensaje = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        textoCodigo = new javax.swing.JTextField();
+        textoIdAlmacen = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        textoNombre = new javax.swing.JTextField();
+        textoAlmacen = new javax.swing.JTextField();
         botonRegistrar = new javax.swing.JButton();
         botonEliminar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         textoBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaProvincias = new javax.swing.JTable();
+        tablaAlmacenes = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         botonSalir = new javax.swing.JButton();
 
@@ -155,11 +155,11 @@ public class ProvinciasVista extends javax.swing.JDialog {
         etiquetaMensaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         getContentPane().add(etiquetaMensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 460, 20));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Provincia", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Almacen", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel1.setText("Código:");
+        jLabel1.setText("Id Almacén:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -167,10 +167,10 @@ public class ProvinciasVista extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         jPanel1.add(jLabel1, gridBagConstraints);
 
-        textoCodigo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        textoCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+        textoIdAlmacen.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        textoIdAlmacen.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                textoCodigoKeyPressed(evt);
+                textoIdAlmacenKeyPressed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -180,10 +180,10 @@ public class ProvinciasVista extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        jPanel1.add(textoCodigo, gridBagConstraints);
+        jPanel1.add(textoIdAlmacen, gridBagConstraints);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel2.setText("Provincia:");
+        jLabel2.setText("Almacén:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
@@ -191,10 +191,10 @@ public class ProvinciasVista extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         jPanel1.add(jLabel2, gridBagConstraints);
 
-        textoNombre.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        textoNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+        textoAlmacen.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        textoAlmacen.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                textoNombreKeyPressed(evt);
+                textoAlmacenKeyPressed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -204,7 +204,7 @@ public class ProvinciasVista extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
-        jPanel1.add(textoNombre, gridBagConstraints);
+        jPanel1.add(textoAlmacen, gridBagConstraints);
 
         botonRegistrar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         botonRegistrar.setText("Registrar");
@@ -239,7 +239,7 @@ public class ProvinciasVista extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel3)
                 .addGap(4, 4, 4)
-                .addComponent(textoBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
+                .addComponent(textoBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,29 +257,21 @@ public class ProvinciasVista extends javax.swing.JDialog {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, -1));
 
-        tablaProvincias.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        tablaProvincias.setModel(new javax.swing.table.DefaultTableModel(
+        tablaAlmacenes.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        tablaAlmacenes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Código", "Provincia"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-        });
-        tablaProvincias.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tablaProvincias.setShowGrid(true);
-        jScrollPane1.setViewportView(tablaProvincias);
+        ));
+        tablaAlmacenes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tablaAlmacenes.setShowGrid(true);
+        jScrollPane1.setViewportView(tablaAlmacenes);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 460, 152));
 
@@ -292,17 +284,17 @@ public class ProvinciasVista extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textoCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoCodigoKeyPressed
+    private void textoIdAlmacenKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoIdAlmacenKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            textoNombre.requestFocus();
+            textoAlmacen.requestFocus();
         }
-    }//GEN-LAST:event_textoCodigoKeyPressed
+    }//GEN-LAST:event_textoIdAlmacenKeyPressed
 
-    private void textoNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoNombreKeyPressed
+    private void textoAlmacenKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoAlmacenKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             botonRegistrar.requestFocus();
         }
-    }//GEN-LAST:event_textoNombreKeyPressed
+    }//GEN-LAST:event_textoAlmacenKeyPressed
 
     /**
      * @param args the command line arguments
@@ -321,14 +313,18 @@ public class ProvinciasVista extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ProvinciasVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlmacenesVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ProvinciasVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlmacenesVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ProvinciasVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlmacenesVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ProvinciasVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlmacenesVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -337,7 +333,7 @@ public class ProvinciasVista extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ProvinciasVista dialog = new ProvinciasVista(new javax.swing.JFrame(), true);
+                AlmacenesVista dialog = new AlmacenesVista(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -361,9 +357,9 @@ public class ProvinciasVista extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tablaProvincias;
+    private javax.swing.JTable tablaAlmacenes;
+    private javax.swing.JTextField textoAlmacen;
     private javax.swing.JTextField textoBuscar;
-    private javax.swing.JTextField textoCodigo;
-    private javax.swing.JTextField textoNombre;
+    private javax.swing.JTextField textoIdAlmacen;
     // End of variables declaration//GEN-END:variables
 }

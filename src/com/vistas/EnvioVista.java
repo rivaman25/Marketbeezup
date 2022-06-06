@@ -6,11 +6,14 @@ package com.vistas;
 
 import com.controladores.EnvioControlador;
 import com.controladores.PedidosControlador;
+import com.modelos.Almacen;
 import com.modelos.Articulo;
 import com.modelos.Envio;
 import com.principal.Main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Timer;
 
@@ -22,6 +25,7 @@ public class EnvioVista extends javax.swing.JDialog {
 
     private Articulo articulo;
     private final Timer TIMER;
+    private final List<String> almacenes;
 
     /**
      * Creates new form Envio
@@ -29,6 +33,10 @@ public class EnvioVista extends javax.swing.JDialog {
     public EnvioVista(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        almacenes = new ArrayList<>();
+        for (Almacen almacen : PedidosControlador.getAlmacenes()) {
+            almacenes.add(almacen.getIdAlmacen() + " - " + almacen.getAlmacen());
+        }
         // Repite una tarea cada cierto tiempo, en este caso oculta una etiqueta cada n milisegundos
         TIMER = new Timer(5000, new ActionListener() {
             @Override
@@ -55,7 +63,7 @@ public class EnvioVista extends javax.swing.JDialog {
         comboAgenciaSalida.setModel(comboAgenciasModel);
         // Muestra la lista de almacenes para registrar el seleccionado en el envío
         DefaultComboBoxModel<String> comboAlmacenesModel = new DefaultComboBoxModel<>();
-        comboAlmacenesModel.addAll(PedidosControlador.getAlmacenes());
+        comboAlmacenesModel.addAll(almacenes);
         comboAlmacenSalida.setModel(comboAlmacenesModel);
         if (articulo.getEnvio() == null) {
             selectorFechaSalida.setDate(new java.util.Date(Main.fechaActual().getTime()));
@@ -98,7 +106,7 @@ public class EnvioVista extends javax.swing.JDialog {
             envio.setIdAgencia((String) comboAgenciaSalida.getSelectedItem());
         }
         if (comboAlmacenSalida.getSelectedItem() != null) {
-            envio.setIdAlmacen((String) comboAlmacenSalida.getSelectedItem());
+            envio.setIdAlmacen(PedidosControlador.getAlmacenes().get(comboAlmacenSalida.getSelectedIndex()).getIdAlmacen());
         }
         return envio;
     }

@@ -10,7 +10,7 @@ package com.modelos;
  */
 public class Almacen {
 
-    private String idAlmacen;
+    private String idAlmacen, almacen;
 
     public String getIdAlmacen() {
         return idAlmacen;
@@ -18,5 +18,13 @@ public class Almacen {
 
     public void setIdAlmacen(String idAlmacen) {
         this.idAlmacen = idAlmacen;
+    }
+
+    public String getAlmacen() {
+        return almacen;
+    }
+
+    public void setAlmacen(String almacen) {
+        this.almacen = almacen;
     }
 }

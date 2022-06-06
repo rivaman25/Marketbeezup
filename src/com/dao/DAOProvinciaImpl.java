@@ -47,10 +47,12 @@ public class DAOProvinciaImpl extends ConexionBD implements DAOProvincia {
             pstm.close();
         } catch (SQLException ex) {
             throw ex;
+        } finally {
+            this.closeConnection();
         }
         return provincias;
     }
-    
+
     @Override
     public Provincia obtener(String codigo) throws SQLException {
         Provincia provincia = null;
@@ -75,6 +77,8 @@ public class DAOProvinciaImpl extends ConexionBD implements DAOProvincia {
             pstm.close();
         } catch (SQLException ex) {
             throw ex;
+        } finally {
+            this.closeConnection();
         }
         return provincia;
     }
@@ -95,6 +99,8 @@ public class DAOProvinciaImpl extends ConexionBD implements DAOProvincia {
             pstm.close();
         } catch (SQLException ex) {
             throw ex;
+        } finally {
+            this.closeConnection();
         }
     }
 
@@ -116,6 +122,8 @@ public class DAOProvinciaImpl extends ConexionBD implements DAOProvincia {
             pstm.close();
         } catch (SQLException ex) {
             throw ex;
+        } finally {
+            this.closeConnection();
         }
     }
 
@@ -134,6 +142,8 @@ public class DAOProvinciaImpl extends ConexionBD implements DAOProvincia {
             pstm.close();
         } catch (SQLException ex) {
             throw ex;
+        } finally {
+            this.closeConnection();
         }
     }
 }

@@ -156,6 +156,8 @@ public class PedidosVista extends javax.swing.JFrame {
         menuConfiguracion.setActionCommand("Configuracion");
         menuProvincias.addActionListener(pedidosControlador);
         menuProvincias.setActionCommand("Provincias");
+        menuAlmacenes.addActionListener(pedidosControlador);
+        menuAlmacenes.setActionCommand("Almacenes");
     }
 
     public String getAtributoBuscar() {
@@ -220,7 +222,7 @@ public class PedidosVista extends javax.swing.JFrame {
         menuFiltrar = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menuAlmacenes = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         menuProvincias = new javax.swing.JMenuItem();
         menuPedidos = new javax.swing.JMenu();
@@ -534,9 +536,9 @@ public class PedidosVista extends javax.swing.JFrame {
         menuEditar.add(jMenuItem5);
         menuEditar.add(jSeparator2);
 
-        jMenuItem1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jMenuItem1.setText("Almacenes");
-        menuEditar.add(jMenuItem1);
+        menuAlmacenes.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        menuAlmacenes.setText("Almacenes");
+        menuEditar.add(menuAlmacenes);
 
         jMenuItem2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jMenuItem2.setText("Agencias de transporte");
@@ -755,7 +757,6 @@ public class PedidosVista extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem16;
@@ -771,6 +772,7 @@ public class PedidosVista extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JMenuItem menuAlmacenes;
     private javax.swing.JMenuItem menuAnularPedido;
     private javax.swing.JMenu menuArchivo;
     private javax.swing.JMenuItem menuConfiguracion;

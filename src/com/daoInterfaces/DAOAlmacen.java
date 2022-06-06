@@ -4,6 +4,7 @@
  */
 package com.daoInterfaces;
 
+import com.modelos.Almacen;
 import java.util.List;
 import java.sql.SQLException;
 
@@ -11,7 +12,9 @@ import java.sql.SQLException;
  *
  * @author Manuel Rivallo Bejarano
  */
-public interface DAOAlmacen extends CRUD<String> {
+public interface DAOAlmacen extends CRUD<Almacen> {
 
-    public List<String> obtener() throws SQLException;
+    public List<Almacen> listar() throws SQLException;
+    
+    public Almacen obtener(String idAlmacen) throws SQLException;
 }

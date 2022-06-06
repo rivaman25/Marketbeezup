@@ -5,12 +5,15 @@
 package com.vistas;
 
 import com.controladores.PedidosControlador;
+import com.modelos.Almacen;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import com.modelos.Filtro;
 import com.modelos.Preferencias;
 import com.principal.Main;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -21,6 +24,7 @@ public class FiltroVista extends javax.swing.JDialog {
     private Filtro filtroNuevo;
     private String botonSeleccionado;
     private Preferencias preferencias;
+    private List<String> almacenes;
 
     /**
      * Creates new form Filtro
@@ -33,6 +37,7 @@ public class FiltroVista extends javax.swing.JDialog {
         initComponents();
         try {
             filtroNuevo = new Filtro();
+            almacenes = new ArrayList<>();
             DefaultListModel<String> listaTiendasModel = new DefaultListModel<>();
             listaTiendasModel.addAll(PedidosControlador.getTiendas());
             listaTiendas.setModel(listaTiendasModel);
@@ -43,7 +48,10 @@ public class FiltroVista extends javax.swing.JDialog {
             listaAgenciasModel.addAll(PedidosControlador.getAgencias());
             listaAgencias.setModel(listaAgenciasModel);
             DefaultListModel<String> listaAlmacenesModel = new DefaultListModel<>();
-            listaAlmacenesModel.addAll(PedidosControlador.getAlmacenes());
+            for (Almacen almacen : PedidosControlador.getAlmacenes()) {
+                almacenes.add(almacen.getIdAlmacen() + " - " + almacen.getAlmacen());
+            }
+            listaAlmacenesModel.addAll(almacenes);
             listaAlmacenes.setModel(listaAlmacenesModel);
             DefaultListModel<String> listaEstadosModel = new DefaultListModel<>();
             listaEstadosModel.addAll(PedidosControlador.getEstados());
@@ -242,12 +250,12 @@ public class FiltroVista extends javax.swing.JDialog {
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelEstado))
+                    .addComponent(labelEstado)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelAlmacen, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -261,12 +269,12 @@ public class FiltroVista extends javax.swing.JDialog {
                     .addComponent(labelEstado)
                     .addComponent(labelAlmacen))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -692,11 +700,8 @@ public class FiltroVista extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
