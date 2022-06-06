@@ -477,6 +477,8 @@ public class PedidosControlador implements ActionListener, KeyListener {
                                 if (JOptionPane.showConfirmDialog(pedidosVista, "¿Desea anular el envío del pedido seleccionado?",
                                         "Eliminar Envío", JOptionPane.OK_CANCEL_OPTION) == 0) {
                                     daoEnvio.eliminar(articulo.getEnvio());
+                                    articulo.setFechaHoraImpr(null);
+                                    daoArticulo.modificar(articulo);
                                     obtenerPedidos();
                                     actualizarVista();
                                 }
