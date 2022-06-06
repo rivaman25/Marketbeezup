@@ -14,6 +14,23 @@ import com.modelos.Filtro;
  * @author Manuel Rivallo Bejarano
  */
 public class Consultas {
+    
+    static final String CONSULTA_STOCKS = """
+        SELECT 
+            dbo.GES_stockAlmacen.IdAlmacen,
+            dbo.GES_StockAlmacen.UnidadesStock,
+            dbo.GES_StockAlmacen.UnidadesStockReservado
+        FROM
+            dbo.GES_Articulos
+                JOIN
+            dbo.GES_StockAlmacen ON (dbo.GES_Articulos.IdArticulo = dbo.GES_StockAlmacen.idArticulo)
+        WHERE
+            dbo.GES_Articulos.CodigoAlternativo1 = ?
+                AND dbo.GES_stockAlmacen.IdEmpresa = 'ZAR'
+        GROUP BY
+              dbo.GES_Aticulos.stockAlmacen.IdAlmacen;
+        ORDER BY dbo.GES_stockAlmacen.IdAlmacen;
+                                          """;
 
     static final String CONSULTA_PEDIDOS_SOLO_CON_OBSERVACIONES = """
         SELECT 
