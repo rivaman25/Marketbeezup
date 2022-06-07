@@ -76,18 +76,64 @@ public class DAOAgenciaImpl extends ConexionBD implements DAOAgencia {
     }
 
     @Override
-    public void registrar(Agencia objeto) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void registrar(Agencia agencia) throws SQLException {
+        try {
+            this.openConnection();
+            PreparedStatement pstm = this.getConnection().prepareStatement("""
+                INSERT INTO
+                    agencias (idAgencia)
+                VALUES
+                    (?)                                                                                                             
+                """);
+            pstm.setString(1, agencia.getIdAgencia());
+            pstm.executeUpdate();
+            pstm.close();
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            this.closeConnection();
+        }
     }
 
     @Override
-    public void modificar(Agencia objeto) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void modificar(Agencia agencia) throws SQLException {
+        try {
+            this.openConnection();
+            PreparedStatement pstm = this.getConnection().prepareStatement("""
+                UPDATE
+                    agencias
+                SET
+                    agencias.idAgencia = ?     
+                WHERE
+                    agencias.idAgencia = ?                                                                                                             
+                """);
+            pstm.setString(1, agencia.getIdAgencia());
+            pstm.executeUpdate();
+            pstm.close();
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            this.closeConnection();
+        }
     }
 
     @Override
-    public void eliminar(Agencia objeto) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void eliminar(Agencia agencia) throws SQLException {
+        try {
+            this.openConnection();
+            PreparedStatement pstm = this.getConnection().prepareStatement("""
+                DELETE FROM
+                    agencias                                                                                                                                           
+                WHERE
+                    agencias.idAgencia = ?                                                                                                             
+                """);
+            pstm.setString(1, agencia.getIdAgencia());
+            pstm.executeUpdate();
+            pstm.close();
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            this.closeConnection();
+        }
     }
-
 }

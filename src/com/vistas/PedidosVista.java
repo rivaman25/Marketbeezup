@@ -133,6 +133,8 @@ public class PedidosVista extends javax.swing.JFrame {
         botonImprimirAlbaran.setActionCommand("ImprimirAlbaran");
         menuImprimirAlbaran.addActionListener(pedidosControlador);
         menuImprimirAlbaran.setActionCommand("ImprimirAlbaran");
+        menuReimprimirAlbaran.addActionListener(pedidosControlador);
+        menuReimprimirAlbaran.setActionCommand("ReimprimirAlbaran");
         menuNuevoPedido.addActionListener(pedidosControlador);
         menuNuevoPedido.setActionCommand("NuevoPedido");
         menuEditarPedido.addActionListener(pedidosControlador);
@@ -158,6 +160,8 @@ public class PedidosVista extends javax.swing.JFrame {
         menuProvincias.setActionCommand("Provincias");
         menuAlmacenes.addActionListener(pedidosControlador);
         menuAlmacenes.setActionCommand("Almacenes");
+        menuAgencias.addActionListener(pedidosControlador);
+        menuAgencias.setActionCommand("Agencias");
     }
 
     public String getAtributoBuscar() {
@@ -223,7 +227,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         menuAlmacenes = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        menuAgencias = new javax.swing.JMenuItem();
         menuProvincias = new javax.swing.JMenuItem();
         menuPedidos = new javax.swing.JMenu();
         menuNuevoPedido = new javax.swing.JMenuItem();
@@ -540,9 +544,9 @@ public class PedidosVista extends javax.swing.JFrame {
         menuAlmacenes.setText("Almacenes");
         menuEditar.add(menuAlmacenes);
 
-        jMenuItem2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jMenuItem2.setText("Agencias de transporte");
-        menuEditar.add(jMenuItem2);
+        menuAgencias.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        menuAgencias.setText("Agencias de transporte");
+        menuEditar.add(menuAgencias);
 
         menuProvincias.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         menuProvincias.setText("Provincias");
@@ -762,7 +766,6 @@ public class PedidosVista extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem19;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
@@ -772,6 +775,7 @@ public class PedidosVista extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JMenuItem menuAgencias;
     private javax.swing.JMenuItem menuAlmacenes;
     private javax.swing.JMenuItem menuAnularPedido;
     private javax.swing.JMenu menuArchivo;

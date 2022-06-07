@@ -46,7 +46,7 @@ public class ModeloTablaAgencias extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int row, int col) {
-        return true;
+        return false;
     }
 
     @Override

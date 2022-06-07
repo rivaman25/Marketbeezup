@@ -36,14 +36,16 @@ public class ImprimirControlador extends ConexionBD implements ActionListener {
     private ImprimirVista imprimirVista;
     private List<Articulo> articulosImpr;
     private final DAOArticulo DAO_ARTICULO;
-    private boolean impreso;
+    private boolean impreso, reimprimir;
 
-    public ImprimirControlador(ImprimirVista imprimirVista, Preferencias preferencias) throws SQLException {
+    public ImprimirControlador(boolean reimprimir, ImprimirVista imprimirVista, Preferencias preferencias) throws SQLException {
         super("jdbc:mysql://", preferencias.getDireccionIPMarket(), preferencias.getPuertoMarket(),
                 preferencias.getBdMarket(), preferencias.getUsuarioMarket(), preferencias.getPassMarket());
         this.imprimirVista = imprimirVista;
+        this.reimprimir = reimprimir;
         DAO_ARTICULO = PedidosControlador.getDaoArticulo();
-        articulosImpr = DAO_ARTICULO.listar(null, null, new ArrayList<>(), false);
+        // En función de la variable reimprimir obtengo los pedidos impresos o pendientes de imprimir
+        articulosImpr = DAO_ARTICULO.listar(null, null, new ArrayList<>(), reimprimir);
         impreso = false;
     }
 
@@ -142,5 +144,13 @@ public class ImprimirControlador extends ConexionBD implements ActionListener {
 
     public void setImpreso(boolean impreso) {
         this.impreso = impreso;
+    }
+
+    public boolean isReimprimir() {
+        return reimprimir;
+    }
+
+    public void setReimprimir(boolean reimprimir) {
+        this.reimprimir = reimprimir;
     }
 }

@@ -4,8 +4,8 @@
  */
 package com.controladores;
 
-import com.modelos.Provincia;
-import com.vistas.ProvinciasVista;
+import com.modelos.Agencia;
+import com.vistas.AgenciasVista;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,69 +21,65 @@ import javax.swing.JOptionPane;
  */
 public class AgenciasControlador implements ActionListener, KeyListener {
 
-    private ProvinciasVista provinciasVista;
-    private List<Provincia> provincias;
+    private AgenciasVista agenciasVista;
+    private List<Agencia> agencias;
 
-    public AgenciasControlador(ProvinciasVista provinciasVista, List<Provincia> provincias) {
-        this.provinciasVista = provinciasVista;
-        this.provincias = provincias;
+    public AgenciasControlador(AgenciasVista agenciasVista, List<Agencia> agencias) {
+        this.agenciasVista = agenciasVista;
+        this.agencias = agencias;
     }
 
     public void actualizarVista() {
-        provinciasVista.actualizarVista(provincias);
-        provinciasVista.setLocationRelativeTo(null);
-        provinciasVista.setVisible(true);
+        agenciasVista.actualizarVista(agencias);
+        agenciasVista.setLocationRelativeTo(null);
+        agenciasVista.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Provincia provincia;
+        Agencia agencia;
         switch (e.getActionCommand()) {
             case "Registrar":
-                provincia = provinciasVista.obtenerProvincia();
-                if (provincia.getCodigoProvincia().isBlank()) {
-                    provinciasVista.mostrarMensaje("Introduzca un valor para el código de provincia");
+                agencia = agenciasVista.obtenerAgencia();
+                if (agencia.getIdAgencia().isBlank()) {
+                    agenciasVista.mostrarMensaje("Introduzca un valor para la agencia");
                     return;
                 }
-                if (provincia.getCodigoProvincia().length() > 2) {
-                    provinciasVista.mostrarMensaje("El código de provincia solo puede tener 2 caracteres");
-                    return;
-                }
-                if (provincia.getNombreProvincia().isBlank()) {
-                    provinciasVista.mostrarMensaje("Introduzca un valor para el nombre de la provincia");
+                if (agencia.getIdAgencia().length() > 16) {
+                    agenciasVista.mostrarMensaje("El código de agencia solo puede tener 16 caracteres");
                     return;
                 }
                 try {
-                    if (PedidosControlador.getDaoProvincia().obtener(provincia.getCodigoProvincia()) == null) {
-                        PedidosControlador.getDaoProvincia().registrar(provincia);
-                        PedidosControlador.getProvincias().add(0, provincia);
-                        provinciasVista.getModeloTablaProvincias().fireTableDataChanged();
-                        provinciasVista.limpiarTexto();
+                    if (PedidosControlador.getDaoAgencia().obtener(agencia.getIdAgencia()) == null) {
+                        PedidosControlador.getDaoAgencia().registrar(agencia);
+                        PedidosControlador.getAgencias().add(0, agencia);
+                        agenciasVista.getModeloTablaAgencias().fireTableDataChanged();
+                        agenciasVista.limpiarTexto();
                     } else {
-                        provinciasVista.mostrarMensaje("El código de provincia ya existe en la Base de Datos");
+                        agenciasVista.mostrarMensaje("La agencia ya existe en la Base de Datos");
                     }
                 } catch (SQLException ex) {
-                    provinciasVista.mostrarMensaje("No hay conexión con la Base de Datos");
+                    agenciasVista.mostrarMensaje("No hay conexión con la Base de Datos");
                 }
                 break;
             case "Eliminar":
-                if (provinciasVista.obtenerProvinciaSeleccionada() == null) {
-                    provinciasVista.mostrarMensaje("No se ha seleccionado ninguna provincia");
+                if (agenciasVista.obtenerAgenciaSeleccionada() == null) {
+                    agenciasVista.mostrarMensaje("No se ha seleccionado ninguna agencia");
                 } else {
-                    if (JOptionPane.showConfirmDialog(provinciasVista, "¿Desea anular la provincia seleccionada?",
-                            "Eliminar Provincia", JOptionPane.OK_CANCEL_OPTION) == 0) {
+                    if (JOptionPane.showConfirmDialog(agenciasVista, "¿Desea anular la agencia seleccionada?",
+                            "Eliminar Agencia", JOptionPane.OK_CANCEL_OPTION) == 0) {
                         try {
-                            PedidosControlador.getDaoProvincia().eliminar(provinciasVista.obtenerProvinciaSeleccionada());
-                            PedidosControlador.getProvincias().remove(provinciasVista.obtenerFilaSeleccionada());
-                            provinciasVista.getModeloTablaProvincias().fireTableDataChanged();
+                            PedidosControlador.getDaoAgencia().eliminar(agenciasVista.obtenerAgenciaSeleccionada());
+                            PedidosControlador.getAgencias().remove(agenciasVista.obtenerFilaSeleccionada());
+                            agenciasVista.getModeloTablaAgencias().fireTableDataChanged();
                         } catch (SQLException ex) {
-                            provinciasVista.mostrarMensaje("Error de conexión, no se ha podido eliminar");
+                            agenciasVista.mostrarMensaje("Error de conexión, no se ha podido eliminar");
                         }
                     }
                 }
                 break;
             case "Salir":
-                provinciasVista.dispose();
+                agenciasVista.dispose();
                 break;
         }
     }
@@ -96,20 +92,19 @@ public class AgenciasControlador implements ActionListener, KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            String textoBuscar = provinciasVista.obtenerTextoBuscar();
+            String textoBuscar = agenciasVista.obtenerTextoBuscar();
             if (!textoBuscar.isBlank()) {
-                for (Provincia provincia : provincias) {
-                    if (provincia.getCodigoProvincia().toUpperCase().contains(textoBuscar.toUpperCase()) 
-                            || provincia.getNombreProvincia().toUpperCase().contains(textoBuscar.toUpperCase())) {
-                        provinciasVista.getTablaProvincias().getSelectionModel().
-                                setSelectionInterval(provincias.indexOf(provincia), provincias.indexOf(provincia));
-                        provinciasVista.getTablaProvincias().scrollRectToVisible(
-                                new Rectangle(provinciasVista.getTablaProvincias().getCellRect(provincias.indexOf(provincia), 0, true)));
-                        provinciasVista.limpiarTextoBuscar();
+                for (Agencia agencia : agencias) {
+                    if (agencia.getIdAgencia().toUpperCase().contains(textoBuscar.toUpperCase())) {
+                        agenciasVista.getTablaAgencias().getSelectionModel().
+                                setSelectionInterval(agencias.indexOf(agencia), agencias.indexOf(agencia));
+                        agenciasVista.getTablaAgencias().scrollRectToVisible(
+                                new Rectangle(agenciasVista.getTablaAgencias().getCellRect(agencias.indexOf(agencia), 0, true)));
+                        agenciasVista.limpiarTextoBuscar();
                         return;
                     }
                 }
-                provinciasVista.mostrarMensaje("Registro no encontrado");
+                agenciasVista.mostrarMensaje("Registro no encontrado");
             }
         }
     }
@@ -119,19 +114,19 @@ public class AgenciasControlador implements ActionListener, KeyListener {
 
     }
 
-    public ProvinciasVista getProvinciasVista() {
-        return provinciasVista;
+    public AgenciasVista getAgenciasVista() {
+        return agenciasVista;
     }
 
-    public void setProvinciasVista(ProvinciasVista provinciasVista) {
-        this.provinciasVista = provinciasVista;
+    public void setAgenciasVista(AgenciasVista agenciasVista) {
+        this.agenciasVista = agenciasVista;
     }
 
-    public List<Provincia> getProvincias() {
-        return provincias;
+    public List<Agencia> getAgencias() {
+        return agencias;
     }
 
-    public void setProvincias(List<Provincia> provincias) {
-        this.provincias = provincias;
+    public void setAgencias(List<Agencia> agencias) {
+        this.agencias = agencias;
     }
 }

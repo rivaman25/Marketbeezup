@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import com.modelos.Articulo;
+import javax.swing.ListSelectionModel;
 
 /**
  *
@@ -19,8 +20,9 @@ import com.modelos.Articulo;
  */
 public class ImprimirVista extends javax.swing.JDialog {
 
-    ModeloTablaAlbaranesImpr modeloTablaAlbaranesImpr;
-    DefaultListModel<String> modeloListaAgencias;
+    private ModeloTablaAlbaranesImpr modeloTablaAlbaranesImpr;
+    private DefaultListModel<String> modeloListaAgencias;
+    private boolean reimprimir;
 
     /**
      * Creates new form Imprimir
@@ -47,6 +49,12 @@ public class ImprimirVista extends javax.swing.JDialog {
         // Se muestran los pedidos en la tabla
         modeloTablaAlbaranesImpr = new ModeloTablaAlbaranesImpr(articulos);
         tablaAlbaranesImpr.setModel(modeloTablaAlbaranesImpr);
+        // Si se quieren reimprimir albaranen se habilita la selección de filas
+        if (reimprimir) {
+            this.setTitle("Reimprimir Albaranes");
+            tablaAlbaranesImpr.setRowSelectionAllowed(true);
+            tablaAlbaranesImpr.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        }
     }
 
     public void actualizarAgencias(List<Articulo> articulos) {
@@ -77,6 +85,7 @@ public class ImprimirVista extends javax.swing.JDialog {
     }
 
     public void setControlador(ImprimirControlador imprimirControlador) {
+        reimprimir = imprimirControlador.isReimprimir();
         botonImprimir.addActionListener(imprimirControlador);
         botonImprimir.setActionCommand("ImprimirAlbaranes");
         botonFiltrar.addActionListener(imprimirControlador);
@@ -151,17 +160,18 @@ public class ImprimirVista extends javax.swing.JDialog {
         tablaAlbaranesImpr = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Imprimir Albarán");
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanel1.setMaximumSize(new java.awt.Dimension(32767, 132));
         jPanel1.setMinimumSize(new java.awt.Dimension(640, 132));
         jPanel1.setPreferredSize(new java.awt.Dimension(640, 132));
 
-        jLabel2.setText("Fecha");
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel2.setText("Fecha");
 
-        jLabel3.setText("Id Pedido");
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel3.setText("Id Pedido");
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Agencias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
 
@@ -181,32 +191,32 @@ public class ImprimirVista extends javax.swing.JDialog {
 
         botonImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Imprimir32(1).png"))); // NOI18N
         botonImprimir.setText("Imprimir");
-        botonImprimir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonImprimir.setToolTipText("Imprimir Albaranes");
+        botonImprimir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonImprimir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         botonFiltrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Filtrar32.png"))); // NOI18N
         botonFiltrar.setText("Filtrar");
-        botonFiltrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonFiltrar.setToolTipText("Filtrar");
+        botonFiltrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonFiltrar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         botonLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Limipiar32.png"))); // NOI18N
         botonLimpiar.setText("Limpiar");
-        botonLimpiar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonLimpiar.setToolTipText("Limpiar Filtro");
+        botonLimpiar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonLimpiar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         botonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Cancelar32.png"))); // NOI18N
         botonCancelar.setText("Salir");
-        botonCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonCancelar.setToolTipText("Salir");
+        botonCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonCancelar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         botonMarcar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Check.png"))); // NOI18N
         botonMarcar.setText("Marcar");
-        botonMarcar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonMarcar.setToolTipText("Marcar como Impreso");
+        botonMarcar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonMarcar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

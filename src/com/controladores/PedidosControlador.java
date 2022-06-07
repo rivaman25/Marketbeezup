@@ -41,6 +41,7 @@ import com.modelos.Filtro;
 import com.modelos.Preferencias;
 import com.modelos.Provincia;
 import com.principal.Main;
+import com.vistas.AgenciasVista;
 import com.vistas.AlmacenesVista;
 import com.vistas.EnvioVista;
 import com.vistas.FiltroVista;
@@ -198,6 +199,8 @@ public class PedidosControlador implements ActionListener, KeyListener {
         Pedido pedido;
         Articulo articulo;
         PedidoControlador pedidoControlador;
+        ImprimirVista imprimirVista;
+        ImprimirControlador imprimirControlador;
         try {
             switch (e.getActionCommand()) {
                 case "Configuracion":
@@ -284,6 +287,13 @@ public class PedidosControlador implements ActionListener, KeyListener {
                     almacenesVista.setControlador(almacenesControlador);
                     almacenesControlador.actualizarVista();
                     break;
+                case "Agencias":
+                    AgenciasVista agenciasVista = new AgenciasVista(pedidosVista, true);
+                    AgenciasControlador agenciasControlador
+                            = new AgenciasControlador(agenciasVista, PedidosControlador.agencias);
+                    agenciasVista.setControlador(agenciasControlador);
+                    agenciasControlador.actualizarVista();
+                    break;
                 case "Filtrar":
                     // Se inicia el formulario de selección de filtros para la lista de pedidos
                     FiltroVista filtroVista = new FiltroVista(pedidosVista, true);
@@ -306,8 +316,20 @@ public class PedidosControlador implements ActionListener, KeyListener {
                     break;
                 case "ImprimirAlbaran":
                     // Inicia el formulario de impresión de pedidos con envío
-                    ImprimirVista imprimirVista = new ImprimirVista(pedidosVista, true);
-                    ImprimirControlador imprimirControlador = new ImprimirControlador(imprimirVista, PREFERENCIAS);
+                    imprimirVista = new ImprimirVista(pedidosVista, true);
+                    imprimirControlador = new ImprimirControlador(false, imprimirVista, PREFERENCIAS);
+                    imprimirVista.setControlador(imprimirControlador);
+                    imprimirControlador.actualizarAgenciasVista();
+                    imprimirControlador.actualizarVista();
+                    if (imprimirControlador.isImpreso()) {
+                        this.obtenerPedidos();
+                        this.actualizarVista();
+                    }
+                    break;
+                case "ReimprimirAlbaran":
+                    // Inicia el formulario de impresión de pedidos con envío
+                    imprimirVista = new ImprimirVista(pedidosVista, true);
+                    imprimirControlador = new ImprimirControlador(true, imprimirVista, PREFERENCIAS);
                     imprimirVista.setControlador(imprimirControlador);
                     imprimirControlador.actualizarAgenciasVista();
                     imprimirControlador.actualizarVista();

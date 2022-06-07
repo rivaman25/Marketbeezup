@@ -142,16 +142,16 @@ public class AgenciasVista extends javax.swing.JDialog {
         botonSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Provincia");
+        setTitle("Agencias");
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         etiquetaMensaje.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         etiquetaMensaje.setForeground(new java.awt.Color(255, 51, 51));
         etiquetaMensaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        getContentPane().add(etiquetaMensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 460, 20));
+        getContentPane().add(etiquetaMensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 410, 20));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Almacen", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Agencias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -169,7 +169,7 @@ public class AgenciasVista extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
@@ -208,7 +208,7 @@ public class AgenciasVista extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel3)
                 .addGap(4, 4, 4)
-                .addComponent(textoBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))
+                .addComponent(textoBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,7 +224,7 @@ public class AgenciasVista extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         jPanel1.add(jPanel3, gridBagConstraints);
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 410, -1));
 
         tablaAgencias.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         tablaAgencias.setModel(new javax.swing.table.DefaultTableModel(
@@ -242,20 +242,20 @@ public class AgenciasVista extends javax.swing.JDialog {
         tablaAgencias.setShowGrid(true);
         jScrollPane1.setViewportView(tablaAgencias);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 460, 152));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 410, 152));
 
         botonSalir.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         botonSalir.setText("Salir");
         jPanel2.add(botonSalir);
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 460, 40));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 410, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void textoAgenciaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoAgenciaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            textoAgencia.requestFocus();
+            botonRegistrar.requestFocus();
         }
     }//GEN-LAST:event_textoAgenciaKeyPressed
 
