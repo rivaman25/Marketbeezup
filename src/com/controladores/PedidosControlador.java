@@ -27,6 +27,7 @@ import com.daoInterfaces.DAOEnvio;
 import com.daoInterfaces.DAOInterfaz;
 import com.daoInterfaces.DAOObservacion;
 import com.daoInterfaces.DAOProvincia;
+import com.modelos.Agencia;
 import com.modelos.AlbaranVenta;
 import com.modelos.Almacen;
 import com.modelos.Articulo;
@@ -63,7 +64,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
     private static List<Pedido> pedidos;
     private List<Pedido> pedidosNuevos;
     private static Filtro filtro;
-    private static List<String> agencias;
+    private static List<Agencia> agencias;
     private static List<Almacen> almacenes;
     private static List<String> markets;
     private static List<String> tiendas;
@@ -137,7 +138,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
             PedidosControlador.daoPedido.registrar(pedidosNuevos);
             PedidosControlador.tiendas.addAll(daoPedido.listarTiendas());
             PedidosControlador.markets.addAll(daoPedido.listarMarket());
-            PedidosControlador.agencias.addAll(daoAgencia.obtener());
+            PedidosControlador.agencias.addAll(daoAgencia.listar());
             PedidosControlador.almacenes.addAll(daoAlmacen.listar());
             PedidosControlador.estados.addAll(daoArticulo.listarEstados());
             PedidosControlador.provincias.addAll(daoProvincia.listar());
@@ -258,7 +259,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
                             PedidosControlador.daoPedido.registrar(pedidosNuevos);
                             PedidosControlador.tiendas.addAll(daoPedido.listarTiendas());
                             PedidosControlador.markets.addAll(daoPedido.listarMarket());
-                            PedidosControlador.agencias.addAll(daoAgencia.obtener());
+                            PedidosControlador.agencias.addAll(daoAgencia.listar());
                             PedidosControlador.almacenes.addAll(daoAlmacen.listar());
                             PedidosControlador.estados.addAll(daoArticulo.listarEstados());
                             PedidosControlador.pedidos.addAll(PedidosControlador.daoPedido.listar(filtro));
@@ -548,11 +549,11 @@ public class PedidosControlador implements ActionListener, KeyListener {
         PedidosControlador.filtro = filtro;
     }
 
-    public static List<String> getAgencias() {
+    public static List<Agencia> getAgencias() {
         return agencias;
     }
 
-    public static void setAgencias(List<String> agencias) {
+    public static void setAgencias(List<Agencia> agencias) {
         PedidosControlador.agencias = agencias;
     }
 

@@ -5,6 +5,8 @@
 package com.dao;
 
 import com.daoInterfaces.DAOAgencia;
+import com.modelos.Agencia;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,37 +24,69 @@ public class DAOAgenciaImpl extends ConexionBD implements DAOAgencia {
     }
 
     @Override
-    public List<String> obtener() throws SQLException {
-        List<String> lista = new ArrayList<>();
+    public List<Agencia> listar() throws SQLException {
+        List<Agencia> agencias = new ArrayList<>();
+        Agencia agencia;
         try {
             this.openConnection();
             Statement st = this.getConnection().createStatement();
-            ResultSet result = st.executeQuery("SELECT idAgencia FROM Agencias ORDER BY idAgencia");
+            ResultSet result = st.executeQuery("SELECT agencias.idAgencia FROM agencias ORDER BY idAgencia");
             while (result.next()) {
-                lista.add(result.getString(1));
+                agencia = new Agencia();
+                agencia.setIdAgencia(result.getString(1));
+                agencias.add(agencia);
             }
             result.close();
             st.close();
         } catch (SQLException ex) {
-
+            throw ex;
         } finally {
             this.closeConnection();
         }
-        return lista;
+        return agencias;
     }
 
     @Override
-    public void registrar(String objeto) throws SQLException {
+    public Agencia obtener(String idAgencia) throws SQLException {
+        Agencia agencia = null;
+        try {
+            this.openConnection();
+            PreparedStatement pstm = this.getConnection().prepareStatement("""
+                SELECT
+                    *
+                FROM
+                    agencias
+                WHERE
+                    agencias.idAgencia = ?                                                                                              
+                """);
+            pstm.setString(1, idAgencia);
+            ResultSet result = pstm.executeQuery();
+            if (result.next()) {
+                agencia = new Agencia();
+                agencia.setIdAgencia(result.getString("idAgencia"));
+            }
+            result.close();
+            pstm.close();
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            this.closeConnection();
+        }
+        return agencia;
+    }
+
+    @Override
+    public void registrar(Agencia objeto) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void modificar(String objeto) throws SQLException {
+    public void modificar(Agencia objeto) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void eliminar(String objeto) throws SQLException {
+    public void eliminar(Agencia objeto) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

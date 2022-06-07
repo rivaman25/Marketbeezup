@@ -76,7 +76,7 @@ public class Filtro {
     public static List<String> obtenerAgenciasFiltradas(int[] agenciasSeleccionadas) {
         List<String> lista = new ArrayList<>();
         for (int i : agenciasSeleccionadas) {
-            lista.add(PedidosControlador.getAgencias().get(i));
+            lista.add(PedidosControlador.getAgencias().get(i).getIdAgencia());
         }
         return lista;
     }

@@ -4,6 +4,7 @@
  */
 package com.daoInterfaces;
 
+import com.modelos.Agencia;
 import java.util.List;
 import java.sql.SQLException;
 
@@ -11,7 +12,9 @@ import java.sql.SQLException;
  *
  * @author Manuel Rivallo Bejarano
  */
-public interface DAOAgencia extends CRUD<String> {
+public interface DAOAgencia extends CRUD<Agencia> {
 
-    public List<String> obtener() throws SQLException;
+    public List<Agencia> listar() throws SQLException;
+
+    public Agencia obtener(String idAgencia) throws SQLException;
 }

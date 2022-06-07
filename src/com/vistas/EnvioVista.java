@@ -6,6 +6,7 @@ package com.vistas;
 
 import com.controladores.EnvioControlador;
 import com.controladores.PedidosControlador;
+import com.modelos.Agencia;
 import com.modelos.Almacen;
 import com.modelos.Articulo;
 import com.modelos.Envio;
@@ -26,6 +27,7 @@ public class EnvioVista extends javax.swing.JDialog {
     private Articulo articulo;
     private final Timer TIMER;
     private final List<String> almacenes;
+    private final List<String> agencias;
 
     /**
      * Creates new form Envio
@@ -34,6 +36,10 @@ public class EnvioVista extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         almacenes = new ArrayList<>();
+        agencias = new ArrayList<>();
+        for (Agencia agencia : PedidosControlador.getAgencias()) {
+            agencias.add(agencia.getIdAgencia());
+        }
         for (Almacen almacen : PedidosControlador.getAlmacenes()) {
             almacenes.add(almacen.getIdAlmacen() + " - " + almacen.getAlmacen());
         }
@@ -59,7 +65,7 @@ public class EnvioVista extends javax.swing.JDialog {
         textoCodigoArticulo.setText(articulo.getCodigoArticulo());
         // Muestra la lista de agencias para registrar la seleccionada en el envío
         DefaultComboBoxModel<String> comboAgenciasModel = new DefaultComboBoxModel<>();
-        comboAgenciasModel.addAll(PedidosControlador.getAgencias());
+        comboAgenciasModel.addAll(agencias);
         comboAgenciaSalida.setModel(comboAgenciasModel);
         // Muestra la lista de almacenes para registrar el seleccionado en el envío
         DefaultComboBoxModel<String> comboAlmacenesModel = new DefaultComboBoxModel<>();
@@ -69,9 +75,10 @@ public class EnvioVista extends javax.swing.JDialog {
             selectorFechaSalida.setDate(new java.util.Date(Main.fechaActual().getTime()));
         } else {
             selectorFechaSalida.setDate(new java.util.Date(articulo.getEnvio().getFechaSalida().getTime()));
-            comboAgenciaSalida.setSelectedItem(articulo.getEnvio().getIdAgencia());
-            int i = Almacen.obtenerIndiceAlmacen(articulo.getEnvio().getIdAlmacen(), PedidosControlador.getAlmacenes());
-            comboAlmacenSalida.setSelectedIndex(i);
+            comboAgenciaSalida.setSelectedItem(Agencia.obtenerIndiceAgencia(articulo.getEnvio().getIdAgencia(),
+                    PedidosControlador.getAgencias()));
+            comboAlmacenSalida.setSelectedIndex(Almacen.obtenerIndiceAlmacen(articulo.getEnvio().getIdAlmacen(),
+                    PedidosControlador.getAlmacenes()));
         }
         this.setLocationRelativeTo(null);
         this.setVisible(true);

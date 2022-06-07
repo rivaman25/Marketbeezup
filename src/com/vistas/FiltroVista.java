@@ -5,6 +5,7 @@
 package com.vistas;
 
 import com.controladores.PedidosControlador;
+import com.modelos.Agencia;
 import com.modelos.Almacen;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +26,7 @@ public class FiltroVista extends javax.swing.JDialog {
     private String botonSeleccionado;
     private Preferencias preferencias;
     private List<String> almacenes;
+    private List<String> agencias;
 
     /**
      * Creates new form Filtro
@@ -38,14 +40,18 @@ public class FiltroVista extends javax.swing.JDialog {
         try {
             filtroNuevo = new Filtro();
             almacenes = new ArrayList<>();
+            agencias = new ArrayList<>();
             DefaultListModel<String> listaTiendasModel = new DefaultListModel<>();
             listaTiendasModel.addAll(PedidosControlador.getTiendas());
             listaTiendas.setModel(listaTiendasModel);
             DefaultListModel<String> listaMarketModel = new DefaultListModel<>();
             listaMarketModel.addAll(PedidosControlador.getMarkets());
             listaMarket.setModel(listaMarketModel);
+            for (Agencia agencia : PedidosControlador.getAgencias()) {
+                agencias.add(agencia.getIdAgencia());
+            }
             DefaultListModel<String> listaAgenciasModel = new DefaultListModel<>();
-            listaAgenciasModel.addAll(PedidosControlador.getAgencias());
+            listaAgenciasModel.addAll(agencias);
             listaAgencias.setModel(listaAgenciasModel);
             DefaultListModel<String> listaAlmacenesModel = new DefaultListModel<>();
             for (Almacen almacen : PedidosControlador.getAlmacenes()) {

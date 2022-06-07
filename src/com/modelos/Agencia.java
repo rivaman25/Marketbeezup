@@ -4,11 +4,14 @@
  */
 package com.modelos;
 
+import java.util.List;
+
 /**
  *
  * @author Manuel Rivallo Bejarano
  */
 public class Agencia {
+
     private String idAgencia;
 
     public String getIdAgencia() {
@@ -17,5 +20,14 @@ public class Agencia {
 
     public void setIdAgencia(String idAgencia) {
         this.idAgencia = idAgencia;
+    }
+
+    public static int obtenerIndiceAgencia(String idAgencia, List<Agencia> agencias) {
+        for (Agencia agencia : agencias) {
+            if (agencia.getIdAgencia().equals(idAgencia)) {
+                return agencias.indexOf(agencia);
+            }
+        }
+        return -1;
     }
 }
