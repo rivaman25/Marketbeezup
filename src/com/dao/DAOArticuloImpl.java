@@ -58,6 +58,9 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
             if (fechaSalida != null) {
                 pstm.setDate(indice, fechaSalida);
                 indice++;
+            } else {
+                pstm.setDate(indice, PedidosControlador.getFiltro().getFechaPedidoDesde());
+                indice++;
             }
             for (String agencia : agencias) {
                 pstm.setString(indice, agencia);

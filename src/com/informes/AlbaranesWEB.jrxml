@@ -45,7 +45,7 @@
                 AND articulos.estado <> "CANCELADO"
                 AND envios.idAgencia NOT LIKE '%drop%'
         GROUP BY articulos.marketplace, articulos.idPedido, articulos.codigoArticulo
-        ORDER BY envios.fechaSalida, pedidos.idPedido, articulos.codigoArticulo]]>
+        ORDER BY envios.fechaSalida DESC, pedidos.idPedido, articulos.codigoArticulo]]>
 	</queryString>
 	<field name="tienda" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="tienda"/>

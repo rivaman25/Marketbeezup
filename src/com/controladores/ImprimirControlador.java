@@ -63,10 +63,20 @@ public class ImprimirControlador extends ConexionBD implements ActionListener {
         try {
             switch (e.getActionCommand()) {
                 case "ImprimirAlbaranes":
-                    if (!articulosImpr.isEmpty()) {
+                    if (reimprimir) {
+                        articulosImpr = imprimirVista.obtenerArticulosSeleccionados();
+                    }
+                    if (articulosImpr.isEmpty()) {
+                        if (reimprimir) {
+                            imprimirVista.mostrarMensaje("Seleccione pedido para reimprimir albarán");
+                        } else {
+                            imprimirVista.mostrarMensaje("No hay albaranes para imprimir");
+                        }
+                    } else {
                         // Si introduzco el informe JasperReport en un paquete de la aplicación lo cargo en un stream
                         InputStream jasperStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("com/informes/AlbaranesWEB.jasper");
                         Map<String, Object> parametros = new HashMap<>();
+                        // Si quiero reimprimir Albaranes obtengo los que selecciona el usuario
                         try {
                             this.openConnection();
                             // this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR)); // Modifico el cursor para indicar que está trabajando
@@ -81,7 +91,9 @@ public class ImprimirControlador extends ConexionBD implements ActionListener {
                             JasperViewer jv = new JasperViewer(jp, true);
                             viewer.getContentPane().add(jv.getContentPane());
                             viewer.setVisible(true);
-                            imprimirVista.habilitarMarcar(true);
+                            if (!reimprimir) {
+                                imprimirVista.habilitarMarcar(true);
+                            }
                         } catch (JRException ex) {
                             JOptionPane.showMessageDialog(imprimirVista, "No se puede obtener el Albarán", "Error Albarán", JOptionPane.ERROR_MESSAGE);
                         } finally {
@@ -102,7 +114,7 @@ public class ImprimirControlador extends ConexionBD implements ActionListener {
                     break;
                 case "FiltrarAlbaranes":
                     articulosImpr = DAO_ARTICULO.listar(imprimirVista.getIdPedido(),
-                            imprimirVista.getFechaSeleccionada(), imprimirVista.getAgenciasSeleccionadas(), false);
+                            imprimirVista.getFechaSeleccionada(), imprimirVista.getAgenciasSeleccionadas(), reimprimir);
                     imprimirVista.actualizarTabla(articulosImpr);
                     break;
                 case "LimpiarFiltroAlbaranes":
@@ -110,7 +122,7 @@ public class ImprimirControlador extends ConexionBD implements ActionListener {
                     imprimirVista.setFechaSeleccionada(null);
                     imprimirVista.setAgenciasSeleccionadas(null);
                     articulosImpr = DAO_ARTICULO.listar(imprimirVista.getIdPedido(),
-                            imprimirVista.getFechaSeleccionada(), imprimirVista.getAgenciasSeleccionadas(), false);
+                            imprimirVista.getFechaSeleccionada(), imprimirVista.getAgenciasSeleccionadas(), reimprimir);
                     imprimirVista.actualizarTabla(articulosImpr);
                     break;
                 case "Salir":

@@ -1097,6 +1097,8 @@ public class Consultas {
         }
         if (fechaSalida != null) {
             predicados.add("envios.fechaSalida = ?");
+        } else {
+            predicados.add("envios.fechaSalida > ?");
         }
         if (!agencias.isEmpty()) {
             predicadoAux.append("envios.idAgencia IN (?");
@@ -1114,7 +1116,7 @@ public class Consultas {
         }
         consulta.append("""
             GROUP BY articulos.marketplace, articulos.idPedido, articulos.codigoArticulo
-            ORDER BY envios.fechaSalida, pedidos.idPedido, articulos.codigoArticulo""");
+            ORDER BY envios.fechaSalida DESC, pedidos.idPedido, articulos.codigoArticulo""");
         return consulta.toString();
     }
 }
