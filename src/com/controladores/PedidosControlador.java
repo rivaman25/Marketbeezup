@@ -43,6 +43,7 @@ import com.modelos.Provincia;
 import com.principal.Main;
 import com.vistas.AgenciasVista;
 import com.vistas.AlmacenesVista;
+import com.vistas.CompraVista;
 import com.vistas.EnvioVista;
 import com.vistas.FiltroVista;
 import com.vistas.ImprimirVista;
@@ -507,6 +508,79 @@ public class PedidosControlador implements ActionListener, KeyListener {
                                 }
                             } else {
                                 pedidosVista.mostrarMensaje("El pedido no tiene registrado un envío.");
+                            }
+                        }
+                    } else {
+                        pedidosVista.mostrarMensaje("Seleccione un pedido.");
+                    }
+                    break;
+                case "NuevaCompra":
+                    articulo = pedidosVista.obtenerArticuloSeleccionado();
+                    if (articulo != null) {
+                        if (articulo.getEstado().equals("ANULADO")) {
+                            pedidosVista.mostrarMensaje("El pedido está anulado.");
+                        } else {
+                            if (articulo.getCompra() == null) {
+                                CompraVista compraVista = new CompraVista(pedidosVista, true);
+                                compraVista.setTitle("Nueva Compra");
+                                CompraControlador compraControlador = new CompraControlador(articulo, compraVista);
+                                compraVista.setControlador(compraControlador);
+                                compraControlador.actualizarVista();
+                                if (compraControlador.isGuardado()) {
+                                    obtenerPedidos();
+                                    actualizarVista();
+                                }
+                            } else {
+                                pedidosVista.mostrarMensaje("El pedido ya tiene registrado una compra, "
+                                        + "puede seleccionar el menú Compras y luego Editar.");
+                            }
+                        }
+                    } else {
+                        pedidosVista.mostrarMensaje("Seleccione un pedido.");
+                    }
+                    break;
+                case "EditarCompra":
+                    articulo = pedidosVista.obtenerArticuloSeleccionado();
+                    if (articulo != null) {
+                        if (articulo.getEstado().equals("ANULADO")) {
+                            pedidosVista.mostrarMensaje("El pedido está anulado.");
+                        } else {
+                            if (articulo.getCompra() != null) {
+                                CompraVista compraVista = new CompraVista(pedidosVista, true);
+                                compraVista.setTitle("Editar Compra");
+                                CompraControlador compraControlador = new CompraControlador(articulo, compraVista);
+                                compraControlador.setEditar(true);
+                                compraVista.setControlador(compraControlador);
+                                compraControlador.actualizarVista();
+                                if (compraControlador.isGuardado()) {
+                                    obtenerPedidos();
+                                    actualizarVista();
+                                }
+                            } else {
+                                pedidosVista.mostrarMensaje("El pedido no tiene registrado una compra, puede seleccionar el menú Compras y luego Nuevo.");
+                            }
+                        }
+                    } else {
+                        pedidosVista.mostrarMensaje("Seleccione un pedido.");
+                    }
+                    break;
+                case "EliminarCompra":
+                    articulo = pedidosVista.obtenerArticuloSeleccionado();
+                    if (articulo != null) {
+                        if (articulo.getEstado().equals("ANULADO")) {
+                            pedidosVista.mostrarMensaje("El pedido está anulado.");
+                        } else {
+                            if (articulo.getCompra() != null) {
+                                if (JOptionPane.showConfirmDialog(pedidosVista, "¿Desea anular la compra del pedido seleccionado?",
+                                        "Eliminar Compra", JOptionPane.OK_CANCEL_OPTION) == 0) {
+                                    daoCompra.eliminar(articulo.getCompra());
+                                    articulo.setEstado("NUEVO");
+                                    daoArticulo.modificar(articulo);
+                                    obtenerPedidos();
+                                    actualizarVista();
+                                }
+                            } else {
+                                pedidosVista.mostrarMensaje("El pedido no tiene registrado una compra.");
                             }
                         }
                     } else {

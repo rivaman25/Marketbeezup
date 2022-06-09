@@ -162,6 +162,14 @@ public class PedidosVista extends javax.swing.JFrame {
         menuAlmacenes.setActionCommand("Almacenes");
         menuAgencias.addActionListener(pedidosControlador);
         menuAgencias.setActionCommand("Agencias");
+        menuNuevaCompra.addActionListener(pedidosControlador);
+        menuNuevaCompra.setActionCommand("NuevaCompra");
+        botonNuevaCompra.addActionListener(pedidosControlador);
+        botonNuevaCompra.setActionCommand("NuevaCompra");
+        menuEditarCompra.addActionListener(pedidosControlador);
+        menuEditarCompra.setActionCommand("EditarCompra");
+        menuEliminarCompra.addActionListener(pedidosControlador);
+        menuEliminarCompra.setActionCommand("EliminarCompra");
     }
 
     public String getAtributoBuscar() {
@@ -241,8 +249,8 @@ public class PedidosVista extends javax.swing.JFrame {
         menuEliminarEnvio = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         menuNuevaCompra = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
+        menuEditarCompra = new javax.swing.JMenuItem();
+        menuEliminarCompra = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         menuImprimirAlbaran = new javax.swing.JMenuItem();
         menuReimprimirAlbaran = new javax.swing.JMenuItem();
@@ -299,11 +307,6 @@ public class PedidosVista extends javax.swing.JFrame {
         botonNuevaCompra.setFocusable(false);
         botonNuevaCompra.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonNuevaCompra.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        botonNuevaCompra.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonNuevaCompraActionPerformed(evt);
-            }
-        });
         jToolBar1.add(botonNuevaCompra);
 
         botonImprimirAlbaran.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
@@ -604,20 +607,15 @@ public class PedidosVista extends javax.swing.JFrame {
 
         menuNuevaCompra.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuNuevaCompra.setText("Nueva");
-        menuNuevaCompra.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuNuevaCompraActionPerformed(evt);
-            }
-        });
         jMenu5.add(menuNuevaCompra);
 
-        jMenuItem12.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jMenuItem12.setText("Editar");
-        jMenu5.add(jMenuItem12);
+        menuEditarCompra.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuEditarCompra.setText("Editar");
+        jMenu5.add(menuEditarCompra);
 
-        jMenuItem13.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jMenuItem13.setText("Borrar");
-        jMenu5.add(jMenuItem13);
+        menuEliminarCompra.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuEliminarCompra.setText("Eliminar");
+        jMenu5.add(menuEliminarCompra);
 
         jMenuBar1.add(jMenu5);
 
@@ -676,12 +674,6 @@ public class PedidosVista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void menuNuevaCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNuevaCompraActionPerformed
-        CompraVista compra = new CompraVista(this, true);
-        compra.setLocationRelativeTo(null);
-        compra.setVisible(true);
-    }//GEN-LAST:event_menuNuevaCompraActionPerformed
-
     private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem19ActionPerformed
@@ -693,12 +685,6 @@ public class PedidosVista extends javax.swing.JFrame {
     private void menuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_menuSalirActionPerformed
-
-    private void botonNuevaCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNuevaCompraActionPerformed
-        CompraVista compra = new CompraVista(this, true);
-        compra.setLocationRelativeTo(null);
-        compra.setVisible(true);
-    }//GEN-LAST:event_botonNuevaCompraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -761,8 +747,6 @@ public class PedidosVista extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem19;
@@ -781,8 +765,10 @@ public class PedidosVista extends javax.swing.JFrame {
     private javax.swing.JMenu menuArchivo;
     private javax.swing.JMenuItem menuConfiguracion;
     private javax.swing.JMenu menuEditar;
+    private javax.swing.JMenuItem menuEditarCompra;
     private javax.swing.JMenuItem menuEditarEnvio;
     private javax.swing.JMenuItem menuEditarPedido;
+    private javax.swing.JMenuItem menuEliminarCompra;
     private javax.swing.JMenuItem menuEliminarEnvio;
     private javax.swing.JMenuItem menuEliminarPedido;
     private javax.swing.JMenu menuEnvios;
