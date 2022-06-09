@@ -196,135 +196,124 @@ public class ImprimirVista extends javax.swing.JDialog {
         jPanel1.setMaximumSize(new java.awt.Dimension(32767, 132));
         jPanel1.setMinimumSize(new java.awt.Dimension(640, 132));
         jPanel1.setPreferredSize(new java.awt.Dimension(640, 132));
-        jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Agencias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(266, 150));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(266, 150));
 
         listaAgencias.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jScrollPane1.setViewportView(listaAgencias);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        jPanel1.add(jScrollPane1, gridBagConstraints);
-
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("Fecha:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        jPanel1.add(jLabel2, gridBagConstraints);
 
         selectorFecha.setDateFormatString("dd-MM-yy");
         selectorFecha.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         selectorFecha.setMaximumSize(new java.awt.Dimension(150, 23));
-        selectorFecha.setMinimumSize(new java.awt.Dimension(150, 23));
         selectorFecha.setPreferredSize(new java.awt.Dimension(150, 23));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        jPanel1.add(selectorFecha, gridBagConstraints);
 
         etiquetaMensaje.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         etiquetaMensaje.setForeground(new java.awt.Color(255, 51, 51));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.ipadx = 263;
-        gridBagConstraints.ipady = 23;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        jPanel1.add(etiquetaMensaje, gridBagConstraints);
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setText("Id Pedido:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        jPanel1.add(jLabel3, gridBagConstraints);
 
         textoIdPedido.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         textoIdPedido.setMaximumSize(new java.awt.Dimension(219, 23));
         textoIdPedido.setMinimumSize(new java.awt.Dimension(219, 23));
         textoIdPedido.setPreferredSize(new java.awt.Dimension(219, 23));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        jPanel1.add(textoIdPedido, gridBagConstraints);
 
         botonImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Imprimir32(1).png"))); // NOI18N
         botonImprimir.setText("Imprimir");
         botonImprimir.setToolTipText("Imprimir Albaranes");
         botonImprimir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonImprimir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
-        jPanel1.add(botonImprimir, gridBagConstraints);
 
         botonMarcar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Check.png"))); // NOI18N
         botonMarcar.setText("Marcar");
         botonMarcar.setToolTipText("Marcar como Impreso");
         botonMarcar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonMarcar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
-        jPanel1.add(botonMarcar, gridBagConstraints);
 
         botonFiltrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Filtrar32.png"))); // NOI18N
         botonFiltrar.setText("Filtrar");
         botonFiltrar.setToolTipText("Filtrar");
         botonFiltrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonFiltrar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
-        jPanel1.add(botonFiltrar, gridBagConstraints);
 
         botonLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Limipiar32.png"))); // NOI18N
         botonLimpiar.setText("Limpiar");
         botonLimpiar.setToolTipText("Limpiar Filtro");
         botonLimpiar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonLimpiar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
-        jPanel1.add(botonLimpiar, gridBagConstraints);
 
         botonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Cancelar32.png"))); // NOI18N
         botonCancelar.setText("Salir");
         botonCancelar.setToolTipText("Salir");
         botonCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         botonCancelar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
-        jPanel1.add(botonCancelar, gridBagConstraints);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(botonImprimir))
+                .addGap(5, 5, 5)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(textoIdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(botonMarcar)
+                        .addGap(5, 5, 5)
+                        .addComponent(botonFiltrar))
+                    .addComponent(selectorFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(botonLimpiar)
+                        .addGap(5, 5, 5)
+                        .addComponent(botonCancelar)
+                        .addGap(105, 105, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(etiquetaMensaje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel2)
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel3)
+                        .addGap(7, 7, 7)
+                        .addComponent(botonImprimir))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(selectorFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(textoIdPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(etiquetaMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(5, 5, 5)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(botonMarcar)
+                            .addComponent(botonFiltrar)
+                            .addComponent(botonLimpiar)
+                            .addComponent(botonCancelar)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(2, 2, 2))
+        );
 
         getContentPane().add(jPanel1);
 
