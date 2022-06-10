@@ -49,7 +49,7 @@ public class PedidosVista extends javax.swing.JFrame {
         modeloComboBuscar.addElement("Ticket");
         modeloComboBuscar.addElement("Albarán");
         comboBuscar.setModel(modeloComboBuscar);
-         // Repite una tarea cada cierto tiempo, en este caso oculta una etiqueta cada n milisegundos
+        // Repite una tarea cada cierto tiempo, en este caso oculta una etiqueta cada n milisegundos
         TIMER = new Timer(5000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -57,9 +57,10 @@ public class PedidosVista extends javax.swing.JFrame {
             }
         });
     }
-    
+
     /**
      * Muestra un mensaje durante un intervalo de tiempo controlado por el timer
+     *
      * @param mensaje Mensaje que se muestra en la etiqueta
      */
     public void mostrarMensaje(String mensaje) {
@@ -115,9 +116,9 @@ public class PedidosVista extends javax.swing.JFrame {
         colModel.getColumn(27).setPreferredWidth(120); // proveedor
         colModel.getColumn(28).setPreferredWidth(80); // fecha compra
         colModel.getColumn(29).setPreferredWidth(80); // fecha entrega
-        colModel.getColumn(30).setPreferredWidth(62); // ticket
+        colModel.getColumn(30).setPreferredWidth(70); // ticket
         colModel.getColumn(31).setPreferredWidth(80); // fecha ticket
-        colModel.getColumn(32).setPreferredWidth(78); // albarán
+        colModel.getColumn(32).setPreferredWidth(84); // albarán
         colModel.getColumn(33).setPreferredWidth(80); // fecha albarán
         textoBuscar.setText(null);
     }
@@ -170,6 +171,18 @@ public class PedidosVista extends javax.swing.JFrame {
         menuEditarCompra.setActionCommand("EditarCompra");
         menuEliminarCompra.addActionListener(pedidosControlador);
         menuEliminarCompra.setActionCommand("EliminarCompra");
+        menuNuevoAlbaran.addActionListener(pedidosControlador);
+        menuNuevoAlbaran.setActionCommand("NuevoAlbaran");
+        menuEditarAlbaran.addActionListener(pedidosControlador);
+        menuEditarAlbaran.setActionCommand("EditarAlbaran");
+        menuEliminarAlbaran.addActionListener(pedidosControlador);
+        menuEliminarAlbaran.setActionCommand("EliminarAlbaran");
+        menuNuevaFactura.addActionListener(pedidosControlador);
+        menuNuevaFactura.setActionCommand("NuevaFactura");
+        menuEditarFactura.addActionListener(pedidosControlador);
+        menuEditarFactura.setActionCommand("EditarFactura");
+        menuEliminarFactura.addActionListener(pedidosControlador);
+        menuEliminarFactura.setActionCommand("EliminarFactura");
     }
 
     public String getAtributoBuscar() {
@@ -229,13 +242,14 @@ public class PedidosVista extends javax.swing.JFrame {
         menuArchivo = new javax.swing.JMenu();
         menuConfiguracion = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        menuManual = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
         menuSalir = new javax.swing.JMenuItem();
         menuEditar = new javax.swing.JMenu();
         menuFiltrar = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
-        menuAlmacenes = new javax.swing.JMenuItem();
         menuAgencias = new javax.swing.JMenuItem();
+        menuAlmacenes = new javax.swing.JMenuItem();
         menuProvincias = new javax.swing.JMenuItem();
         menuPedidos = new javax.swing.JMenu();
         menuNuevoPedido = new javax.swing.JMenuItem();
@@ -243,6 +257,7 @@ public class PedidosVista extends javax.swing.JFrame {
         menuEditarPedido = new javax.swing.JMenuItem();
         menuEliminarPedido = new javax.swing.JMenuItem();
         menuAnularPedido = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         menuEnvios = new javax.swing.JMenu();
         menuNuevoEnvio = new javax.swing.JMenuItem();
         menuEditarEnvio = new javax.swing.JMenuItem();
@@ -251,11 +266,17 @@ public class PedidosVista extends javax.swing.JFrame {
         menuNuevaCompra = new javax.swing.JMenuItem();
         menuEditarCompra = new javax.swing.JMenuItem();
         menuEliminarCompra = new javax.swing.JMenuItem();
+        menuRegistrarTicket = new javax.swing.JMenu();
+        jMenuItem16 = new javax.swing.JMenuItem();
+        menuNuevaFactura = new javax.swing.JMenuItem();
+        menuNuevoAlbaran = new javax.swing.JMenuItem();
+        menuEditarFactura = new javax.swing.JMenuItem();
+        menuEditarAlbaran = new javax.swing.JMenuItem();
+        menuEliminarFactura = new javax.swing.JMenuItem();
+        menuEliminarAlbaran = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         menuImprimirAlbaran = new javax.swing.JMenuItem();
         menuReimprimirAlbaran = new javax.swing.JMenuItem();
-        jMenu7 = new javax.swing.JMenu();
-        jMenuItem16 = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
@@ -516,7 +537,16 @@ public class PedidosVista extends javax.swing.JFrame {
         menuConfiguracion.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         menuConfiguracion.setText("Configuración");
         menuArchivo.add(menuConfiguracion);
+
+        jSeparator1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menuArchivo.add(jSeparator1);
+
+        menuManual.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuManual.setText("Manual");
+        menuArchivo.add(menuManual);
+
+        jSeparator3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menuArchivo.add(jSeparator3);
 
         menuSalir.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         menuSalir.setText("Salir");
@@ -534,22 +564,19 @@ public class PedidosVista extends javax.swing.JFrame {
 
         menuFiltrar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
         menuFiltrar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        menuFiltrar.setText("Filtrar Pedidos");
+        menuFiltrar.setText("Filtro Pedidos");
         menuEditar.add(menuFiltrar);
 
-        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
-        jMenuItem5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jMenuItem5.setText("Actualizar");
-        menuEditar.add(jMenuItem5);
+        jSeparator2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         menuEditar.add(jSeparator2);
-
-        menuAlmacenes.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        menuAlmacenes.setText("Almacenes");
-        menuEditar.add(menuAlmacenes);
 
         menuAgencias.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         menuAgencias.setText("Agencias de transporte");
         menuEditar.add(menuAgencias);
+
+        menuAlmacenes.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        menuAlmacenes.setText("Almacenes");
+        menuEditar.add(menuAlmacenes);
 
         menuProvincias.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         menuProvincias.setText("Provincias");
@@ -582,6 +609,11 @@ public class PedidosVista extends javax.swing.JFrame {
         menuAnularPedido.setText("Anular");
         menuPedidos.add(menuAnularPedido);
 
+        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
+        jMenuItem5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jMenuItem5.setText("Actualizar");
+        menuPedidos.add(jMenuItem5);
+
         jMenuBar1.add(menuPedidos);
 
         menuEnvios.setText("Envíos");
@@ -605,6 +637,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jMenu5.setText("Compras");
         jMenu5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
+        menuNuevaCompra.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
         menuNuevaCompra.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         menuNuevaCompra.setText("Nueva");
         jMenu5.add(menuNuevaCompra);
@@ -619,34 +652,61 @@ public class PedidosVista extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu5);
 
+        menuRegistrarTicket.setText("Ventas");
+        menuRegistrarTicket.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+
+        jMenuItem16.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jMenuItem16.setText("Obtener Ticket");
+        menuRegistrarTicket.add(jMenuItem16);
+
+        menuNuevaFactura.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, 0));
+        menuNuevaFactura.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuNuevaFactura.setText("Nueva Factura");
+        menuRegistrarTicket.add(menuNuevaFactura);
+
+        menuNuevoAlbaran.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F8, 0));
+        menuNuevoAlbaran.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuNuevoAlbaran.setText("Nuevo Albarán");
+        menuRegistrarTicket.add(menuNuevoAlbaran);
+
+        menuEditarFactura.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuEditarFactura.setText("Editar Factura");
+        menuRegistrarTicket.add(menuEditarFactura);
+
+        menuEditarAlbaran.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuEditarAlbaran.setText("Editar Albarán");
+        menuRegistrarTicket.add(menuEditarAlbaran);
+
+        menuEliminarFactura.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuEliminarFactura.setText("Eliminar Factura");
+        menuRegistrarTicket.add(menuEliminarFactura);
+
+        menuEliminarAlbaran.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuEliminarAlbaran.setText("Eliminar Albarán");
+        menuRegistrarTicket.add(menuEliminarAlbaran);
+
+        jMenuBar1.add(menuRegistrarTicket);
+
         jMenu6.setText("Albaranes");
         jMenu6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
-        menuImprimirAlbaran.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
+        menuImprimirAlbaran.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F10, 0));
         menuImprimirAlbaran.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        menuImprimirAlbaran.setText("Imprimir");
+        menuImprimirAlbaran.setText("Imprimir Albaranes Entrega");
         jMenu6.add(menuImprimirAlbaran);
 
         menuReimprimirAlbaran.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        menuReimprimirAlbaran.setText("Reimprimir");
+        menuReimprimirAlbaran.setText("Reimprimir Albaranes Entrega");
         jMenu6.add(menuReimprimirAlbaran);
 
         jMenuBar1.add(jMenu6);
 
-        jMenu7.setText("Tickets");
-        jMenu7.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-
-        jMenuItem16.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jMenuItem16.setText("Obtener");
-        jMenu7.add(jMenuItem16);
-
-        jMenuBar1.add(jMenu7);
-
         jMenu8.setText("Listados");
         jMenu8.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
+        jMenuItem17.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F11, 0));
         jMenuItem17.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jMenuItem17.setText("Obtener");
+        jMenuItem17.setText("Obtener Envíos");
         jMenu8.add(jMenuItem17);
 
         jMenuBar1.add(jMenu8);
@@ -654,6 +714,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jMenu9.setText("Observaciones");
         jMenu9.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
+        jMenuItem19.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F12, 0));
         jMenuItem19.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jMenuItem19.setText("Nueva");
         jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
@@ -743,7 +804,6 @@ public class PedidosVista extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
@@ -758,6 +818,7 @@ public class PedidosVista extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenuItem menuAgencias;
     private javax.swing.JMenuItem menuAlmacenes;
@@ -765,21 +826,29 @@ public class PedidosVista extends javax.swing.JFrame {
     private javax.swing.JMenu menuArchivo;
     private javax.swing.JMenuItem menuConfiguracion;
     private javax.swing.JMenu menuEditar;
+    private javax.swing.JMenuItem menuEditarAlbaran;
     private javax.swing.JMenuItem menuEditarCompra;
     private javax.swing.JMenuItem menuEditarEnvio;
+    private javax.swing.JMenuItem menuEditarFactura;
     private javax.swing.JMenuItem menuEditarPedido;
+    private javax.swing.JMenuItem menuEliminarAlbaran;
     private javax.swing.JMenuItem menuEliminarCompra;
     private javax.swing.JMenuItem menuEliminarEnvio;
+    private javax.swing.JMenuItem menuEliminarFactura;
     private javax.swing.JMenuItem menuEliminarPedido;
     private javax.swing.JMenu menuEnvios;
     private javax.swing.JMenuItem menuFiltrar;
     private javax.swing.JMenuItem menuImportarPedido;
     private javax.swing.JMenuItem menuImprimirAlbaran;
+    private javax.swing.JMenuItem menuManual;
     private javax.swing.JMenuItem menuNuevaCompra;
+    private javax.swing.JMenuItem menuNuevaFactura;
+    private javax.swing.JMenuItem menuNuevoAlbaran;
     private javax.swing.JMenuItem menuNuevoEnvio;
     private javax.swing.JMenuItem menuNuevoPedido;
     private javax.swing.JMenu menuPedidos;
     private javax.swing.JMenuItem menuProvincias;
+    private javax.swing.JMenu menuRegistrarTicket;
     private javax.swing.JMenuItem menuReimprimirAlbaran;
     private javax.swing.JMenuItem menuSalir;
     private javax.swing.JTable tablaPedidos;

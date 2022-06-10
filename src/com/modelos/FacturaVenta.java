@@ -10,32 +10,32 @@ import java.sql.Date;
  *
  * @author Manuel Rivallo Bejarano
  */
-public class DocumentoVenta {
-    private String numeroVenta, codigoArticulo, marketplace, idPedido;;
-    private Date fechaVenta;
+public class FacturaVenta {
+    private String numeroFactura, codigoArticulo, marketplace, idPedido;;
+    private Date fechaFactura;
 
-    public DocumentoVenta() {
+    public FacturaVenta() {
     }
 
-    public DocumentoVenta(String numeroVenta, Date fechaVenta) {
-        this.numeroVenta = numeroVenta;
-        this.fechaVenta = fechaVenta;
+    public FacturaVenta(String numeroVenta, Date fechaVenta) {
+        this.numeroFactura = numeroVenta;
+        this.fechaFactura = fechaVenta;
     }
 
-    public String getNumeroVenta() {
-        return numeroVenta;
+    public String getNumeroFactura() {
+        return numeroFactura;
     }
 
-    public void setNumeroVenta(String numeroVenta) {
-        this.numeroVenta = numeroVenta;
+    public void setNumeroFactura(String numeroFactura) {
+        this.numeroFactura = numeroFactura;
     }
 
-    public Date getFechaVenta() {
-        return fechaVenta;
+    public Date getFechaFactura() {
+        return fechaFactura;
     }
 
-    public void setFechaVenta(Date fechaVenta) {
-        this.fechaVenta = fechaVenta;
+    public void setFechaFactura(Date fechaFactura) {
+        this.fechaFactura = fechaFactura;
     }
 
     public String getCodigoArticulo() {

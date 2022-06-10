@@ -10,6 +10,7 @@ import com.modelos.Compra;
 import com.principal.Main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import javax.swing.Timer;
 
 /**
@@ -34,6 +35,18 @@ public class CompraVista extends javax.swing.JDialog {
                 etiquetaMensaje.setVisible(false);
             }
         });
+        selectorFechaCompra.getDateEditor().getUiComponent().addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                selectorFechaCompraKeyPressed(evt);
+            }
+        });
+        selectorFechaEntrada.getDateEditor().getUiComponent().addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                selectorFechaEntradaKeyPressed(evt);
+            }
+        });
     }
 
     /**
@@ -53,7 +66,9 @@ public class CompraVista extends javax.swing.JDialog {
             textoIdCompra.setText(articulo.getCompra().getIdCompra());
             textoProveedor.setText(articulo.getCompra().getProveedor());
             selectorFechaCompra.setDate(new java.util.Date(articulo.getCompra().getFechaCompra().getTime()));
-            selectorFechaEntrada.setDate(new java.util.Date(articulo.getCompra().getFechaEntrada().getTime()));
+            if (articulo.getCompra().getFechaEntrada() != null) {
+                selectorFechaEntrada.setDate(new java.util.Date(articulo.getCompra().getFechaEntrada().getTime()));
+            }
         }
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -124,7 +139,6 @@ public class CompraVista extends javax.swing.JDialog {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        etiquetaMensaje = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         textoMarketplace = new javax.swing.JTextField();
@@ -140,19 +154,13 @@ public class CompraVista extends javax.swing.JDialog {
         selectorFechaCompra = new com.toedter.calendar.JDateChooser();
         textoIdCompra = new javax.swing.JTextField();
         textoProveedor = new javax.swing.JTextField();
+        etiquetaMensaje = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         botonGuardar = new javax.swing.JButton();
         botonCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nuevo Envío");
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        etiquetaMensaje.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        etiquetaMensaje.setForeground(new java.awt.Color(255, 51, 51));
-        etiquetaMensaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        etiquetaMensaje.setPreferredSize(new java.awt.Dimension(10, 10));
-        getContentPane().add(etiquetaMensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 630, 18));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Compra", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
         jPanel1.setLayout(new java.awt.GridBagLayout());
@@ -196,7 +204,7 @@ public class CompraVista extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         jPanel1.add(selectorFechaEntrada, gridBagConstraints);
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -258,7 +266,7 @@ public class CompraVista extends javax.swing.JDialog {
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 5);
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 5);
         jPanel1.add(jLabel6, gridBagConstraints);
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -282,25 +290,43 @@ public class CompraVista extends javax.swing.JDialog {
         jPanel1.add(selectorFechaCompra, gridBagConstraints);
 
         textoIdCompra.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        textoIdCompra.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                textoIdCompraKeyPressed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         jPanel1.add(textoIdCompra, gridBagConstraints);
 
         textoProveedor.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        textoProveedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                textoProveedorKeyPressed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         jPanel1.add(textoProveedor, gridBagConstraints);
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 731, -1));
+        etiquetaMensaje.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        etiquetaMensaje.setForeground(new java.awt.Color(255, 51, 51));
+        etiquetaMensaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        etiquetaMensaje.setMaximumSize(new java.awt.Dimension(1920, 20));
+        etiquetaMensaje.setMinimumSize(new java.awt.Dimension(500, 20));
+        etiquetaMensaje.setPreferredSize(new java.awt.Dimension(50, 20));
 
         botonGuardar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         botonGuardar.setText("Guardar");
@@ -310,10 +336,50 @@ public class CompraVista extends javax.swing.JDialog {
         botonCancelar.setText("Cancelar");
         jPanel2.add(botonCancelar);
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 731, -1));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(etiquetaMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(etiquetaMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void textoIdCompraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoIdCompraKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            textoProveedor.requestFocus();
+        }
+    }//GEN-LAST:event_textoIdCompraKeyPressed
+
+    private void textoProveedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoProveedorKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            selectorFechaCompra.getDateEditor().getUiComponent().requestFocus();
+        }
+    }//GEN-LAST:event_textoProveedorKeyPressed
+
+    private void selectorFechaCompraKeyPressed(java.awt.event.KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            selectorFechaEntrada.getDateEditor().getUiComponent().requestFocus();
+        }
+    }
+
+    private void selectorFechaEntradaKeyPressed(java.awt.event.KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            botonGuardar.requestFocus();
+        }
+    }
 
     /**
      * @param args the command line arguments

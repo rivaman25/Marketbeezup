@@ -173,14 +173,14 @@ public class ModeloTablaPedidos extends AbstractTableModel {
                     return null;
                 }
             case 30:
-                if (articulos.get(row).getDocumentoVenta() != null) {
-                    return articulos.get(row).getDocumentoVenta().getNumeroVenta();
+                if (articulos.get(row).getFacturaVenta() != null) {
+                    return articulos.get(row).getFacturaVenta().getNumeroFactura();
                 } else {
                     return null;
                 }
             case 31:
-                if (articulos.get(row).getDocumentoVenta() != null) {
-                    return articulos.get(row).getDocumentoVenta().getFechaVenta();
+                if (articulos.get(row).getFacturaVenta() != null) {
+                    return articulos.get(row).getFacturaVenta().getFechaFactura();
                 } else {
                     return null;
                 }

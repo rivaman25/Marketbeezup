@@ -81,7 +81,6 @@ public class DAOAlbaranVentaImpl extends ConexionBD implements DAOInterfaz<Albar
             pstm.executeUpdate();
             pstm.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAOAlbaranVentaImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         } finally {
             // Si no he recibido la conexión por parámetro, cierro la que he obtenido

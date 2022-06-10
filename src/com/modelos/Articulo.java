@@ -23,7 +23,7 @@ public class Articulo {
     private Compra compra;
     private Envio envio;
     private List<StockAlmacen> stock;
-    private DocumentoVenta documentoVenta;
+    private FacturaVenta facturaVenta;
     private AlbaranVenta albaranVenta;
 
     public Articulo() {
@@ -54,14 +54,14 @@ public class Articulo {
         this.compra.setMarketplace(marketplace);
     }
 
-    public void NuevoDocumentoVenta(String numeroVenta, Date fecha,
+    public void NuevaFacturaVenta(String numeroVenta, Date fecha,
             String codigoArticulo, String idPedido, String marketplace) {
-        documentoVenta = new DocumentoVenta();
-        this.documentoVenta.setNumeroVenta(numeroVenta);
-        this.documentoVenta.setFechaVenta(fecha);
-        this.documentoVenta.setCodigoArticulo(codigoArticulo);
-        this.documentoVenta.setIdPedido(idPedido);
-        this.documentoVenta.setMarketplace(marketplace);
+        facturaVenta = new FacturaVenta();
+        this.facturaVenta.setNumeroFactura(numeroVenta);
+        this.facturaVenta.setFechaFactura(fecha);
+        this.facturaVenta.setCodigoArticulo(codigoArticulo);
+        this.facturaVenta.setIdPedido(idPedido);
+        this.facturaVenta.setMarketplace(marketplace);
 
     }
 
@@ -92,12 +92,12 @@ public class Articulo {
         this.albaranVenta = albaranVenta;
     }
 
-    public DocumentoVenta getDocumentoVenta() {
-        return documentoVenta;
+    public FacturaVenta getFacturaVenta() {
+        return facturaVenta;
     }
 
-    public void setDocumentoVenta(DocumentoVenta documentoVenta) {
-        this.documentoVenta = documentoVenta;
+    public void setFacturaVenta(FacturaVenta facturaVenta) {
+        this.facturaVenta = facturaVenta;
     }
 
     public List<StockAlmacen> getStock() {

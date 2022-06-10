@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 import com.modelos.AlbaranVenta;
 import com.modelos.Articulo;
 import com.modelos.Compra;
-import com.modelos.DocumentoVenta;
+import com.modelos.FacturaVenta;
 import com.modelos.Filtro;
 
 /**
@@ -31,14 +31,14 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
 
     DAOEnvio daoEnvio;
     DAOInterfaz<Compra> daoCompra;
-    DAOInterfaz<DocumentoVenta> daoDocumentoVenta;
+    DAOInterfaz<FacturaVenta> daoDocumentoVenta;
     DAOInterfaz<AlbaranVenta> daoAlbaranVenta;
 
     public DAOArticuloImpl(String url, String serverName, int portNumber, String databaseName, String userName, String password) {
         super(url, serverName, portNumber, databaseName, userName, password);
         daoEnvio = PedidosControlador.getDaoEnvio();
         daoCompra = PedidosControlador.getDaoCompra();
-        daoDocumentoVenta = PedidosControlador.getDaoDocumentoVenta();
+        daoDocumentoVenta = PedidosControlador.getDaoFacturaVenta();
         daoAlbaranVenta = PedidosControlador.getDaoAlbaranVenta();
     }
 
@@ -135,7 +135,7 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
                             result.getString("idPedido"), result.getString("marketplace"));
                 }
                 if (result.getString("numeroVenta") != null) {
-                    articulo.NuevoDocumentoVenta(result.getString("numeroVenta"), result.getDate("fechaVenta"),
+                    articulo.NuevaFacturaVenta(result.getString("numeroVenta"), result.getDate("fechaVenta"),
                             result.getString("codigoArticulo"), result.getString("idPedido"), result.getString("marketplace"));
                 }
                 if (result.getString("numeroAlbaran") != null) {
@@ -260,7 +260,7 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
                             result.getString("idPedido"), result.getString("marketplace"));
                 }
                 if (result.getString("numeroVenta") != null) {
-                    articulo.NuevoDocumentoVenta(result.getString("numeroVenta"), result.getDate("fechaVenta"),
+                    articulo.NuevaFacturaVenta(result.getString("numeroVenta"), result.getDate("fechaVenta"),
                             result.getString("codigoArticulo"), result.getString("idPedido"), result.getString("marketplace"));
                 }
                 if (result.getString("numeroAlbaran") != null) {
@@ -313,8 +313,8 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
             if (articulo.getCompra() != null) {
                 daoCompra.registrar(articulo.getCompra(), this.getConnection());
             }
-            if (articulo.getDocumentoVenta() != null) {
-                daoDocumentoVenta.registrar(articulo.getDocumentoVenta(), this.getConnection());
+            if (articulo.getFacturaVenta() != null) {
+                daoDocumentoVenta.registrar(articulo.getFacturaVenta(), this.getConnection());
             }
             if (articulo.getAlbaranVenta() != null) {
                 daoAlbaranVenta.registrar(articulo.getAlbaranVenta(), this.getConnection());
@@ -366,8 +366,8 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
                 if (articulo.getCompra() != null) {
                     daoCompra.registrar(articulo.getCompra(), this.getConnection());
                 }
-                if (articulo.getDocumentoVenta() != null) {
-                    daoDocumentoVenta.registrar(articulo.getDocumentoVenta(), this.getConnection());
+                if (articulo.getFacturaVenta() != null) {
+                    daoDocumentoVenta.registrar(articulo.getFacturaVenta(), this.getConnection());
                 }
                 if (articulo.getAlbaranVenta() != null) {
                     daoAlbaranVenta.registrar(articulo.getAlbaranVenta(), this.getConnection());
@@ -415,8 +415,8 @@ public class DAOArticuloImpl extends ConexionBD implements DAOArticulo {
             if (articulo.getCompra() != null) {
                 daoCompra.registrar(articulo.getCompra(), this.getConnection());
             }
-            if (articulo.getDocumentoVenta() != null) {
-                daoDocumentoVenta.registrar(articulo.getDocumentoVenta(), this.getConnection());
+            if (articulo.getFacturaVenta() != null) {
+                daoDocumentoVenta.registrar(articulo.getFacturaVenta(), this.getConnection());
             }
             if (articulo.getAlbaranVenta() != null) {
                 daoAlbaranVenta.registrar(articulo.getAlbaranVenta(), this.getConnection());

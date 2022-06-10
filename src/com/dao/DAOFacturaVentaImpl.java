@@ -10,20 +10,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Connection;
 import com.modelos.Articulo;
-import com.modelos.DocumentoVenta;
+import com.modelos.FacturaVenta;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.modelos.Filtro;
 
-public class DAODocumentoVentaImpl extends ConexionBD implements DAOInterfaz<DocumentoVenta> {
+public class DAOFacturaVentaImpl extends ConexionBD implements DAOInterfaz<FacturaVenta> {
 
-    public DAODocumentoVentaImpl(String url, String serverName, int portNumber, String databaseName, String userName, String password) {
+    public DAOFacturaVentaImpl(String url, String serverName, int portNumber, String databaseName, String userName, String password) {
         super(url, serverName, portNumber, databaseName, userName, password);
     }
 
     @Override
-    public DocumentoVenta obtener(Articulo articulo, Filtro filtro, Connection conexion) throws SQLException {
-        DocumentoVenta documentoVenta = null;
+    public FacturaVenta obtener(Articulo articulo, Filtro filtro, Connection conexion) throws SQLException {
+        FacturaVenta facturaVenta = null;
         try {
             // Si recibo una conexión a la BD por parámetro no creo una nueva
             if (conexion == null) {
@@ -39,17 +39,17 @@ public class DAODocumentoVentaImpl extends ConexionBD implements DAOInterfaz<Doc
             pstm.setString(3, articulo.getCodigoArticulo());
             ResultSet result = pstm.executeQuery();
             if (result.next()) {
-                documentoVenta = new DocumentoVenta();
-                documentoVenta.setNumeroVenta(result.getString("numeroVenta"));
-                documentoVenta.setFechaVenta(result.getDate("fechaVenta"));
-                documentoVenta.setCodigoArticulo(result.getString("codigoArticulo"));
-                documentoVenta.setMarketplace(result.getString("marketplace"));
-                documentoVenta.setIdPedido(result.getString("idPedido"));
+                facturaVenta = new FacturaVenta();
+                facturaVenta.setNumeroFactura(result.getString("numeroVenta"));
+                facturaVenta.setFechaFactura(result.getDate("fechaVenta"));
+                facturaVenta.setCodigoArticulo(result.getString("codigoArticulo"));
+                facturaVenta.setMarketplace(result.getString("marketplace"));
+                facturaVenta.setIdPedido(result.getString("idPedido"));
             }
             result.close();
             pstm.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAODocumentoVentaImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOFacturaVentaImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         } finally {
             // Si no he recibido la conexión por parámetro, cierro la que he obtenido
@@ -58,11 +58,11 @@ public class DAODocumentoVentaImpl extends ConexionBD implements DAOInterfaz<Doc
                 this.closeConnection();
             }
         }
-        return documentoVenta;
+        return facturaVenta;
     }
 
     @Override
-    public void registrar(DocumentoVenta documentoVenta, Connection conexion) throws SQLException {
+    public void registrar(FacturaVenta facturaVenta, Connection conexion) throws SQLException {
         try {
             // Si recibo una conexión a la BD por parámetro no creo una nueva
             if (conexion == null) {
@@ -71,18 +71,18 @@ public class DAODocumentoVentaImpl extends ConexionBD implements DAOInterfaz<Doc
                 this.setConnection(conexion);
             }
             PreparedStatement pstm = this.getConnection().prepareStatement(
-                    "INSERT INTO Documentosventa (numeroVenta, fechaVenta, "
+                    "INSERT INTO documentosventa (numeroVenta, fechaVenta, "
                     + "codigoArticulo, idPedido, marketplace) "
                     + "VALUES (?, ?, ?, ?, ?)");
-            pstm.setString(1, documentoVenta.getNumeroVenta());
-            pstm.setDate(2, documentoVenta.getFechaVenta());
-            pstm.setString(3, documentoVenta.getCodigoArticulo());
-            pstm.setString(4, documentoVenta.getIdPedido());
-            pstm.setString(5, documentoVenta.getMarketplace());
+            pstm.setString(1, facturaVenta.getNumeroFactura());
+            pstm.setDate(2, facturaVenta.getFechaFactura());
+            pstm.setString(3, facturaVenta.getCodigoArticulo());
+            pstm.setString(4, facturaVenta.getIdPedido());
+            pstm.setString(5, facturaVenta.getMarketplace());
             pstm.executeUpdate();
             pstm.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAODocumentoVentaImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOFacturaVentaImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         } finally {
             // Si no he recibido la conexión por parámetro, cierro la que he obtenido
@@ -94,22 +94,22 @@ public class DAODocumentoVentaImpl extends ConexionBD implements DAOInterfaz<Doc
     }
 
     @Override
-    public void modificar(DocumentoVenta documentoVenta) throws SQLException {
+    public void modificar(FacturaVenta facturaVenta) throws SQLException {
         try {
             this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement(
-                    "UPDATE Documentosventa SET numeroVenta = ?, fechaVenta "
-                    + "= ? WHERE codigoArticulo = ? AND idPedido = ? AND "
-                    + "marketplace = ?");
-            pstm.setString(1, documentoVenta.getNumeroVenta());
-            pstm.setDate(2, documentoVenta.getFechaVenta());
-            pstm.setString(3, documentoVenta.getCodigoArticulo());
-            pstm.setString(4, documentoVenta.getIdPedido());
-            pstm.setString(5, documentoVenta.getMarketplace());
+                    "UPDATE documentosventa SET documentosventa.numeroVenta = ?, documentosventa.fechaVenta "
+                    + "= ? WHERE documentosventa.codigoArticulo = ? AND documentosventa.idPedido = ? AND "
+                    + "documentosventa.marketplace = ?");
+            pstm.setString(1, facturaVenta.getNumeroFactura());
+            pstm.setDate(2, facturaVenta.getFechaFactura());
+            pstm.setString(3, facturaVenta.getCodigoArticulo());
+            pstm.setString(4, facturaVenta.getIdPedido());
+            pstm.setString(5, facturaVenta.getMarketplace());
             pstm.executeUpdate();
             pstm.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAODocumentoVentaImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOFacturaVentaImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         } finally {
             this.closeConnection();
@@ -117,19 +117,19 @@ public class DAODocumentoVentaImpl extends ConexionBD implements DAOInterfaz<Doc
     }
 
     @Override
-    public void eliminar(DocumentoVenta documentoVenta) throws SQLException {
+    public void eliminar(FacturaVenta facturaVenta) throws SQLException {
         try {
             this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement(
-                    "DELETE FROM DocumentoVenta WHERE codigoArticulo = ? AND idPedido"
-                    + " = ? AND marketplace = ?");
-            pstm.setString(1, documentoVenta.getCodigoArticulo());
-            pstm.setString(2, documentoVenta.getIdPedido());
-            pstm.setString(3, documentoVenta.getMarketplace());
+                    "DELETE FROM documentosVenta WHERE documentosVenta.codigoArticulo = ? "
+                            + "AND documentosVenta.idPedido = ? AND marketplace = ?");
+            pstm.setString(1, facturaVenta.getCodigoArticulo());
+            pstm.setString(2, facturaVenta.getIdPedido());
+            pstm.setString(3, facturaVenta.getMarketplace());
             pstm.executeUpdate();
             pstm.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DAODocumentoVentaImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOFacturaVentaImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw ex;
         } finally {
             this.closeConnection();

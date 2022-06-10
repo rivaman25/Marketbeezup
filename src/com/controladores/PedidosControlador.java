@@ -9,7 +9,7 @@ import com.dao.DAOAlbaranVentaImpl;
 import com.dao.DAOAlmacenImpl;
 import com.dao.DAOArticuloImpl;
 import com.dao.DAOCompraImpl;
-import com.dao.DAODocumentoVentaImpl;
+import com.dao.DAOFacturaVentaImpl;
 import com.dao.DAOEnvioImpl;
 import com.dao.DAOObservacionImpl;
 import com.dao.DAOPedidoImpl;
@@ -32,7 +32,7 @@ import com.modelos.AlbaranVenta;
 import com.modelos.Almacen;
 import com.modelos.Articulo;
 import com.modelos.Compra;
-import com.modelos.DocumentoVenta;
+import com.modelos.FacturaVenta;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -42,9 +42,11 @@ import com.modelos.Preferencias;
 import com.modelos.Provincia;
 import com.principal.Main;
 import com.vistas.AgenciasVista;
+import com.vistas.AlbaranVentaVista;
 import com.vistas.AlmacenesVista;
 import com.vistas.CompraVista;
 import com.vistas.EnvioVista;
+import com.vistas.FacturaVentaVista;
 import com.vistas.FiltroVista;
 import com.vistas.ImprimirVista;
 import com.vistas.PedidoVista;
@@ -80,7 +82,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
     private static DAOAlmacen daoAlmacen;
     private static DAOEnvio daoEnvio;
     private static DAOInterfaz<Compra> daoCompra;
-    private static DAOInterfaz<DocumentoVenta> daoDocumentoVenta;
+    private static DAOInterfaz<FacturaVenta> daoFacturaVenta;
     private static DAOInterfaz<AlbaranVenta> daoAlbaranVenta;
     private static DAOObservacion daoObservacion;
     private static DAOProvincia daoProvincia;
@@ -113,7 +115,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
         PedidosControlador.daoCompra = new DAOCompraImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
                 PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
                 PREFERENCIAS.getPassMarket());
-        PedidosControlador.daoDocumentoVenta = new DAODocumentoVentaImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+        PedidosControlador.daoFacturaVenta = new DAOFacturaVentaImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
                 PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
                 PREFERENCIAS.getPassMarket());
         PedidosControlador.daoAlbaranVenta = new DAOAlbaranVentaImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
@@ -227,7 +229,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
                         PedidosControlador.daoCompra = new DAOCompraImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
                                 PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
                                 PREFERENCIAS.getPassMarket());
-                        PedidosControlador.daoDocumentoVenta = new DAODocumentoVentaImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
+                        PedidosControlador.daoFacturaVenta = new DAOFacturaVentaImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
                                 PREFERENCIAS.getPuertoMarket(), PREFERENCIAS.getBdMarket(), PREFERENCIAS.getUsuarioMarket(),
                                 PREFERENCIAS.getPassMarket());
                         PedidosControlador.daoAlbaranVenta = new DAOAlbaranVentaImpl("jdbc:mysql://", PREFERENCIAS.getDireccionIPMarket(),
@@ -498,7 +500,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
                             pedidosVista.mostrarMensaje("El pedido está anulado.");
                         } else {
                             if (articulo.getEnvio() != null) {
-                                if (JOptionPane.showConfirmDialog(pedidosVista, "¿Desea anular el envío del pedido seleccionado?",
+                                if (JOptionPane.showConfirmDialog(pedidosVista, "¿Desea eliminar el envío del pedido seleccionado?",
                                         "Eliminar Envío", JOptionPane.OK_CANCEL_OPTION) == 0) {
                                     daoEnvio.eliminar(articulo.getEnvio());
                                     articulo.setFechaHoraImpr(null);
@@ -571,7 +573,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
                             pedidosVista.mostrarMensaje("El pedido está anulado.");
                         } else {
                             if (articulo.getCompra() != null) {
-                                if (JOptionPane.showConfirmDialog(pedidosVista, "¿Desea anular la compra del pedido seleccionado?",
+                                if (JOptionPane.showConfirmDialog(pedidosVista, "¿Desea eliminar la compra del pedido seleccionado?",
                                         "Eliminar Compra", JOptionPane.OK_CANCEL_OPTION) == 0) {
                                     daoCompra.eliminar(articulo.getCompra());
                                     articulo.setEstado("NUEVO");
@@ -581,6 +583,154 @@ public class PedidosControlador implements ActionListener, KeyListener {
                                 }
                             } else {
                                 pedidosVista.mostrarMensaje("El pedido no tiene registrado una compra.");
+                            }
+                        }
+                    } else {
+                        pedidosVista.mostrarMensaje("Seleccione un pedido.");
+                    }
+                    break;
+                case "NuevoAlbaran":
+                    articulo = pedidosVista.obtenerArticuloSeleccionado();
+                    if (articulo != null) {
+                        if (articulo.getEstado().equals("ANULADO")) {
+                            pedidosVista.mostrarMensaje("El pedido está anulado.");
+                        } else {
+                            if (articulo.getAlbaranVenta() == null) {
+                                AlbaranVentaVista albaranVentaVista = new AlbaranVentaVista(pedidosVista, true);
+                                albaranVentaVista.setTitle("Nuevo Albarán de Venta");
+                                AlbaranVentaControlador albaranVentaControlador = new AlbaranVentaControlador(articulo, albaranVentaVista);
+                                albaranVentaVista.setControlador(albaranVentaControlador);
+                                albaranVentaControlador.actualizarVista();
+                                if (albaranVentaControlador.isGuardado()) {
+                                    obtenerPedidos();
+                                    actualizarVista();
+                                }
+                            } else {
+                                pedidosVista.mostrarMensaje("El pedido no tiene registrado un Albarán de Venta, "
+                                        + "puede seleccionar el menú Ventas y luego Nuevo Albarán.");
+                            }
+                        }
+                    } else {
+                        pedidosVista.mostrarMensaje("Seleccione un pedido.");
+                    }
+                    break;
+                case "EditarAlbaran":
+                    articulo = pedidosVista.obtenerArticuloSeleccionado();
+                    if (articulo != null) {
+                        if (articulo.getEstado().equals("ANULADO")) {
+                            pedidosVista.mostrarMensaje("El pedido está anulado.");
+                        } else {
+                            if (articulo.getAlbaranVenta() != null) {
+                                AlbaranVentaVista albaranVentaVista = new AlbaranVentaVista(pedidosVista, true);
+                                albaranVentaVista.setTitle("Editar Albarán de Venta");
+                                AlbaranVentaControlador albaranVentaControlador = new AlbaranVentaControlador(articulo, albaranVentaVista);
+                                albaranVentaControlador.setEditar(true);
+                                albaranVentaVista.setControlador(albaranVentaControlador);
+                                albaranVentaControlador.actualizarVista();
+                                if (albaranVentaControlador.isGuardado()) {
+                                    obtenerPedidos();
+                                    actualizarVista();
+                                }
+                            } else {
+                                pedidosVista.mostrarMensaje("El pedido ya tiene registrado un Albarán de Venta, "
+                                        + "puede seleccionar el menú Ventas y luego Editar Albarán.");
+                            }
+                        }
+                    } else {
+                        pedidosVista.mostrarMensaje("Seleccione un pedido.");
+                    }
+                    break;
+                case "EliminarAlbaran":
+                    articulo = pedidosVista.obtenerArticuloSeleccionado();
+                    if (articulo != null) {
+                        if (articulo.getEstado().equals("ANULADO")) {
+                            pedidosVista.mostrarMensaje("El pedido está anulado.");
+                        } else {
+                            if (articulo.getAlbaranVenta() != null) {
+                                if (JOptionPane.showConfirmDialog(pedidosVista, "¿Desea eliminar el Albarán de Venta del pedido seleccionado?",
+                                        "Eliminar Albarán de Venta", JOptionPane.OK_CANCEL_OPTION) == 0) {
+                                    daoAlbaranVenta.eliminar(articulo.getAlbaranVenta());
+                                    // articulo.setEstado("NUEVO");
+                                    // daoArticulo.modificar(articulo);
+                                    obtenerPedidos();
+                                    actualizarVista();
+                                }
+                            } else {
+                                pedidosVista.mostrarMensaje("El pedido no tiene registrado un Albarán de Venta");
+                            }
+                        }
+                    } else {
+                        pedidosVista.mostrarMensaje("Seleccione un pedido.");
+                    }
+                    break;
+                case "NuevaFactura":
+                    articulo = pedidosVista.obtenerArticuloSeleccionado();
+                    if (articulo != null) {
+                        if (articulo.getEstado().equals("ANULADO")) {
+                            pedidosVista.mostrarMensaje("El pedido está anulado.");
+                        } else {
+                            if (articulo.getFacturaVenta() == null) {
+                                FacturaVentaVista facturaVentaVista = new FacturaVentaVista(pedidosVista, true);
+                                facturaVentaVista.setTitle("Nueva Factura de Venta");
+                                FacturaVentaControlador facturaVentaControlador = new FacturaVentaControlador(articulo, facturaVentaVista);
+                                facturaVentaVista.setControlador(facturaVentaControlador);
+                                facturaVentaControlador.actualizarVista();
+                                if (facturaVentaControlador.isGuardado()) {
+                                    obtenerPedidos();
+                                    actualizarVista();
+                                }
+                            } else {
+                                pedidosVista.mostrarMensaje("El pedido no tiene registrado una Factura de Venta, "
+                                        + "puede seleccionar el menú Ventas y luego Nueva Factura.");
+                            }
+                        }
+                    } else {
+                        pedidosVista.mostrarMensaje("Seleccione un pedido.");
+                    }
+                    break;
+                case "EditarFactura":
+                    articulo = pedidosVista.obtenerArticuloSeleccionado();
+                    if (articulo != null) {
+                        if (articulo.getEstado().equals("ANULADO")) {
+                            pedidosVista.mostrarMensaje("El pedido está anulado.");
+                        } else {
+                            if (articulo.getFacturaVenta() != null) {
+                                FacturaVentaVista facturaVentaVista = new FacturaVentaVista(pedidosVista, true);
+                                facturaVentaVista.setTitle("Editar Factura de Venta");
+                                FacturaVentaControlador facturaVentaControlador = new FacturaVentaControlador(articulo, facturaVentaVista);
+                                facturaVentaControlador.setEditar(true);
+                                facturaVentaVista.setControlador(facturaVentaControlador);
+                                facturaVentaControlador.actualizarVista();
+                                if (facturaVentaControlador.isGuardado()) {
+                                    obtenerPedidos();
+                                    actualizarVista();
+                                }
+                            } else {
+                                pedidosVista.mostrarMensaje("El pedido ya tiene registrado un Albarán de Venta, "
+                                        + "puede seleccionar el menú Ventas y luego Editar Albarán.");
+                            }
+                        }
+                    } else {
+                        pedidosVista.mostrarMensaje("Seleccione un pedido.");
+                    }
+                    break;
+                case "EliminarFactura":
+                    articulo = pedidosVista.obtenerArticuloSeleccionado();
+                    if (articulo != null) {
+                        if (articulo.getEstado().equals("ANULADO")) {
+                            pedidosVista.mostrarMensaje("El pedido está anulado.");
+                        } else {
+                            if (articulo.getFacturaVenta() != null) {
+                                if (JOptionPane.showConfirmDialog(pedidosVista, "¿Desea eliminar la Factura de Venta del pedido seleccionado?",
+                                        "Eliminar Factura", JOptionPane.OK_CANCEL_OPTION) == 0) {
+                                    daoFacturaVenta.eliminar(articulo.getFacturaVenta());
+                                    // articulo.setEstado("NUEVO");
+                                    // daoArticulo.modificar(articulo);
+                                    obtenerPedidos();
+                                    actualizarVista();
+                                }
+                            } else {
+                                pedidosVista.mostrarMensaje("El pedido no tiene registrado una Factura de Venta");
                             }
                         }
                     } else {
@@ -741,12 +891,12 @@ public class PedidosControlador implements ActionListener, KeyListener {
         PedidosControlador.daoCompra = daoCompra;
     }
 
-    public static DAOInterfaz<DocumentoVenta> getDaoDocumentoVenta() {
-        return daoDocumentoVenta;
+    public static DAOInterfaz<FacturaVenta> getDaoFacturaVenta() {
+        return daoFacturaVenta;
     }
 
-    public static void setDaoDocumentoVenta(DAOInterfaz<DocumentoVenta> daoDocumentoVenta) {
-        PedidosControlador.daoDocumentoVenta = daoDocumentoVenta;
+    public static void setDaoFacturaVenta(DAOInterfaz<FacturaVenta> daoFacturaVenta) {
+        PedidosControlador.daoFacturaVenta = daoFacturaVenta;
     }
 
     public static DAOInterfaz<AlbaranVenta> getDaoAlbaranVenta() {
