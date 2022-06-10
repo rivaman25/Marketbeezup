@@ -5,14 +5,25 @@
 package com.modelos;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  *
  * @author Manuel Rivallo Bejarano
  */
 public class Observacion {
+
     private String titulo, descripcion, marketplace, idPedido;
     private Timestamp fechaHora;
+
+    public static boolean existeTitulo(String titulo, List<Observacion> observaciones) {
+        for (Observacion observacion : observaciones) {
+            if (observacion.getTitulo().equalsIgnoreCase(titulo)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public String getTitulo() {
         return titulo;

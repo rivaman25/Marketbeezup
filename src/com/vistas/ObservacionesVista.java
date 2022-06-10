@@ -4,9 +4,9 @@
  */
 package com.vistas;
 
-import com.controladores.ModeloTablaProvincias;
-import com.controladores.ProvinciasControlador;
-import com.modelos.Provincia;
+import com.controladores.ModeloTablaObservaciones;
+import com.controladores.ObservacionesControlador;
+import com.modelos.Observacion;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -20,12 +20,12 @@ import javax.swing.Timer;
  */
 public class ObservacionesVista extends javax.swing.JDialog {
 
-    private ModeloTablaProvincias modeloTablaProvincias;
-    private List<Provincia> provincias;
+    private ModeloTablaObservaciones modeloTablaObservaciones;
+    private List<Observacion> observaciones;
     private final Timer TIMER;
 
     /**
-     * Creates new form Provincias
+     * Creates new form Observaciones
      */
     public ObservacionesVista(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -38,26 +38,26 @@ public class ObservacionesVista extends javax.swing.JDialog {
         });
     }
 
-    public void actualizarVista(List<Provincia> provincias) {
-        this.provincias = provincias;
-        modeloTablaProvincias = new ModeloTablaProvincias(provincias);
-        tablaProvincias.setModel(modeloTablaProvincias);
+    public void actualizarVista(List<Observacion> observaciones) {
+        this.observaciones = observaciones;
+        modeloTablaObservaciones = new ModeloTablaObservaciones(observaciones);
+        tablaObservaciones.setModel(modeloTablaObservaciones);
     }
 
-    public void setControlador(ProvinciasControlador provinciasControlador) {
-        botonRegistrar.addActionListener(provinciasControlador);
+    public void setControlador(ObservacionesControlador observacionesControlador) {
+        botonRegistrar.addActionListener(observacionesControlador);
         botonRegistrar.setActionCommand("Registrar");
-        botonEliminar.addActionListener(provinciasControlador);
+        botonEliminar.addActionListener(observacionesControlador);
         botonEliminar.setActionCommand("Eliminar");
-        botonSalir.addActionListener(provinciasControlador);
+        botonSalir.addActionListener(observacionesControlador);
         botonSalir.setActionCommand("Salir");
-        textoBuscar.addKeyListener(provinciasControlador);
+        textoBuscar.addKeyListener(observacionesControlador);
     }
 
-    public Provincia obtenerProvincia() {
-        Provincia provincia = new Provincia();
-        provincia.setCodigoProvincia(textoCodigo.getText());
-        provincia.setNombreProvincia(textoNombre.getText());
+    public Observacion obtenerObservacion() {
+        Observacion provincia = new Observacion();
+        provincia.setTitulo(textoTitulo.getText());
+        provincia.setDescripcion(textoDescripcion.getText());
         return provincia;
     }
     
@@ -65,16 +65,16 @@ public class ObservacionesVista extends javax.swing.JDialog {
         return textoBuscar.getText();
     }
 
-    public Provincia obtenerProvinciaSeleccionada() {
-        if (tablaProvincias.getSelectedRow() != -1) {
-            return provincias.get(tablaProvincias.getSelectedRow());
+    public Observacion obtenerObservacionSeleccionada() {
+        if (tablaObservaciones.getSelectedRow() != -1) {
+            return observaciones.get(tablaObservaciones.getSelectedRow());
         } else {
             return null;
         }
     }
 
     public int obtenerFilaSeleccionada() {
-        return tablaProvincias.getSelectedRow();
+        return tablaObservaciones.getSelectedRow();
     }
 
     public void mostrarMensaje(String mensaje) {
@@ -86,37 +86,37 @@ public class ObservacionesVista extends javax.swing.JDialog {
     }
     
     public void limpiarTexto() {
-        textoCodigo.setText(null);
-        textoNombre.setText(null);
-        textoCodigo.requestFocus();
+        textoTitulo.setText(null);
+        textoDescripcion.setText(null);
+        textoTitulo.requestFocus();
     }
     
     public void limpiarTextoBuscar() {
         textoBuscar.setText(null);
     }
 
-    public List<Provincia> getProvincias() {
-        return provincias;
+    public List<Observacion> getObservaciones() {
+        return observaciones;
     }
 
-    public void setProvincias(List<Provincia> provincias) {
-        this.provincias = provincias;
+    public void setObservaciones(List<Observacion> observaciones) {
+        this.observaciones = observaciones;
     }
 
-    public ModeloTablaProvincias getModeloTablaProvincias() {
-        return modeloTablaProvincias;
+    public ModeloTablaObservaciones getModeloTablaObservaciones() {
+        return modeloTablaObservaciones;
     }
 
-    public void setModeloTablaProvincias(ModeloTablaProvincias modeloTablaProvincias) {
-        this.modeloTablaProvincias = modeloTablaProvincias;
+    public void setModeloTablaObservaciones(ModeloTablaObservaciones modeloTablaObservaciones) {
+        this.modeloTablaObservaciones = modeloTablaObservaciones;
     }
 
-    public JTable getTablaProvincias() {
-        return tablaProvincias;
+    public JTable getTablaObservaciones() {
+        return tablaObservaciones;
     }
 
-    public void setTablaProvincias(JTable tablaProvincias) {
-        this.tablaProvincias = tablaProvincias;
+    public void setTablaObservaciones(JTable tablaObservaciones) {
+        this.tablaObservaciones = tablaObservaciones;
     }
 
     /**
@@ -132,16 +132,16 @@ public class ObservacionesVista extends javax.swing.JDialog {
         etiquetaMensaje = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        textoCodigo = new javax.swing.JTextField();
+        textoTitulo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        textoNombre = new javax.swing.JTextField();
+        textoDescripcion = new javax.swing.JTextField();
         botonRegistrar = new javax.swing.JButton();
         botonEliminar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         textoBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaProvincias = new javax.swing.JTable();
+        tablaObservaciones = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         botonSalir = new javax.swing.JButton();
 
@@ -159,7 +159,7 @@ public class ObservacionesVista extends javax.swing.JDialog {
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel1.setText("Código:");
+        jLabel1.setText("Título:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -167,10 +167,10 @@ public class ObservacionesVista extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         jPanel1.add(jLabel1, gridBagConstraints);
 
-        textoCodigo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        textoCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+        textoTitulo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        textoTitulo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                textoCodigoKeyPressed(evt);
+                textoTituloKeyPressed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -180,10 +180,10 @@ public class ObservacionesVista extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        jPanel1.add(textoCodigo, gridBagConstraints);
+        jPanel1.add(textoTitulo, gridBagConstraints);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel2.setText("Provincia:");
+        jLabel2.setText("Descripción:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
@@ -191,10 +191,10 @@ public class ObservacionesVista extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         jPanel1.add(jLabel2, gridBagConstraints);
 
-        textoNombre.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        textoNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+        textoDescripcion.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        textoDescripcion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                textoNombreKeyPressed(evt);
+                textoDescripcionKeyPressed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -204,7 +204,7 @@ public class ObservacionesVista extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
-        jPanel1.add(textoNombre, gridBagConstraints);
+        jPanel1.add(textoDescripcion, gridBagConstraints);
 
         botonRegistrar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         botonRegistrar.setText("Registrar");
@@ -239,7 +239,7 @@ public class ObservacionesVista extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel3)
                 .addGap(4, 4, 4)
-                .addComponent(textoBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
+                .addComponent(textoBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,29 +257,21 @@ public class ObservacionesVista extends javax.swing.JDialog {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, -1));
 
-        tablaProvincias.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        tablaProvincias.setModel(new javax.swing.table.DefaultTableModel(
+        tablaObservaciones.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        tablaObservaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Código", "Provincia"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-        });
-        tablaProvincias.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tablaProvincias.setShowGrid(true);
-        jScrollPane1.setViewportView(tablaProvincias);
+        ));
+        tablaObservaciones.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tablaObservaciones.setShowGrid(true);
+        jScrollPane1.setViewportView(tablaObservaciones);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 460, 152));
 
@@ -292,17 +284,17 @@ public class ObservacionesVista extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textoCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoCodigoKeyPressed
+    private void textoTituloKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoTituloKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            textoNombre.requestFocus();
+            textoDescripcion.requestFocus();
         }
-    }//GEN-LAST:event_textoCodigoKeyPressed
+    }//GEN-LAST:event_textoTituloKeyPressed
 
-    private void textoNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoNombreKeyPressed
+    private void textoDescripcionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textoDescripcionKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             botonRegistrar.requestFocus();
         }
-    }//GEN-LAST:event_textoNombreKeyPressed
+    }//GEN-LAST:event_textoDescripcionKeyPressed
 
     /**
      * @param args the command line arguments
@@ -365,9 +357,9 @@ public class ObservacionesVista extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tablaProvincias;
+    private javax.swing.JTable tablaObservaciones;
     private javax.swing.JTextField textoBuscar;
-    private javax.swing.JTextField textoCodigo;
-    private javax.swing.JTextField textoNombre;
+    private javax.swing.JTextField textoDescripcion;
+    private javax.swing.JTextField textoTitulo;
     // End of variables declaration//GEN-END:variables
 }

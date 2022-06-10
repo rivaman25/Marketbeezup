@@ -49,6 +49,7 @@ import com.vistas.EnvioVista;
 import com.vistas.FacturaVentaVista;
 import com.vistas.FiltroVista;
 import com.vistas.ImprimirVista;
+import com.vistas.ObservacionesVista;
 import com.vistas.PedidoVista;
 import com.vistas.PreferenciasVista;
 import com.vistas.ProvinciasVista;
@@ -733,6 +734,19 @@ public class PedidosControlador implements ActionListener, KeyListener {
                                 pedidosVista.mostrarMensaje("El pedido no tiene registrado una Factura de Venta");
                             }
                         }
+                    } else {
+                        pedidosVista.mostrarMensaje("Seleccione un pedido.");
+                    }
+                    break;
+                case "Observaciones":
+                    ObservacionesVista observacionesVista;
+                    ObservacionesControlador observacionesControlador;
+                    pedido = pedidosVista.obtenerPedidoSeleccionado();
+                    if (pedido != null) {
+                        observacionesVista = new ObservacionesVista(pedidosVista, true);
+                        observacionesControlador = new ObservacionesControlador(observacionesVista, pedido);
+                        observacionesVista.setControlador(observacionesControlador);
+                        observacionesControlador.actualizarVista();
                     } else {
                         pedidosVista.mostrarMensaje("Seleccione un pedido.");
                     }

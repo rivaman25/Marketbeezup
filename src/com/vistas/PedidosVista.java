@@ -183,6 +183,10 @@ public class PedidosVista extends javax.swing.JFrame {
         menuEditarFactura.setActionCommand("EditarFactura");
         menuEliminarFactura.addActionListener(pedidosControlador);
         menuEliminarFactura.setActionCommand("EliminarFactura");
+        menuObservaciones.addActionListener(pedidosControlador);
+        menuObservaciones.setActionCommand("Observaciones");
+        botonObservaciones.addActionListener(pedidosControlador);
+        botonObservaciones.setActionCommand("Observaciones");
     }
 
     public String getAtributoBuscar() {
@@ -228,7 +232,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         botonAnularPedido = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        botonObservaciones = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         comboBuscar = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
@@ -280,8 +284,7 @@ public class PedidosVista extends javax.swing.JFrame {
         jMenu8 = new javax.swing.JMenu();
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
-        jMenuItem19 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
+        menuObservaciones = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MARKETBEEZUP");
@@ -371,14 +374,14 @@ public class PedidosVista extends javax.swing.JFrame {
         botonAnularPedido.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(botonAnularPedido);
 
-        jButton6.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Observaciones32.png"))); // NOI18N
-        jButton6.setText("Observaciones");
-        jButton6.setToolTipText("Obtener Observaciones");
-        jButton6.setFocusable(false);
-        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton6);
+        botonObservaciones.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        botonObservaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/imagenes/Observaciones32.png"))); // NOI18N
+        botonObservaciones.setText("Observaciones");
+        botonObservaciones.setToolTipText("Obtener Observaciones");
+        botonObservaciones.setFocusable(false);
+        botonObservaciones.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        botonObservaciones.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(botonObservaciones);
 
         comboBuscar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         comboBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pedido", "Nombre", "Dirección", "Teléfono", "Artículo", "Compra", "Ticket", "Albaran", " " }));
@@ -714,19 +717,9 @@ public class PedidosVista extends javax.swing.JFrame {
         jMenu9.setText("Observaciones");
         jMenu9.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
 
-        jMenuItem19.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F12, 0));
-        jMenuItem19.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jMenuItem19.setText("Nueva");
-        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem19ActionPerformed(evt);
-            }
-        });
-        jMenu9.add(jMenuItem19);
-
-        jMenuItem9.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jMenuItem9.setText("Obtener");
-        jMenu9.add(jMenuItem9);
+        menuObservaciones.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        menuObservaciones.setText("Obtener");
+        jMenu9.add(menuObservaciones);
 
         jMenuBar1.add(jMenu9);
 
@@ -734,10 +727,6 @@ public class PedidosVista extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem19ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
@@ -796,11 +785,11 @@ public class PedidosVista extends javax.swing.JFrame {
     private javax.swing.JButton botonImprimirAlbaran;
     private javax.swing.JButton botonNuevaCompra;
     private javax.swing.JButton botonNuevoEnvio;
+    private javax.swing.JButton botonObservaciones;
     private javax.swing.JComboBox<String> comboBuscar;
     private javax.swing.JLabel etiquetaMensaje;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
@@ -809,9 +798,7 @@ public class PedidosVista extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
-    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -846,6 +833,7 @@ public class PedidosVista extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuNuevoAlbaran;
     private javax.swing.JMenuItem menuNuevoEnvio;
     private javax.swing.JMenuItem menuNuevoPedido;
+    private javax.swing.JMenuItem menuObservaciones;
     private javax.swing.JMenu menuPedidos;
     private javax.swing.JMenuItem menuProvincias;
     private javax.swing.JMenu menuRegistrarTicket;
