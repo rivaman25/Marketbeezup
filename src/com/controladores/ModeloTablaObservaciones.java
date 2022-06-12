@@ -6,6 +6,7 @@ package com.controladores;
 
 import com.modelos.Observacion;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
@@ -17,8 +18,8 @@ import javax.swing.table.AbstractTableModel;
 public class ModeloTablaObservaciones extends AbstractTableModel {
 
     private List<Observacion> observaciones;
-    private final Class[] columnClass = {String.class, String.class};
-    private final String[] columnNames = {"Título", "Descripción"};
+    private final Class[] columnClass = {String.class, String.class, String.class};
+    private final String[] columnNames = {"Fecha", "Título", "Descripción"};
 
     public ModeloTablaObservaciones(List<Observacion> observaciones) {
         this.observaciones = observaciones;
@@ -46,15 +47,17 @@ public class ModeloTablaObservaciones extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int row, int col) {
-        return col == 1;
+        return col == 2;
     }
 
     @Override
     public Object getValueAt(int row, int col) {
         switch (col) {
             case 0:
-                return observaciones.get(row).getTitulo();
+                return new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new java.util.Date(observaciones.get(row).getFechaHora().getTime()));
             case 1:
+                return observaciones.get(row).getTitulo();
+            case 2:
                 return observaciones.get(row).getDescripcion();
             default:
                 return null;

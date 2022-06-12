@@ -83,13 +83,13 @@ public class DAOObservacionImpl extends ConexionBD implements DAOObservacion {
         try {
             this.openConnection();
             PreparedStatement pstm = this.getConnection().prepareStatement(
-                    "INSERT INTO Observaciones (titulo, descripcion, fechaHora, "
-                    + "idPedido, marketplace) VALUES (?, ?, ?, ?, ?)");
+                    "INSERT INTO Observaciones (titulo, descripcion, "
+                    + "idPedido, marketplace) VALUES (?, ?, ?, ?)");
             pstm.setString(1, observacion.getTitulo());
             pstm.setString(2, observacion.getDescripcion());
-            pstm.setTimestamp(3, observacion.getFechaHora());
-            pstm.setString(4, observacion.getIdPedido());
-            pstm.setString(5, observacion.getMarketplace());
+            // pstm.setTimestamp(3, observacion.getFechaHora());
+            pstm.setString(3, observacion.getIdPedido());
+            pstm.setString(4, observacion.getMarketplace());
             pstm.executeUpdate();
             pstm.close();
         } catch (SQLException ex) {
