@@ -351,7 +351,7 @@ public class PedidoVista extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 5, 5);
         panelPedido.add(jLabel4, gridBagConstraints);
 
-        selectorFechaPedido.setDateFormatString("dd-MM-yy");
+        selectorFechaPedido.setDateFormatString("dd-MM-yy HH:mm");
         selectorFechaPedido.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
