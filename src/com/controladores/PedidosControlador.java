@@ -137,7 +137,7 @@ public class PedidosControlador implements ActionListener, KeyListener {
         try {
             pedidosNuevos.addAll(daoPedidoNuevos.obtenerPedidosNuevos());
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(pedidosVista, "No hay conexión con la Base de Datos, no se actulizarán los pedidos", "Error al conectar", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(pedidosVista, "No hay conexión con la Base de Datos, no se actualizarán los pedidos", "Error al conectar", JOptionPane.ERROR_MESSAGE);
         }
         try {
             PedidosControlador.daoPedido.registrar(pedidosNuevos);

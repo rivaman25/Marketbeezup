@@ -20,6 +20,7 @@ import com.modelos.Articulo;
 import com.modelos.Observacion;
 import com.modelos.Pedido;
 import com.modelos.PedidoPK;
+import javax.swing.JOptionPane;
 
 /**
  * Clase que busca los pedidos nuevos en la base de datos online y los registra
@@ -261,6 +262,9 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
             throw ex;
         } finally {
             this.closeConnection();
+        }
+        if (!pedidosNuevos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se han encotrado " + pedidosNuevos.size() + " pedidos nuevos.", "Nuevos pedidos", JOptionPane.INFORMATION_MESSAGE);
         }
         return pedidosNuevos;
     }
