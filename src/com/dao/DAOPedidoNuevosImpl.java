@@ -5,8 +5,12 @@
 package com.dao;
 
 import com.controladores.PedidosControlador;
+import com.daoInterfaces.DAOAgencia;
+import com.daoInterfaces.DAOAlmacen;
 import com.daoInterfaces.DAOPedido;
 import com.daoInterfaces.DAOPedidoNuevos;
+import com.modelos.Agencia;
+import com.modelos.Almacen;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,6 +22,8 @@ import com.modelos.Pedido;
 import com.modelos.PedidoPK;
 
 /**
+ * Clase que busca los pedidos nuevos en la base de datos online y los registra
+ * en la base de datos marketbeezup
  *
  * @author Manuel Rivallo Bejarano
  */
@@ -49,10 +55,16 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
     public List<Pedido> obtenerPedidosNuevos() throws SQLException {
         List<Pedido> pedidosNuevos = new ArrayList<>();
         int indicePedido;
+        boolean encontrado;
         Pedido pedidoNuevo;
         Articulo articulo;
         Observacion observacion;
         DAOPedido daoPedido = PedidosControlador.getDaoPedido();
+        // Obtengo las agencias y los almacenes registrados
+        DAOAgencia daoAgencia = PedidosControlador.getDaoAgencia();
+        DAOAlmacen daoAlmacen = PedidosControlador.getDaoAlmacen();
+        List<Agencia> agencias = daoAgencia.listar();
+        List<Almacen> almacenes = daoAlmacen.listar();
         List<PedidoPK> pedidosPK;
         try {
             this.openConnection();
@@ -101,6 +113,7 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
                     pedidosNuevos.add(pedidoNuevo);
                 }
                 articulo = new Articulo();
+                // Compruebo que el artículo no esté duplicado en el pedido
                 if (existeArticuloPedido(result.getString("idarticulo"), pedidoNuevo)) {
                     System.out.println("Este artículo no se graba: " + result.getString("idarticulo"));
                 } else {
@@ -108,6 +121,9 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
                     articulo.setDescripcion(result.getString("Descripcion"));
                     articulo.setCantidad(result.getInt("Bultos"));
                     articulo.setPrecio(result.getFloat("Importe"));
+                    // A continuación se registran los envíos, compras, facturas y albaranes de venta,
+                    // y observaciones para cada línea de pedido. Esto se hace por registrar la información
+                    // que se ha introducido anteriormente al funcionamiento de esta aplicación.
                     // Según los valores de diferentes atributos registro el estado del pedido
                     if (result.getBoolean("Cancelado")) {
                         articulo.setEstado("ANULADO");
@@ -136,12 +152,45 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
                     articulo.setIdPedido(result.getString("idPedido"));
                     articulo.setMarketplace(result.getString("Marketplace"));
                     if (result.getDate("FechaSalida") != null
-                            & result.getString("AlmacenSalida") != null & !result.getString("AlmacenSalida").isBlank()
-                            & result.getString("Agencia") != null & !result.getString("Agencia").isBlank()) {
-                        articulo.NuevoEnvio(result.getDate("FechaSalida"),
-                                result.getString("AlmacenSalida"), result.getString("Agencia"),
-                                result.getString("idarticulo"), result.getString("idPedido"),
-                                result.getString("Marketplace"));
+                            & result.getString("AlmacenSalida") != null
+                            & result.getString("Agencia") != null) {
+                        if (!result.getString("AlmacenSalida").isBlank() || !result.getString("Agencia").isBlank()) {
+                            // Compruebo si la agencia está registrada en la tabla marketbeezup.agencias
+                            encontrado = false;
+                            for (Agencia agencia : agencias) {
+                                if (agencia.getIdAgencia().equalsIgnoreCase(result.getString("Agencia"))) {
+                                    encontrado = true;
+                                    break;
+                                }
+                            }
+                            // Registro la agencia si no está en la tabla
+                            if (!encontrado) {
+                                Agencia agencia = new Agencia();
+                                agencia.setIdAgencia(result.getString("Agencia"));
+                                daoAgencia.registrar(agencia);
+                                agencias.add(agencia);
+                            }
+                            // Compruebo si el almacén está registrado en la tabla marketbeezup.almacenes
+                            encontrado = false;
+                            for (Almacen almacen : almacenes) {
+                                if (almacen.getIdAlmacen().equalsIgnoreCase(result.getString("AlmacenSalida"))) {
+                                    encontrado = true;
+                                    break;
+                                }
+                            }
+                            // Registro el almacén si no está en la tabla                            
+                            if (!encontrado) {
+                                Almacen almacen = new Almacen();
+                                almacen.setIdAlmacen(result.getString("AlmacenSalida"));
+                                almacen.setAlmacen(result.getString("AlmacenSalida"));
+                                daoAlmacen.registrar(almacen);
+                                almacenes.add(almacen);
+                            }
+                            articulo.NuevoEnvio(result.getDate("FechaSalida"),
+                                    result.getString("AlmacenSalida"), result.getString("Agencia"),
+                                    result.getString("idarticulo"), result.getString("idPedido"),
+                                    result.getString("Marketplace"));
+                        }
                     }
                     if (result.getString("NumeroSeguimiento") != null & result.getDate("FPedido") != null) {
                         articulo.NuevaCompra(result.getString("NumeroSeguimiento"),
@@ -154,24 +203,31 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
                                 result.getDate("FechaTiquet"), result.getString("idarticulo"),
                                 result.getString("idPedido"), result.getString("Marketplace"));
                     }
-                    if ((result.getString("numeroAlbaran") != null & !result.getString("numeroAlbaran").isBlank())) {
-                        articulo.NuevoAlbaranVenta(result.getString("numeroAlbaran"),
-                                result.getDate("Fecha"), result.getString("idarticulo"),
-                                result.getString("idPedido"), result.getString("Marketplace"));
+                    if (result.getString("numeroAlbaran") != null) {
+                        if (!result.getString("numeroAlbaran").isBlank()) {
+                            articulo.NuevoAlbaranVenta(result.getString("numeroAlbaran"),
+                                    result.getDate("Fecha"), result.getString("idarticulo"),
+                                    result.getString("idPedido"), result.getString("Marketplace"));
+                        }
                     }
                     pedidoNuevo.NuevoArticulo(articulo);
+                    // Si hay registrada una observación, la copio en la base de datos
                     if (result.getString("Observaciones") != null) {
-                        observacion = new Observacion();
-                        observacion.setTitulo(articulo.getMarketplace() + "-"
-                                + articulo.getIdPedido() + " - " + articulo.getCodigoArticulo());
-                        observacion.setDescripcion(result.getString("Observaciones"));
-                        observacion.setFechaHora(pedidoNuevo.getFechaPedido());
-                        observacion.setMarketplace(result.getString("marketplace"));
-                        observacion.setIdPedido(result.getString("idPedido"));
-                        pedidoNuevo.NuevaObservacion(observacion);
+                        if (!result.getString("Observaciones").isBlank()) {
+                            observacion = new Observacion();
+                            observacion.setTitulo(articulo.getMarketplace() + "-"
+                                    + articulo.getIdPedido() + " - " + articulo.getCodigoArticulo());
+                            observacion.setDescripcion(result.getString("Observaciones"));
+                            observacion.setFechaHora(pedidoNuevo.getFechaPedido());
+                            observacion.setMarketplace(result.getString("marketplace"));
+                            observacion.setIdPedido(result.getString("idPedido"));
+                            pedidoNuevo.NuevaObservacion(observacion);
+                        }
                     }
                 }
-                /*			
+                /*  Estos atributos de la base de datos online contienen información que
+                    no es necesario registrar en la nueva base de datos:
+                
                     idArticuloA varchar(1) YES
                     AceptaCambio tinyint(1) NO
                     RecogidaUsado tinyint(1) NO
