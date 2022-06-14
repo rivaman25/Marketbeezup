@@ -17,6 +17,7 @@ import java.util.Map;
 import javax.swing.JDialog;
 import com.modelos.Articulo;
 import com.modelos.Preferencias;
+import com.principal.Main;
 import net.sf.jasperreports.engine.JRException;
 import com.vistas.ImprimirVista;
 import java.sql.SQLException;
@@ -45,11 +46,18 @@ public class ImprimirControlador extends ConexionBD implements ActionListener {
         this.reimprimir = reimprimir;
         DAO_ARTICULO = PedidosControlador.getDaoArticulo();
         // En función de la variable reimprimir obtengo los pedidos impresos o pendientes de imprimir
-        articulosImpr = DAO_ARTICULO.listar(null, null, new ArrayList<>(), reimprimir);
+        if (reimprimir) {
+            articulosImpr = DAO_ARTICULO.listar(null, null, new ArrayList<>(), reimprimir);
+        } else {
+            articulosImpr = DAO_ARTICULO.listar(null, Main.fechaActual(), new ArrayList<>(), reimprimir);
+        }
         impreso = false;
     }
 
     public void actualizarVista() {
+        if (!reimprimir) {
+            imprimirVista.setFechaSeleccionada(Main.fechaActual());
+        }
         imprimirVista.actualizarTabla(articulosImpr);
         imprimirVista.setVisible(true);
     }

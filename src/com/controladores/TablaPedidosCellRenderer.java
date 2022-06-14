@@ -44,25 +44,26 @@ public class TablaPedidosCellRenderer extends DefaultTableCellRenderer {
             case "ANULADO":
                 if (isSelected) {
                     //this.setBackground(Color.GRAY);
-                    this.setForeground(new Color(123, 36, 28));
+                    this.setForeground(new Color(255, 255, 255));
                 } else {
                     //this.setBackground(Color.LIGHT_GRAY);
-                    this.setForeground(new Color(123, 36, 28));
+                    this.setForeground(new Color(255, 0, 0));
                 }
                 break;
-            case "IMPRIMIR":
-                this.setForeground(new Color(74, 35, 90));
-                break;
             case "PREPARAR":
-                this.setForeground(new Color(14, 102, 85));
+                if (isSelected) {
+                    this.setForeground(new Color(255, 255, 255));
+                } else {
+                    this.setForeground(new Color(255, 168, 0));
+                }
                 break;
             case "ENTREGADO":
                 if (isSelected) {
                     //this.setBackground(Color.GRAY);
-                    this.setForeground(Color.GREEN);
+                    this.setForeground(new Color(51, 255, 68));
                 } else {
                     //this.setBackground(Color.LIGHT_GRAY);
-                    this.setForeground(Color.GREEN);
+                    this.setForeground(new Color(51, 255, 68));
                 }
                 break;
             default:
@@ -78,20 +79,20 @@ public class TablaPedidosCellRenderer extends DefaultTableCellRenderer {
                         & articulos.get(row).getMarketplace().equals(marketplaceAnterior)) {
                     if (isSelected) {
                         // this.setBackground(Color.YELLOW);
-                        this.setForeground(new Color(33, 97, 140));
+                        this.setForeground(new Color(255, 255, 255));
                     } else {
                         // this.setBackground(Color.ORANGE);
-                        this.setForeground(new Color(33, 97, 140));
+                        this.setForeground(new Color(51, 100, 255));
                     }
                 } else {
                     if (articulos.get(row).getIdPedido().equals(idPedidoSiguiente)
                             & articulos.get(row).getMarketplace().equals(marketplaceSiguiente)) {
                         if (isSelected) {
                             // this.setBackground(Color.YELLOW);
-                            this.setForeground(new Color(33, 97, 140));
+                            this.setForeground(new Color(255, 255, 255));
                         } else {
                             // this.setBackground(Color.ORANGE);
-                            this.setForeground(new Color(33, 97, 140));
+                            this.setForeground(new Color(51, 100, 255));
                         }
                     } else {
                         if (!isSelected) {

@@ -75,7 +75,7 @@ public class EnvioVista extends javax.swing.JDialog {
             selectorFechaSalida.setDate(new java.util.Date(Main.fechaActual().getTime()));
         } else {
             selectorFechaSalida.setDate(new java.util.Date(articulo.getEnvio().getFechaSalida().getTime()));
-            comboAgenciaSalida.setSelectedItem(Agencia.obtenerIndiceAgencia(articulo.getEnvio().getIdAgencia(),
+            comboAgenciaSalida.setSelectedIndex(Agencia.obtenerIndiceAgencia(articulo.getEnvio().getIdAgencia(),
                     PedidosControlador.getAgencias()));
             comboAlmacenSalida.setSelectedIndex(Almacen.obtenerIndiceAlmacen(articulo.getEnvio().getIdAlmacen(),
                     PedidosControlador.getAlmacenes()));

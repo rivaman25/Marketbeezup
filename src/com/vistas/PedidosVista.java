@@ -695,11 +695,11 @@ public class PedidosVista extends javax.swing.JFrame {
 
         menuImprimirAlbaran.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F10, 0));
         menuImprimirAlbaran.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        menuImprimirAlbaran.setText("Imprimir Albaranes Entrega");
+        menuImprimirAlbaran.setText("Imprimir Albaranes Envío");
         jMenu6.add(menuImprimirAlbaran);
 
         menuReimprimirAlbaran.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        menuReimprimirAlbaran.setText("Reimprimir Albaranes Entrega");
+        menuReimprimirAlbaran.setText("Reimprimir Albaranes Envío");
         jMenu6.add(menuReimprimirAlbaran);
 
         jMenuBar1.add(jMenu6);
