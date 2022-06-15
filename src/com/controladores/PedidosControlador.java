@@ -53,9 +53,15 @@ import com.vistas.ObservacionesVista;
 import com.vistas.PedidoVista;
 import com.vistas.PreferenciasVista;
 import com.vistas.ProvinciasVista;
+import java.awt.Desktop;
 import java.awt.HeadlessException;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 /**
@@ -277,6 +283,19 @@ public class PedidosControlador implements ActionListener, KeyListener {
                         this.actualizarVista();
                     }
                     break;
+                case "Manual":
+                    try {
+                    File path = new File("manual.pdf");
+                    Desktop.getDesktop().open(path);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                JDialog viewer = new JDialog(pedidosVista, "Manual", true);
+                viewer.setSize(800, 600);
+                viewer.setLocationRelativeTo(null);
+                break;
+
                 case "Provincias":
                     ProvinciasVista provinciasVista = new ProvinciasVista(pedidosVista, true);
                     ProvinciasControlador provinciasControlador

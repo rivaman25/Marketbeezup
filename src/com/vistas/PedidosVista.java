@@ -187,6 +187,8 @@ public class PedidosVista extends javax.swing.JFrame {
         menuObservaciones.setActionCommand("Observaciones");
         botonObservaciones.addActionListener(pedidosControlador);
         botonObservaciones.setActionCommand("Observaciones");
+        menuManual.addActionListener(pedidosControlador);
+        menuManual.setActionCommand("Manual");
     }
 
     public String getAtributoBuscar() {
