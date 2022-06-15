@@ -74,7 +74,7 @@ public class DAOPedidoNuevosImpl extends ConexionBD implements DAOPedidoNuevos {
             // Se obtienen los pedidos que no están registrados
             PreparedStatement pstm = this.getConnection().prepareStatement(
                     "SELECT * FROM pedidos WHERE marketplace NOT IN ("
-                    + obtenerParametros(pedidosPK) + ") AND idPedido NOT IN("
+                    + obtenerParametros(pedidosPK) + ") OR idPedido NOT IN("
                     + obtenerParametros(pedidosPK) + ")");
             for (int i = 0; i < pedidosPK.size(); i++) {
                 pstm.setString(i + 1, pedidosPK.get(i).getMarketplace());

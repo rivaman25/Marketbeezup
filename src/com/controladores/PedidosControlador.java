@@ -57,8 +57,6 @@ import java.awt.Desktop;
 import java.awt.HeadlessException;
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -285,11 +283,11 @@ public class PedidosControlador implements ActionListener, KeyListener {
                     }
                     break;
                 case "Manual":
-                    URL url = Thread.currentThread().getContextClassLoader().getResource("com/informes/manual.pdf");
+                    File path;
                     try {
-                        File path = new File(url.toURI());
+                        path = new File("MANUAL.pdf");
                         Desktop.getDesktop().open(path);
-                    } catch (IOException | URISyntaxException ex) {
+                    } catch (IOException ex) {
                         Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     break;
