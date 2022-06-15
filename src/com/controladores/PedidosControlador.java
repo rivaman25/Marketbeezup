@@ -57,11 +57,12 @@ import java.awt.Desktop;
 import java.awt.HeadlessException;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 /**
@@ -284,18 +285,14 @@ public class PedidosControlador implements ActionListener, KeyListener {
                     }
                     break;
                 case "Manual":
+                    URL url = Thread.currentThread().getContextClassLoader().getResource("com/informes/manual.pdf");
                     try {
-                    File path = new File("manual.pdf");
-                    Desktop.getDesktop().open(path);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                    Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                JDialog viewer = new JDialog(pedidosVista, "Manual", true);
-                viewer.setSize(800, 600);
-                viewer.setLocationRelativeTo(null);
-                break;
-
+                        File path = new File(url.toURI());
+                        Desktop.getDesktop().open(path);
+                    } catch (IOException | URISyntaxException ex) {
+                        Logger.getLogger(PedidosControlador.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    break;
                 case "Provincias":
                     ProvinciasVista provinciasVista = new ProvinciasVista(pedidosVista, true);
                     ProvinciasControlador provinciasControlador
