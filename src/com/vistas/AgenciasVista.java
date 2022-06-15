@@ -186,7 +186,7 @@ public class AgenciasVista extends javax.swing.JDialog {
         jPanel1.add(botonRegistrar, gridBagConstraints);
 
         botonEliminar.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        botonEliminar.setText("Elminar");
+        botonEliminar.setText("Eliminar");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
@@ -208,7 +208,7 @@ public class AgenciasVista extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel3)
                 .addGap(4, 4, 4)
-                .addComponent(textoBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE))
+                .addComponent(textoBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
