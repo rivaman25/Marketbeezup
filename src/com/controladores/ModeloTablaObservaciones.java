@@ -66,7 +66,7 @@ public class ModeloTablaObservaciones extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object obj, int row, int col) {
-        if (col == 1) {
+        if (col == 2) {
             observaciones.get(row).setDescripcion((String) obj);
             try {
                 PedidosControlador.getDaoObservacion().modificar(observaciones.get(row));
