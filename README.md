@@ -1,3 +1,3 @@
 # Marketbeezup
-Java application with database access
-See Readme.pdf for proyect documentation
+Java application with database access,
+see Readme.pdf for proyect documentation
